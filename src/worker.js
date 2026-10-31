@@ -22,8 +22,19 @@ async function getJSON(url, ms = 4000) {
 
 const num = v => { const n = parseFloat(String(v ?? '').replace('%', '')); return Number.isFinite(n) ? n : null; };
 
-/* $CFB/USDT on SafeTrade (Peatio-style public API; two known path variants) */
+/* $CFB on CoinPaprika (aggregated price, 24h/7d/30d change, ATH) */
+async function cfbPaprika() {
+  const j = await getJSON('https://api.coinpaprika.com/v1/tickers/cfb-cfb-token');
+  const q = j?.quotes?.USD;
+  if (!q?.price) return null;
+  return { price: q.price, change24h: num(q.percent_change_24h), change7d: num(q.percent_change_7d), change30d: num(q.percent_change_30d),
+    volume24h: num(q.volume_24h), ath: num(q.ath_price), athDate: q.ath_date || null, fromAth: num(q.percent_from_price_ath), source: 'CoinPaprika' };
+}
+
+/* $CFB/USDT on SafeTrade (Peatio-style public API; two known path variants) — fallback */
 async function cfbTicker() {
+  const p = await cfbPaprika();
+  if (p) return p;
   for (const u of [
     'https://safe.trade/api/v2/peatio/public/markets/cfbusdt/tickers',
     'https://safe.trade/api/v2/trade/public/markets/cfbusdt/tickers',

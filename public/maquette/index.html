@@ -273,6 +273,11 @@ section{position:relative;min-height:100vh;min-height:100svh;scroll-margin-top:5
 .lgrid small,.calc small{display:block;font:400 10.5px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--dim)}
 .lgrid strong{display:block;font:400 clamp(16px,1.5vw,24px)/1.2 var(--disp);margin:8px 0 4px;overflow-wrap:anywhere}
 .lgrid em{font:500 11px var(--mono);font-style:normal}
+.mx{display:block;margin-top:6px;font:400 10px/1.5 var(--mono);text-transform:uppercase;letter-spacing:.04em;color:var(--dim)}
+.lv .track{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:18px;padding-top:12px;border-top:1px solid var(--line);font:400 11px var(--mono);text-transform:uppercase;letter-spacing:.05em}
+.lv .track span{color:var(--dim)}
+.lv .track a{text-decoration:none;color:rgba(255,255,255,.8);transition:color .2s}
+.lv .track a:hover{color:var(--o1)}
 .up{color:#4ade80}.down{color:#f87171}
 .calc{padding:18px 20px;border-left:1px solid rgba(255,131,48,.35);background:rgba(255,131,48,.05)}
 .inp{display:flex;align-items:center;margin:8px 0 14px;border:1px solid var(--line);border-radius:10px;background:rgba(0,0,0,.35);transition:border-color .2s}
@@ -517,10 +522,11 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
     <div class="lv">
       <div class="lh"><span><i class="dot" id="liveDot"></i> Live status</span><span id="liveSrc">Connecting…</span></div>
       <div class="lgrid">
-        <div><small>$CFB price</small><strong id="pCfb">—</strong><em id="cCfb"></em></div>
+        <div><small>$CFB price</small><strong id="pCfb">—</strong><em id="cCfb"></em><span class="mx" id="mCfb"></span></div>
         <div><small>$QUBIC price</small><strong id="pQu">—</strong><em id="cQu"></em></div>
         <div><small>FDV · initial supply</small><strong id="fdv">—</strong><em>Price × 420.69B</em></div>
       </div>
+      <div class="track"><span>Track $CFB</span><a data-link="coinpaprika" href="https://coinpaprika.com/coin/cfb-cfb-token" target="_blank" rel="noopener noreferrer">CoinPaprika ↗</a><a data-link="coinmarketcap" href="https://coinmarketcap.com/currencies/cfb/" target="_blank" rel="noopener noreferrer">CoinMarketCap ↗</a><a data-link="safetrade" href="https://safetrade.com/exchange/CFB-USDT?type=pro" target="_blank" rel="noopener noreferrer">SafeTrade ↗</a></div>
     </div>
     <div class="calc">
       <label for="bag"><small>Your bag</small></label>
@@ -604,6 +610,8 @@ const CFB_CONFIG={
     qx:"https://app.qubicportal.org/trade?asset=CFB&issuer=CFBMEMZOIDEXQAUXYYSZIURADQLAPWPMNJXQSNVQZAHYVOPYUKKJBJUCTVJL",
     qswap:"https://swap.qubicportal.org/swap?from=QUBIC&to=CFBMEMZOIDEXQAUXYYSZIURADQLAPWPMNJXQSNVQZAHYVOPYUKKJBJUCTVJL%3ACFB",
     safetrade:"https://safetrade.com/exchange/CFB-USDT?type=pro",
+    coinpaprika:"https://coinpaprika.com/coin/cfb-cfb-token",
+    coinmarketcap:"https://coinmarketcap.com/currencies/cfb/",
     x:"https://x.com/c_f_b_token",
     discord:"https://discord.com/invite/cAbXK8Kx35",
     telegram:"https://t.me/+0NJgRzFxPXMxMjk8",
@@ -642,6 +650,7 @@ async function fetchCFBMarketData(){
   $('#pCfb').textContent=usd(M.cfb);$('#pQu').textContent=usd(M.qubic);
   const cc=$('#cCfb'),cq=$('#cQu');cc.textContent=pct(d?.cfb?.change24h);cq.textContent=pct(d?.qubic?.change24h);
   cc.className=(d?.cfb?.change24h??0)>=0?'up':'down';cq.className=(d?.qubic?.change24h??0)>=0?'up':'down';
+  const c=d?.cfb;$('#mCfb').textContent=c&&c.change7d!=null?`7D ${pct(c.change7d)}${c.ath?` · ATH ${usd(c.ath)}${c.athDate?' ('+c.athDate.slice(0,10)+')':''}`:''}`:'';
   $('#fdv').textContent=M.cfb?usd(M.cfb*CFB_CONFIG.supply.initial):'—';
   const live=!!(d&&d.ok);$('#liveDot').classList.toggle('on',live);
   $('#liveSrc').textContent=live?[...new Set([d.cfb&&d.cfb.source,d.qubic&&d.qubic.source].filter(Boolean))].join(' · ')+' · '+new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}):'Market data unavailable';
