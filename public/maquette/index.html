@@ -455,6 +455,21 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
   .hl{bottom:calc(56px + 4% + 64px)}
   .sub{left:var(--col);right:auto;bottom:calc(56px + 4%);padding-left:18px;max-width:60ch;text-align:left}
 }
+/* short desktop windows (laptops, remote desktops): keep the hero blocks from colliding */
+@media (min-width:901px) and (max-height:860px){
+  #intro{min-height:max(100vh,580px)}
+  #intro .prompt,.feat{top:calc(86px + 3vh)}
+  #intro .prompt .next{display:none}
+  .mega{font-size:min(10vw,15vh)}
+  .tag{font-size:min(2.3vw,4.4vh)}
+  .hl{bottom:calc(56px + 4vh)}
+  .ctas{margin-top:2.4vh}
+}
+@media (min-width:901px) and (max-width:1280px) and (max-height:860px){
+  .hl{bottom:calc(56px + 3vh + 52px)}
+  .sub{bottom:calc(56px + 2vh)}
+  .mega{font-size:min(10vw,13vh)}
+}
 /* focus, press states, touch */
 :focus-visible{outline:2px solid var(--o1);outline-offset:3px;border-radius:6px}
 .btn:active,.sbtn:active,.totop:active,.navplay:active{transform:translateY(1px) scale(.98)}
