@@ -239,11 +239,11 @@ const sndBtn=$('#snd');function paintSnd(){sndBtn.textContent=muted?'🔇':'🔊
 paintSnd();sndBtn.onclick=()=>{muted=!muted;store.set('cfb-hm-mute',muted);paintSnd()};
 function ac(){if(muted)return null;if(!AC){const C=window.AudioContext||window.webkitAudioContext;if(!C)return null;AC=new C()}if(AC.state==='suspended')AC.resume();return AC}
 /* card flip: short filtered noise "swish" + tiny click */
-function sFlip(){const a=ac();if(!a)return;const t=a.currentTime,len=.09;
+function sFlip(){const a=ac();if(!a)return;const t=a.currentTime,len=.13;
   const buf=a.createBuffer(1,a.sampleRate*len,a.sampleRate),d=buf.getChannelData(0);
-  for(let i=0;i<d.length;i++){const k=i/d.length;d[i]=(Math.random()*2-1)*Math.pow(1-k,2)}
+  for(let i=0;i<d.length;i++){const k=i/d.length;d[i]=(Math.random()*2-1)*Math.pow(1-k,1.3)*Math.min(1,k*40)}
   const src=a.createBufferSource();src.buffer=buf;const f=a.createBiquadFilter();f.type='bandpass';f.frequency.setValueAtTime(1800,t);f.frequency.exponentialRampToValueAtTime(3800,t+len);f.Q.value=.9;
-  const g=a.createGain();g.gain.setValueAtTime(.32,t);g.gain.exponentialRampToValueAtTime(.001,t+len);
+  const g=a.createGain();g.gain.setValueAtTime(1.1,t);g.gain.exponentialRampToValueAtTime(.001,t+len);
   src.connect(f).connect(g).connect(a.destination);src.start(t);src.stop(t+len)}
 /* pair found: bright two-note chime, a bit higher with each combo */
 function sPair(st){const a=ac();if(!a)return;const t=a.currentTime,base=660*Math.pow(2,Math.min(st-1,6)/12);
