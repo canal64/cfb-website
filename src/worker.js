@@ -80,6 +80,28 @@ async function status() {
   return { ok: false };
 }
 
+/* $CFB burns read on-chain: every CFB share sent to the Qubic burn address (QubicBay mint-slot burns).
+   Uses the public query service behind explorer.qubic.org. */
+const BURN_ADDR = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFXIB';
+async function burns() {
+  const out = [];
+  for (let offset = 0; offset < 2000; offset += 100) {
+    let j = null;
+    try {
+      const r = await fetch('https://rpc.qubic.org/query/v1/getEventLogs', { method: 'POST', headers: { ...HEADERS, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ filters: { destination: BURN_ADDR, logType: '2', assetIssuer: CFB_ISSUER, assetName: 'CFB' }, pagination: { offset, size: 100 } }) });
+      j = r.ok ? await r.json() : null;
+    } catch {}
+    if (!j) return { ok: false };
+    for (const e of j.eventLogs || []) {
+      const a = e.assetOwnershipChange; if (!a) continue;
+      out.push({ date: new Date(+e.timestamp).toISOString().slice(0, 10), amount: +a.numberOfShares, tx: e.transactionHash, source: a.source, epoch: e.epoch });
+    }
+    if (!j.eventLogs || j.eventLogs.length < 100) break;
+  }
+  return { ok: true, burns: out, updated: new Date().toISOString() };
+}
+
 /* Exchange logos: fetched from each exchange's own site (fixed allowlist), cached at the edge for a week.
    Falls back to Google's favicon service if the site doesn't answer. */
 const LOGOS = {
@@ -122,6 +144,7 @@ export default {
     const { pathname } = new URL(request.url);
     if (pathname === '/api/market') return cached(request, ctx, 60, market);
     if (pathname === '/api/status') return cached(request, ctx, 20, status);
+    if (pathname === '/api/burn') return cached(request, ctx, 600, burns);
     const lm = pathname.match(/^\/logos\/([a-z]+)$/); if (lm) return logo(request, ctx, lm[1]);
     return env.ASSETS.fetch(request); // everything else = static site
   },

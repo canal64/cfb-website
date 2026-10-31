@@ -726,13 +726,13 @@ const CFB_CONFIG={
   launchDate:"2024-05-04",
   supply:{initial:420690000000,
     goalPct:15,
-    // Verified burns (add a line for each new one; totals are computed from this list)
+    // Burns not visible as transfers to the burn address (asset-share burns). QubicBay burns are read live from the chain via /api/burn.
     burns:[
-      {date:"2025-05-16",amount:12620700000,label:"Community burn: 3% of the total supply",tx:"uxolklzyzarwibebudnqesoppxwaljlnfzhiuicmvfwtbsordcjotbvgipye"},
-      {date:"2026",amount:45400000,label:"QubicBay: BITE collection launch, first after the Qbay smart contract upgrade",tx:"jgroxukvilsshcubufaaicxcmwneqsxfzcpymvkebeunclvyprqbtrpfktnm"}
+      {date:"2025-05-16",amount:12620700000,label:"Community burn: 3% of the total supply",tx:"uxolklzyzarwibebudnqesoppxwaljlnfzhiuicmvfwtbsordcjotbvgipye"}
     ],
-    asOf:"Oct 31, 2026"},
-  api:{market:"/api/market",status:"/api/status",paprika:"https://api.coinpaprika.com/v1/tickers/cfb-cfb-token",burn:null},
+    // Optional nicer labels for on-chain burns, by transaction
+    labels:{"jgroxukvilsshcubufaaicxcmwneqsxfzcpymvkebeunclvyprqbtrpfktnm":"QubicBay: BITE collection launch, first after the Qbay smart contract upgrade"}},
+  api:{market:"/api/market",status:"/api/status",paprika:"https://api.coinpaprika.com/v1/tickers/cfb-cfb-token",burn:"/api/burn"},
   links:{
     qubicbay:"https://qubicbay.io/",
     qbros:"https://qubicbay.io/Collections/0",
@@ -804,7 +804,9 @@ fetchCFBMarketData();setInterval(fetchCFBMarketData,60000);
 
 /* ---- MODULE 2 · burn radar ---- */
 async function fetchBurnStats(){
-  const S=CFB_CONFIG.supply,list=S.burns||[];
+  const S=CFB_CONFIG.supply,live=await getJSON(CFB_CONFIG.api.burn);
+  const list=[...(S.burns||[])];
+  if(live&&live.ok)live.burns.forEach(b=>{if(!list.some(x=>x.tx===b.tx))list.push({...b,label:S.labels[b.tx]||'QubicBay: new collection launch (mint slots burned)'})});
   const burned=list.reduce((t,b)=>t+b.amount,0),remain=S.initial-burned,pct=burned/S.initial*100,goal=S.goalPct;
   $('#radar').classList.toggle('idle',!burned);if(!burned)return;
   const prog=Math.min(pct/goal*100,100);
@@ -814,7 +816,7 @@ async function fetchBurnStats(){
   document.querySelector('[data-stat="burned"]').textContent=fmt(burned);
   document.querySelector('[data-stat="burnedPct"]').textContent=pct.toFixed(2)+'% of the supply';
   document.querySelector('[data-stat="circulating"]').textContent=fmt(remain);
-  $('#radarState').textContent='Verified burns · '+S.asOf;
+  $('#radarState').textContent=live&&live.ok?'Live from the Qubic chain':'Verified burns';$('#radar .dot').classList.toggle('on',!!(live&&live.ok));
   const EXP='https://explorer.qubic.org/network/tx/';
   $('#burnLog').innerHTML=list.slice().sort((a,b)=>String(b.date).localeCompare(String(a.date))).map(b=>{
     const d=/^\d{4}-\d{2}-\d{2}$/.test(b.date)?new Date(b.date+'T12:00:00Z').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):b.date;
