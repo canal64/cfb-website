@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Head Match — $CFB memory game</title>
+<title>Head Match · $CFB memory game</title>
 <meta name="description" content="Flip the cards, match the CFB heads, beat the clock. A memory game made with the $CFB community's memes.">
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#0b0706">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Head Match — $CFB memory game">
+<meta property="og:title" content="Head Match · $CFB memory game">
 <meta property="og:description" content="Match all the CFB heads. Beat the clock. Share your score.">
 <meta property="og:image" content="https://cfb-website.rudynakamoto.workers.dev/assets/brand/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -159,7 +159,7 @@ footer{position:relative;z-index:1;text-align:center;padding:10px 16px 40px;font
     <div><small>Time</small><b id="time">0.0s</b></div>
     <div><small>Moves</small><b id="moves">0</b></div>
     <div><small>Pairs</small><b id="pairs">0/8</b></div>
-    <div class="combo"><small>Best</small><b id="best">—</b></div>
+    <div class="combo"><small>Best</small><b id="best">…</b></div>
   </div>
 
   <div class="board l8" id="board" aria-label="Cards"></div>
@@ -205,7 +205,7 @@ let pairs=8,deck=[],open=[],lock=false,moves=0,found=0,t0=0,timer=null,started=f
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 const fmtT=ms=>(ms/1000).toFixed(1)+'s';
 
-function bestText(){const b=store.get('cfb-hm-'+pairs);return b?`${fmtT(b.ms)} · ${b.moves}`:'—'}
+function bestText(){const b=store.get('cfb-hm-'+pairs);return b?`${fmtT(b.ms)} · ${b.moves}`:'…'}
 
 function newGame(){
   clearInterval(timer);started=false;moves=0;found=0;open=[];lock=false;streak=0;
