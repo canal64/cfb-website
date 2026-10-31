@@ -168,6 +168,23 @@ section{position:relative;min-height:100vh;min-height:100svh;scroll-margin-top:5
 .copy .cp{flex:none;font:500 10px var(--mono);text-transform:uppercase;letter-spacing:.06em;padding:5px 8px;border-radius:999px;background:var(--btn);color:#fff;transition:background .25s}
 .copy.ok{border-color:#4ade80}.copy.ok .cp{background:#16a34a}
 
+.radar{margin:14px var(--col) 0;padding:18px;border:1px solid var(--o2);border-radius:18px;background:var(--panel)}
+.rh{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font:400 11px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--o1)}
+.rh span:last-child{color:var(--dim)}
+.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--o2);margin-right:6px;animation:live 1.4s ease-in-out infinite;vertical-align:1px}
+.dot.on{background:#4ade80}
+@keyframes live{50%{opacity:.25}}
+.bar{position:relative;height:16px;margin:16px 0 14px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid var(--line);overflow:hidden;display:flex}
+.bar>div{height:100%;width:0;transition:width 1.6s cubic-bezier(.2,.7,.2,1)}
+.bar .burned{background:linear-gradient(90deg,#ffd46b,#ff8330,#c43d2f);box-shadow:0 0 18px rgba(255,131,48,.8)}
+.bar .circ{background:rgba(255,255,255,.18)}
+.radar.idle .bar{background:repeating-linear-gradient(45deg,rgba(255,131,48,.08) 0 10px,transparent 10px 20px);animation:stripes 1.5s linear infinite;background-size:28px 28px}
+@keyframes stripes{to{background-position:28px 0}}
+.legend{display:flex;flex-wrap:wrap;gap:8px 22px;font:400 11px var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--dim)}
+.legend b{color:var(--ink);font-weight:500;margin-left:4px}
+.lb{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.b1{background:var(--o2)}.b2{background:rgba(255,255,255,.35)}.b3{border:1px solid rgba(255,255,255,.4)}
+
 /* ---------- 3 STORY ---------- */
 #story{padding:16vh 0 12vh}
 #story .wrap{margin-left:var(--col);width:calc(33% - 18px);padding:14px 18px}
@@ -184,6 +201,14 @@ section{position:relative;min-height:100vh;min-height:100svh;scroll-margin-top:5
 .roadmap small{font:400 11px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--o1)}
 .roadmap h3{font:400 clamp(20px,1.8vw,30px) var(--disp);text-transform:uppercase;margin-top:12px}
 .rm-head{margin:0 var(--col);padding:0 0 14px 18px;margin-top:10vh}
+
+.term{margin:5vh var(--col) 0;border:1px solid var(--o2);border-radius:16px;overflow:hidden;background:#070403}
+.th{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid var(--line);font:400 10.5px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--dim)}
+.th span:first-child i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;background:var(--o4)}
+.th span:first-child i+i{background:var(--o2)}.th span:first-child i+i+i{background:var(--o1)}
+.tb{min-height:104px;padding:18px 16px;font:400 13px/1.6 var(--mono);color:#ffe2b8}
+.tb .pr{color:var(--o2)}
+.tbtn{margin:0 16px 16px}
 
 /* ---------- 4 QUBICBAY ---------- */
 #qubicbay{padding:16vh 0 10vh}
@@ -222,7 +247,10 @@ section{position:relative;min-height:100vh;min-height:100svh;scroll-margin-top:5
 .steps a:hover{border-color:var(--o2);transform:translateY(-4px)}
 .steps .num{font:400 11px var(--mono);color:var(--o1);display:flex;justify-content:space-between}
 .steps h3{font:400 clamp(20px,1.8vw,28px) var(--disp);text-transform:uppercase;margin:36px 0 10px}
+.steps .warn{display:block;margin-top:10px;padding:8px 10px;border:1px solid rgba(255,212,107,.35);border-radius:10px;font:400 10.5px/1.5 var(--mono);text-transform:uppercase;letter-spacing:.03em;color:var(--o1);background:rgba(255,131,48,.06)}
 .steps p{font-size:14.5px;line-height:1.5;color:var(--dim)}
+.where.pulse{animation:pulse 1.4s ease-out}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,131,48,.7)}100%{box-shadow:0 0 0 22px rgba(255,131,48,0)}}
 .where{margin:9vh var(--col) 0;display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--o2);border-radius:18px;overflow:hidden;background:var(--bg)}
 .where>div{padding:20px}
 .where>div+div{border-left:1px solid rgba(255,131,48,.4)}
@@ -236,6 +264,25 @@ section{position:relative;min-height:100vh;min-height:100svh;scroll-margin-top:5
 .ex+.ex{border-top-color:var(--line)}
 .ex small{font:400 10px var(--mono);text-transform:uppercase;color:var(--dim)}
 .wp{margin:5vh var(--col) 0;padding-left:18px;display:flex;gap:12px;flex-wrap:wrap}
+
+.live{margin:6vh var(--col) 0;display:grid;grid-template-columns:1.5fr 1fr;border:1px solid var(--o2);border-radius:18px;overflow:hidden;background:var(--panel)}
+.lv{padding:18px 20px}
+.lh{display:flex;justify-content:space-between;gap:10px;font:400 11px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--o1)}
+.lh span:last-child{color:var(--dim)}
+.lgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}
+.lgrid small,.calc small{display:block;font:400 10.5px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--dim)}
+.lgrid strong{display:block;font:400 clamp(16px,1.5vw,24px)/1.2 var(--disp);margin:8px 0 4px;overflow-wrap:anywhere}
+.lgrid em{font:500 11px var(--mono);font-style:normal}
+.up{color:#4ade80}.down{color:#f87171}
+.calc{padding:18px 20px;border-left:1px solid rgba(255,131,48,.35);background:rgba(255,131,48,.05)}
+.inp{display:flex;align-items:center;margin:8px 0 14px;border:1px solid var(--line);border-radius:10px;background:rgba(0,0,0,.35);transition:border-color .2s}
+.inp:focus-within{border-color:var(--o2)}
+.inp input{flex:1;min-width:0;background:none;border:0;outline:0;color:var(--ink);font:400 16px var(--mono);padding:12px}
+.inp span{font:400 11px var(--mono);color:var(--dim);padding-right:12px}
+.out{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.out b,.rank b{display:block;font:400 18px var(--disp);margin-top:6px;overflow-wrap:anywhere}
+.rank{margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.rank b{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 
 /* ---------- 7 COMMUNITY ---------- */
 #community{padding:16vh 0 8vh;display:flex;flex-direction:column;justify-content:space-between}
@@ -299,6 +346,10 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
   .socials{grid-template-columns:1fr;margin:0 16px}
   .trust{grid-template-columns:1fr;margin:5vh 16px 0}
   .stats{grid-template-columns:1fr 1fr;margin:5vh 16px 0}
+  .radar,.term{margin-left:16px;margin-right:16px}
+  .live{grid-template-columns:1fr;margin:5vh 16px 0}
+  .calc{border-left:0;border-top:1px solid rgba(255,131,48,.35)}
+  .lgrid{grid-template-columns:1fr 1fr}
   .st+.st{border-left:0}.st:nth-child(2n){border-left:1px solid rgba(255,131,48,.35)}
   .st:nth-child(n+3){border-top:1px solid rgba(255,131,48,.35)}
   .st.issuer{grid-column:1/-1;border-left:0!important}
@@ -316,15 +367,15 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
 <div class="glow" aria-hidden="true"></div>
 <div class="guides" aria-hidden="true"><i></i><i></i><i></i></div>
 
-<div class="topbar"><a href="https://qubicbay.io/" target="_blank" rel="noopener"><b>New:</b> $CFB powers QubicBay — Qubic's NFT marketplace ↗</a><button id="closebar" aria-label="Close">×</button></div>
+<div class="topbar"><a data-link="qubicbay" href="https://qubicbay.io/" target="_blank" rel="noopener noreferrer"><b>New:</b> $CFB powers QubicBay — Qubic's NFT marketplace ↗</a><button id="closebar" aria-label="Close">×</button></div>
 
 <nav>
   <a class="logo" href="#intro"><img src="../assets/brand/cfb-head.webp" alt=""><span>$CFB</span></a>
   <div class="menu">
     <a href="#manifesto">Manifesto</a><a href="#story">Story</a><a href="#qubicbay">QubicBay</a><a href="#qbros">Qbros</a><a href="#start">Get $CFB</a><a href="#community">Community</a>
   </div>
-  <a class="pad" href="https://explorer.qubic.org/network/tx/ptthaqjjuyelsdcabjfpzvihriycuquoylnjcnplwclvijofvlkindsatntk" target="_blank" rel="noopener">Genesis TX ↗</a>
-  <a class="btn sm" href="#start">Buy now</a>
+  <a class="pad" data-link="genesisTx" href="https://explorer.qubic.org/network/tx/ptthaqjjuyelsdcabjfpzvihriycuquoylnjcnplwclvijofvlkindsatntk" target="_blank" rel="noopener noreferrer">Genesis TX ↗</a>
+  <a class="btn sm" href="#where" data-buy>Buy now</a>
 </nav>
 
 <aside class="rail" aria-hidden="true">
@@ -351,8 +402,8 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
     <h1 class="mega rv d2">$CFB</h1>
     <div class="tag rv d3">Not just a meme. <em>Qubic history.</em></div>
     <div class="ctas rv d4">
-      <a class="btn" href="#start">Buy now</a>
-      <a class="btn ghost" href="https://drive.google.com/file/d/1Z3H7-WGgqxWhxuz--eQavSG0RdWrPyvB/view" target="_blank" rel="noopener">View whitepaper ↗</a>
+      <a class="btn" href="#where" data-buy>Buy now</a>
+      <a class="btn ghost" data-link="whitepaper" href="https://drive.google.com/file/d/1Z3H7-WGgqxWhxuz--eQavSG0RdWrPyvB/view" target="_blank" rel="noopener noreferrer">View whitepaper ↗</a>
     </div>
   </div>
   <p class="sub rv d4">Deployed on May the 4th, airdropped to everyone, burned to build Qubic's NFT culture.</p>
@@ -379,6 +430,16 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
         <code>CFBMEMZOIDEXQAUXYYSZIURADQLAPWPMNJXQSNVQZAHYVOPYUKKJBJUCTVJL</code><span class="cp">Copy</span></button>
       <em>Asset name: CFB</em></div>
   </div>
+  <!-- MODULE · Burn radar: fed by fetchBurnStats() -->
+  <div class="radar rv d4" id="radar">
+    <div class="rh"><span><i class="dot"></i> QubicBay burn radar</span><span id="radarState">Awaiting on-chain data</span></div>
+    <div class="bar"><div class="burned" id="barBurned"></div><div class="circ" id="barCirc"></div></div>
+    <div class="legend">
+      <span><i class="lb b1"></i>🔥 Burned <b data-count id="rBurned">—</b></span>
+      <span><i class="lb b2"></i>Circulating <b data-count id="rCirc">—</b></span>
+      <span><i class="lb b3"></i>Initial <b>420,690,000,000</b></span>
+    </div>
+  </div>
 </section>
 
 <!-- 3 STORY -->
@@ -387,7 +448,7 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
     <div class="kicker rv d1"><b>01</b> What is $CFB?</div>
     <h2 class="h2 rv d2">The meme that came <span class="sp">before</span> everything else.</h2>
     <p class="p rv d3">$CFB is the first-ever meme launched on Qubic. It was distributed fairly via airdrop to the entire community. It began as a pure memecoin and grew a real use case: it's the main token of QubicBay, Qubic's NFT marketplace, and it introduced the ecosystem's first NFT collection, Qbros.</p>
-    <a class="link rv d4" href="https://explorer.qubic.org/network/tx/ptthaqjjuyelsdcabjfpzvihriycuquoylnjcnplwclvijofvlkindsatntk" target="_blank" rel="noopener">View the Genesis TX on Qubic Explorer ↗</a>
+    <a class="link rv d4" data-link="genesisTx" href="https://explorer.qubic.org/network/tx/ptthaqjjuyelsdcabjfpzvihriycuquoylnjcnplwclvijofvlkindsatntk" target="_blank" rel="noopener noreferrer">View the Genesis TX on Qubic Explorer ↗</a>
     <ul class="timeline-m rv d4">
       <li><em>01</em>May 4th, 2024 — Deployed</li><li><em>02</em>Fair airdrop · no pre-sale</li><li><em>03</em>Main token of QubicBay</li><li><em>04</em>Qbros, the genesis collection</li>
     </ul>
@@ -404,6 +465,12 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
     <div><small>Phase 2</small><h3>Vibe and Hodl</h3></div>
     <div><small>Phase 3</small><h3>Meme takeover</h3></div>
   </div>
+  <!-- MODULE · CFB lore terminal (facts + live Qubic tick/epoch) -->
+  <div class="term rv d3">
+    <div class="th"><span><i></i><i></i><i></i></span><span>cfb-lore — qubic</span><span id="netBadge"><i class="dot"></i>Network</span></div>
+    <div class="tb" id="termOut" aria-live="polite"><span class="pr">$</span> <span id="termText">Press decode to read the lore.</span><span class="caret"></span></div>
+    <button class="btn ghost tbtn" id="decode">[ Decode next CFB message ]</button>
+  </div>
 </section>
 
 <!-- 4 QUBICBAY -->
@@ -414,7 +481,7 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
       <div class="kicker rv d1"><b>02</b> QubicBay · Burn mechanics</div>
       <h2 class="h2 rv d2" style="margin:18px 0 22px"><span class="sp">Burned</span> to build Qubic's NFT culture.</h2>
       <p class="p rv d3">QubicBay is Qubic's definitive NFT marketplace, where $CFB became deflationary. To launch an NFT collection, creators must buy and burn $CFB to obtain minting slots. Every new collection reduces the supply — fully automated and managed exclusively by the Qbay smart contract.</p>
-      <a class="link rv d4" href="https://qubicbay.io/" target="_blank" rel="noopener">Discover QubicBay ↗</a>
+      <a class="link rv d4" data-link="qubicbay" href="https://qubicbay.io/" target="_blank" rel="noopener noreferrer">Discover QubicBay ↗</a>
     </div>
     <div class="burn rv d3">
       <header><span>New collection</span><span>Qbay SC</span></header>
@@ -434,7 +501,7 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
       <div class="kicker rv d1"><b>03</b> Qbros · The Genesis Collection</div>
       <h2 class="h2 rv d2">First of its kind on Qubic.</h2>
       <p class="p rv d3">$CFB brought NFT and meme culture into the Qubic ecosystem, pioneering and paving the way for other projects. Qbros is a highly collectible collection, the first of its kind — you can't be part of the ecosystem and not hold at least one Qbros.</p>
-      <a class="link rv d4" href="https://qubicbay.io/Collections/0" target="_blank" rel="noopener">Join Qbros ↗</a>
+      <a class="link rv d4" data-link="qbros" href="https://qubicbay.io/Collections/0" target="_blank" rel="noopener noreferrer">Join Qbros ↗</a>
     </div>
   </div>
 </section>
@@ -445,23 +512,40 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
     <div class="kicker rv d1"><b>04</b> Getting started</div>
     <h2 class="h2 rv d2" style="margin-top:18px">3 simple steps to join the <span class="sp">$CFB</span> ecosystem.</h2>
   </div>
+  <!-- MODULE · Live market + bag calculator: fed by fetchCFBMarketData() -->
+  <div class="live rv d3" id="live">
+    <div class="lv">
+      <div class="lh"><span><i class="dot" id="liveDot"></i> Live status</span><span id="liveSrc">Connecting…</span></div>
+      <div class="lgrid">
+        <div><small>$CFB price</small><strong id="pCfb">—</strong><em id="cCfb"></em></div>
+        <div><small>$QUBIC price</small><strong id="pQu">—</strong><em id="cQu"></em></div>
+        <div><small>FDV · initial supply</small><strong id="fdv">—</strong><em>Price × 420.69B</em></div>
+      </div>
+    </div>
+    <div class="calc">
+      <label for="bag"><small>Your bag</small></label>
+      <div class="inp"><input id="bag" type="text" inputmode="numeric" placeholder="e.g. 1,000,000,000" autocomplete="off"><span>$CFB</span></div>
+      <div class="out"><div><small>≈ USD</small><b id="vUsd">—</b></div><div><small>≈ $QUBIC</small><b id="vQu">—</b></div></div>
+      <div class="rank"><small>Community rank</small><b id="rank">Type your bag</b></div>
+    </div>
+  </div>
   <div class="steps rv d3">
-    <a href="https://qubic.org/#wallets" target="_blank" rel="noopener"><div class="num"><span>01</span><span>↗</span></div><h3>Choose your wallet</h3><p>Install the official Qubic Wallet app, or use the Qubic Web Wallet. A wallet is necessary to use, trade, or hold $CFB.</p></a>
-    <a href="https://docs.qubic.org/learn/invest#2-create-a-qubic-wallet" target="_blank" rel="noopener"><div class="num"><span>02</span><span>↗</span></div><h3>Configure your wallet</h3><p>Follow Qubic's official guide. Write down your 55-letter seed offline and never share it: it's the only way to recover your $CFB.</p></a>
+    <a data-link="wallets" href="https://qubic.org/#wallets" target="_blank" rel="noopener noreferrer"><div class="num"><span>01</span><span>↗</span></div><h3>Choose your wallet</h3><p>Install the official Qubic Wallet app, or use the Qubic Web Wallet. A wallet is necessary to use, trade, or hold $CFB.</p></a>
+    <a data-link="walletGuide" href="https://docs.qubic.org/learn/invest#2-create-a-qubic-wallet" target="_blank" rel="noopener noreferrer"><div class="num"><span>02</span><span>↗</span></div><h3>Configure your wallet</h3><p>Follow Qubic's official guide. Write down your 55-letter seed offline and never share it: it's the only way to recover your $CFB.<span class="warn">⚠ Seed created on an iPhone/iPad, or in Safari on Mac, before Oct 18, 2026? Make a new one with an updated wallet (v4.26.4+) and move your funds.</span></p></a>
     <a href="#where"><div class="num"><span>03</span><span>↓</span></div><h3>Get some $CFB</h3><p>There are lots of ways to get your hands on some $CFB.</p></a>
   </div>
   <div class="where rv d4" id="where">
     <div>
       <h4>DEX <span>Decentralized exchanges</span></h4>
-      <a class="ex" href="https://app.qubicportal.org/trade?asset=CFB&amp;issuer=CFBMEMZOIDEXQAUXYYSZIURADQLAPWPMNJXQSNVQZAHYVOPYUKKJBJUCTVJL" target="_blank" rel="noopener">QX — Qubic Exchange <small>↗</small></a>
-      <a class="ex" href="https://swap.qubicportal.org/swap?from=QUBIC&amp;to=CFBMEMZOIDEXQAUXYYSZIURADQLAPWPMNJXQSNVQZAHYVOPYUKKJBJUCTVJL%3ACFB" target="_blank" rel="noopener">QSwap <small>↗</small></a>
+      <a class="ex" data-link="qx" href="https://app.qubicportal.org/trade?asset=CFB&amp;issuer=CFBMEMZOIDEXQAUXYYSZIURADQLAPWPMNJXQSNVQZAHYVOPYUKKJBJUCTVJL" target="_blank" rel="noopener noreferrer">QX — Qubic Exchange <small>↗</small></a>
+      <a class="ex" data-link="qswap" href="https://swap.qubicportal.org/swap?from=QUBIC&amp;to=CFBMEMZOIDEXQAUXYYSZIURADQLAPWPMNJXQSNVQZAHYVOPYUKKJBJUCTVJL%3ACFB" target="_blank" rel="noopener noreferrer">QSwap <small>↗</small></a>
     </div>
     <div>
       <h4>CEX <span>Centralized exchanges</span></h4>
-      <a class="ex" href="https://safetrade.com/exchange/CFB-USDT?type=pro" target="_blank" rel="noopener">Safetrade <small>CFB/USDT ↗</small></a>
+      <a class="ex" data-link="safetrade" href="https://safetrade.com/exchange/CFB-USDT?type=pro" target="_blank" rel="noopener noreferrer">Safetrade <small>CFB/USDT ↗</small></a>
     </div>
   </div>
-  <div class="wp rv d4"><a class="btn ghost" href="https://drive.google.com/file/d/1Z3H7-WGgqxWhxuz--eQavSG0RdWrPyvB/view" target="_blank" rel="noopener">Read the whitepaper ↗</a></div>
+  <div class="wp rv d4"><a class="btn ghost" data-link="whitepaper" href="https://drive.google.com/file/d/1Z3H7-WGgqxWhxuz--eQavSG0RdWrPyvB/view" target="_blank" rel="noopener noreferrer">Read the whitepaper ↗</a></div>
 </section>
 
 <!-- 7 COMMUNITY -->
@@ -472,13 +556,13 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
   </div>
   <div class="marquee rv d3"><div class="row" id="mq"></div></div>
   <div class="socials rv d4">
-    <a href="https://x.com/c_f_b_token" target="_blank" rel="noopener">X <small>@c_f_b_token ↗</small></a>
-    <a href="https://discord.com/invite/cAbXK8Kx35" target="_blank" rel="noopener">Discord <small>↗</small></a>
-    <a href="https://t.me/+0NJgRzFxPXMxMjk8" target="_blank" rel="noopener">Telegram <small>↗</small></a>
+    <a data-link="x" href="https://x.com/c_f_b_token" target="_blank" rel="noopener noreferrer">X <small>@c_f_b_token ↗</small></a>
+    <a data-link="discord" href="https://discord.com/invite/cAbXK8Kx35" target="_blank" rel="noopener noreferrer">Discord <small>↗</small></a>
+    <a data-link="telegram" href="https://t.me/+0NJgRzFxPXMxMjk8" target="_blank" rel="noopener noreferrer">Telegram <small>↗</small></a>
   </div>
   <div class="trust rv d4">
     <p><b>Community-led · Transparency</b>$CFB is a community-led project, so the community keeps track of how the funds are managed. The community auditor maintains a public spreadsheet, updated periodically.<span class="mini">Memecoin · No intrinsic value · No expected financial return · Not financial advice. Always do your own research.</span></p>
-    <a class="btn ghost" href="https://docs.google.com/spreadsheets/d/1fCOsFDDWO2YxI6dgRM8LPhHN6r9ZVv_U-bMEQWxMS8E/edit?gid=1212216071#gid=1212216071" target="_blank" rel="noopener">View sheet ↗</a>
+    <a class="btn ghost" data-link="auditSheet" href="https://docs.google.com/spreadsheets/d/1fCOsFDDWO2YxI6dgRM8LPhHN6r9ZVv_U-bMEQWxMS8E/edit?gid=1212216071#gid=1212216071" target="_blank" rel="noopener noreferrer">View sheet ↗</a>
   </div>
 </section>
 </main>
@@ -488,17 +572,126 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
   <p class="disc">$CFB token has no association with Sergey Ivancheglo (aka Come-from-Beyond) or his creation. This token is simply paying homage to a meme well loved and recognized in Qubic's community. $CFB is a meme token with no intrinsic value or expectation of financial return. There is no formal team or roadmap. The token is completely useless and for entertainment purposes only.</p>
   <p class="disc">Created by the Community for the Community, just for fun.</p>
   <div class="eco"><span>Qubic ecosystem</span>
-    <a href="https://qubic.org" target="_blank" rel="noopener">qubic.org ↗</a>
-    <a href="https://qubicbay.io" target="_blank" rel="noopener">qubicbay.io ↗</a>
-    <a href="https://qubicmap.org" target="_blank" rel="noopener">qubicmap.org ↗</a>
-    <a href="https://explorer.qubic.org" target="_blank" rel="noopener">explorer.qubic.org ↗</a>
+    <a data-link="qubic" href="https://qubic.org" target="_blank" rel="noopener noreferrer">qubic.org ↗</a>
+    <a data-link="qubicbay" href="https://qubicbay.io" target="_blank" rel="noopener noreferrer">qubicbay.io ↗</a>
+    <a data-link="qubicmap" href="https://qubicmap.org" target="_blank" rel="noopener noreferrer">qubicmap.org ↗</a>
+    <a data-link="explorer" href="https://explorer.qubic.org" target="_blank" rel="noopener noreferrer">explorer.qubic.org ↗</a>
   </div>
   <div class="bot"><span>$CFB · The first memecoin on Qubic · Since May 4th, 2024</span><span>Community website</span></div>
 </footer>
 
 <script>
+/* =====================================================================
+   CFB_CONFIG — every URL and constant of the site in one place.
+   Edit here; elements with data-link="key" are re-linked on load.
+   ===================================================================== */
+const CFB_CONFIG={
+  issuer:"CFBMEMZOIDEXQAUXYYSZIURADQLAPWPMNJXQSNVQZAHYVOPYUKKJBJUCTVJL",
+  assetName:"CFB",
+  launchDate:"2024-05-04",
+  supply:{initial:420690000000,
+    // Fill these (or serve them from /api/burn later) to light up the burn radar:
+    burned:null, circulating:null, asOf:null},
+  api:{market:"/api/market",status:"/api/status",burn:null},
+  links:{
+    qubicbay:"https://qubicbay.io/",
+    qbros:"https://qubicbay.io/Collections/0",
+    whitepaper:"https://drive.google.com/file/d/1Z3H7-WGgqxWhxuz--eQavSG0RdWrPyvB/view",
+    genesisTx:"https://explorer.qubic.org/network/tx/ptthaqjjuyelsdcabjfpzvihriycuquoylnjcnplwclvijofvlkindsatntk",
+    wallets:"https://qubic.org/#wallets",
+    walletGuide:"https://docs.qubic.org/learn/invest#2-create-a-qubic-wallet",
+    qx:"https://app.qubicportal.org/trade?asset=CFB&issuer=CFBMEMZOIDEXQAUXYYSZIURADQLAPWPMNJXQSNVQZAHYVOPYUKKJBJUCTVJL",
+    qswap:"https://swap.qubicportal.org/swap?from=QUBIC&to=CFBMEMZOIDEXQAUXYYSZIURADQLAPWPMNJXQSNVQZAHYVOPYUKKJBJUCTVJL%3ACFB",
+    safetrade:"https://safetrade.com/exchange/CFB-USDT?type=pro",
+    x:"https://x.com/c_f_b_token",
+    discord:"https://discord.com/invite/cAbXK8Kx35",
+    telegram:"https://t.me/+0NJgRzFxPXMxMjk8",
+    auditSheet:"https://docs.google.com/spreadsheets/d/1fCOsFDDWO2YxI6dgRM8LPhHN6r9ZVv_U-bMEQWxMS8E/edit?gid=1212216071#gid=1212216071",
+    qubic:"https://qubic.org",qubicmap:"https://qubicmap.org",explorer:"https://explorer.qubic.org"
+  },
+  ranks:[ // [minimum bag, title]
+    [0,"Shrimp"],[1e6,"Crab"],[1e8,"Computor Apprentice"],[1e9,"Qbro Whale"],[1e10,"CfB Archi-Brain"]]
+};
+
 (()=>{
 const $=s=>document.querySelector(s);
+
+/* ---- links from config ---- */
+document.querySelectorAll('[data-link]').forEach(a=>{const u=CFB_CONFIG.links[a.dataset.link];if(u){a.href=u;a.target='_blank';a.rel='noopener noreferrer'}});
+
+/* ---- Buy now: smooth scroll to DEX / CEX + highlight ---- */
+document.querySelectorAll('[data-buy]').forEach(b=>b.addEventListener('click',e=>{e.preventDefault();const w=$('#where');
+  w.scrollIntoView({behavior:'smooth',block:'center'});w.classList.remove('pulse');void w.offsetWidth;w.classList.add('pulse')}));
+
+/* ---- helpers ---- */
+const fmt=(n,d=0)=>n==null?'—':n.toLocaleString('en-US',{maximumFractionDigits:d});
+const usd=n=>{if(n==null)return'—';if(n>=1000)return'$'+fmt(n,0);if(n>=1)return'$'+fmt(n,2);if(n>=0.01)return'$'+n.toFixed(4);const z=Math.max(0,-Math.floor(Math.log10(n))-1);return'$'+n.toFixed(z+3)};
+const pct=n=>n==null?'':`${n>=0?'▲':'▼'} ${Math.abs(n).toFixed(2)}%`;
+async function getJSON(url,ms=5000){if(!url)return null;const c=new AbortController(),t=setTimeout(()=>c.abort(),ms);
+  try{const r=await fetch(url,{signal:c.signal});return r.ok?await r.json():null}catch(e){return null}finally{clearTimeout(t)}}
+function countUp(el,to,ms=1600){if(to==null){el.textContent='—';return}const t0=performance.now();
+  (function f(t){const k=Math.min((t-t0)/ms,1),e=1-Math.pow(1-k,3);el.textContent=fmt(to*e);if(k<1)requestAnimationFrame(f)})(t0)}
+
+/* ---- MODULE 1 · live market + bag calculator ---- */
+const M={cfb:null,qubic:null};
+async function fetchCFBMarketData(){
+  const d=await getJSON(CFB_CONFIG.api.market);
+  M.cfb=d?.cfb?.price??null;M.qubic=d?.qubic?.price??null;
+  $('#pCfb').textContent=usd(M.cfb);$('#pQu').textContent=usd(M.qubic);
+  const cc=$('#cCfb'),cq=$('#cQu');cc.textContent=pct(d?.cfb?.change24h);cq.textContent=pct(d?.qubic?.change24h);
+  cc.className=(d?.cfb?.change24h??0)>=0?'up':'down';cq.className=(d?.qubic?.change24h??0)>=0?'up':'down';
+  $('#fdv').textContent=M.cfb?usd(M.cfb*CFB_CONFIG.supply.initial):'—';
+  const live=!!(d&&d.ok);$('#liveDot').classList.toggle('on',live);
+  $('#liveSrc').textContent=live?[d.cfb&&d.cfb.source,d.qubic&&d.qubic.source].filter(Boolean).join(' · ')+' · '+new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}):'Market data unavailable';
+  calc();
+}
+function calc(){
+  const n=parseFloat(($('#bag').value||'').replace(/[^\d.]/g,''));
+  if(!n){$('#vUsd').textContent='—';$('#vQu').textContent='—';$('#rank').textContent='Type your bag';return}
+  const v=M.cfb?n*M.cfb:null;$('#vUsd').textContent=v==null?'—':usd(v);
+  $('#vQu').textContent=(v!=null&&M.qubic)?fmt(v/M.qubic):'—';
+  let r=CFB_CONFIG.ranks[0][1];for(const [min,t] of CFB_CONFIG.ranks)if(n>=min)r=t;$('#rank').textContent=r;
+}
+$('#bag').addEventListener('input',e=>{const raw=e.target.value.replace(/[^\d]/g,'');e.target.value=raw?Number(raw).toLocaleString('en-US'):'';calc()});
+fetchCFBMarketData();setInterval(fetchCFBMarketData,60000);
+
+/* ---- MODULE 2 · burn radar ---- */
+async function fetchBurnStats(){
+  let s={...CFB_CONFIG.supply};
+  const d=await getJSON(CFB_CONFIG.api.burn); if(d)s={...s,...d};
+  const radar=$('#radar'),ok=s.burned!=null;
+  radar.classList.toggle('idle',!ok);
+  if(ok){
+    const circ=s.circulating??(s.initial-s.burned);
+    $('#barBurned').style.width=(s.burned/s.initial*100)+'%';$('#barCirc').style.width=(circ/s.initial*100)+'%';
+    countUp($('#rBurned'),s.burned);countUp($('#rCirc'),circ);
+    document.querySelector('[data-stat="burned"]').textContent=fmt(s.burned);
+    document.querySelector('[data-stat="circulating"]').textContent=fmt(circ);
+    $('#radarState').textContent=s.asOf?'As of '+s.asOf:'Live';
+  }
+}
+new IntersectionObserver((es,o)=>es.forEach(e=>{if(e.isIntersecting){fetchBurnStats();o.disconnect()}}),{threshold:.3}).observe($('#radar'));
+
+/* ---- MODULE 3 · lore terminal ---- */
+let NET=null;
+async function fetchStatus(){const d=await getJSON(CFB_CONFIG.api.status);NET=d&&d.ok?d:null;
+  const b=$('#netBadge');b.innerHTML=`<i class="dot${NET?' on':''}"></i>${NET?'Qubic live':'Network'}`}
+fetchStatus();setInterval(fetchStatus,30000);
+const LORE=[
+  ()=>"May 4th, 2024 — $CFB is issued on Qubic. May the fourth be with you.",
+  ()=>"Distribution: fair airdrop to the entire community. No pre-sale. No VC.",
+  ()=>"Initial supply: 420,690,000,000 $CFB. Yes, those numbers are on purpose.",
+  ()=>"2024 roadmap — Phase 1: launch. Phase 2: vibe and hodl. Phase 3: meme takeover.",
+  ()=>"Launching a collection on QubicBay? Buy $CFB, burn it, get minting slots.",
+  ()=>"Qbros: 1,001 unique collectibles. The genesis NFT collection of Qubic.",
+  ()=>"Qubic runs on 676 Computors. A tick is final when a quorum of 451 agrees.",
+  ()=>NET?`Live from the network — epoch ${NET.epoch??'?'}, tick ${fmt(NET.tick)}.`:"Live network status unavailable right now. Try again in a minute.",
+  ()=>"Issuer: "+CFB_CONFIG.issuer.slice(0,12)+"…"+CFB_CONFIG.issuer.slice(-6)+" — always check it before you trade.",
+  ()=>"$CFB has no association with Sergey Ivancheglo. It pays homage to a meme the community loves."
+];
+let li=0,typing=null;
+$('#decode').addEventListener('click',()=>{clearInterval(typing);const msg=LORE[li++%LORE.length]();const el=$('#termText');el.textContent='';let k=0;
+  typing=setInterval(()=>{el.textContent=msg.slice(0,++k);if(k>=msg.length)clearInterval(typing)},22)});
 addEventListener('scroll',()=>document.body.classList.toggle('scrolled',scrollY>40),{passive:true});
 $('#closebar').onclick=()=>document.body.classList.add('nobar');
 
@@ -535,7 +728,7 @@ const html=H.map(h=>`<img src="../assets/heads/${h}.webp" alt="" loading="lazy">
 /* copy issuer */
 const cb=$('#copyIssuer');cb.addEventListener('click',async()=>{const v=cb.dataset.copy,lab=cb.querySelector('.cp');
   try{await navigator.clipboard.writeText(v)}catch(e){const t=document.createElement('textarea');t.value=v;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove()}
-  cb.classList.add('ok');lab.textContent='Copied!';clearTimeout(cb._t);cb._t=setTimeout(()=>{cb.classList.remove('ok');lab.textContent='Copy'},1800)});
+  cb.classList.add('ok');lab.textContent='✓ Official issuer copied';clearTimeout(cb._t);cb._t=setTimeout(()=>{cb.classList.remove('ok');lab.textContent='Copy'},1800)});
 
 /* floating head + rays */
 const head=$('#head'),tilt=$('#tilt'),rays=$('#rays');let sp=0,px=0,py=0,tx=0,ty=0;
