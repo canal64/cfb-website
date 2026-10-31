@@ -185,6 +185,20 @@ section{position:relative;min-height:100vh;min-height:100svh;scroll-margin-top:5
 .bar .circ{background:rgba(255,255,255,.18)}
 .radar.idle .bar{background:repeating-linear-gradient(45deg,rgba(255,131,48,.08) 0 10px,transparent 10px 20px);animation:stripes 1.5s linear infinite;background-size:28px 28px}
 @keyframes stripes{to{background-position:28px 0}}
+.goal{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px 16px;margin-top:16px;font:400 12px var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--dim)}
+.goal b{color:var(--ink);font-weight:500}.goal i{font-style:normal;color:var(--o1)}
+.gbar{position:relative;overflow:visible}
+.gbar .burned{border-radius:999px}
+.gbar .tick{position:absolute;top:-4px;bottom:-4px;width:2px;background:rgba(255,255,255,.35);display:none}
+.gbar .tick em{position:absolute;top:100%;left:50%;transform:translateX(-50%);font:400 9px var(--mono);font-style:normal;color:var(--dim);margin-top:4px}
+.burns{list-style:none;margin-top:16px;border-top:1px solid var(--line)}
+.burns li{display:grid;grid-template-columns:auto 1fr auto;gap:4px 14px;align-items:baseline;padding:12px 0;border-bottom:1px solid var(--line);font-size:14px;line-height:1.45}
+.burns time{font:400 11px var(--mono);text-transform:uppercase;color:var(--o1);white-space:nowrap}
+.burns span{color:rgba(255,255,255,.82)}
+.burns b{font-weight:600;color:#fff}
+.burns a{font:500 10.5px var(--mono);text-transform:uppercase;letter-spacing:.05em;text-decoration:none;color:var(--dim);white-space:nowrap}
+.burns a:hover{color:var(--o1)}
+@media (max-width:900px){.burns li{grid-template-columns:1fr auto}.burns time{grid-column:1/-1}}
 .legend{display:flex;flex-wrap:wrap;gap:8px 22px;font:400 11px var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--dim)}
 .legend b{color:var(--ink);font-weight:500;margin-left:4px}
 .lb{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
@@ -505,8 +519,8 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
   </div>
   <div class="stats rv d4">
     <div class="st"><small>Initial supply</small><strong title="420,690,000,000 $CFB">420.69B</strong><em>420,690,000,000 $CFB</em></div>
-    <div class="st hot"><small><span class="flame">🔥</span> Burned $CFB</small><strong data-stat="burned">…</strong><em>Live data coming soon</em></div>
-    <div class="st"><small>Circulating supply</small><strong data-stat="circulating">…</strong><em>Live data coming soon</em></div>
+    <div class="st hot"><small><span class="flame">🔥</span> Burned $CFB</small><strong data-stat="burned">…</strong><em data-stat="burnedPct">Verified on-chain burns</em></div>
+    <div class="st"><small>Remaining supply</small><strong data-stat="circulating">…</strong><em>Initial minus burned</em></div>
     <div class="st issuer"><small><svg class="qm" aria-hidden="true"><use href="#qubic-mark"/></svg> Issuer · Token ID on Qubic</small>
       <button class="copy" id="copyIssuer" data-copy="CFBMEMZOIDEXQAUXYYSZIURADQLAPWPMNJXQSNVQZAHYVOPYUKKJBJUCTVJL" aria-label="Copy the $CFB issuer address">
         <code>CFBMEMZOIDEXQAUXYYSZIURADQLAPWPMNJXQSNVQZAHYVOPYUKKJBJUCTVJL</code><span class="cp">Copy</span></button>
@@ -514,13 +528,15 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
   </div>
   <!-- MODULE · Burn radar: fed by fetchBurnStats() -->
   <div class="radar idle rv d4" id="radar">
-    <div class="rh"><span><i class="dot"></i> QubicBay burn radar</span><span id="radarState">Awaiting on-chain data</span></div>
-    <div class="bar"><div class="burned" id="barBurned"></div><div class="circ" id="barCirc"></div></div>
+    <div class="rh"><span><i class="dot"></i> $CFB burn radar</span><span id="radarState">Awaiting on-chain data</span></div>
+    <div class="goal"><span>🔥 Burned <b data-count id="rBurned">…</b> <i id="rPct"></i></span><span>Goal: <b>15%</b> of supply</span></div>
+    <div class="bar gbar"><div class="burned" id="barGoal"></div><i class="tick" style="left:20%"><em>3%</em></i></div>
     <div class="legend">
-      <span><i class="lb b1"></i>🔥 Burned <b data-count id="rBurned">…</b></span>
-      <span><i class="lb b2"></i>Circulating <b data-count id="rCirc">…</b></span>
+      <span><i class="lb b1"></i>Progress to the 15% burn goal <b id="rGoal">…</b></span>
+      <span><i class="lb b2"></i>Remaining <b data-count id="rCirc">…</b></span>
       <span><i class="lb b3"></i>Initial <b>420,690,000,000</b></span>
     </div>
+    <ul class="burns" id="burnLog"></ul>
   </div>
 </section>
 
@@ -532,7 +548,7 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
     <p class="p rv d3">$CFB is the first-ever meme launched on Qubic. It was distributed fairly via airdrop to the entire community. It began as a pure memecoin and grew a real use case: it's the main token of QubicBay, Qubic's NFT marketplace, and it introduced the ecosystem's first NFT collection, Qbros.</p>
     <a class="link rv d4" data-link="genesisTx" href="https://explorer.qubic.org/network/tx/ptthaqjjuyelsdcabjfpzvihriycuquoylnjcnplwclvijofvlkindsatntk" target="_blank" rel="noopener noreferrer">View the Genesis TX on Qubic Explorer ↗</a>
     <ul class="timeline-m rv d4">
-      <li><em>01</em>May 4th, 2024: deployed</li><li><em>02</em>Fair airdrop · no pre-sale</li><li><em>03</em>Main token of QubicBay</li><li><em>04</em>Qbros, the genesis collection</li>
+      <li><em>01</em>May 4th, 2024: deployed</li><li><em>02</em>Fair airdrop · no pre-sale</li><li><em>03</em>Main token of QubicBay</li><li><em>04</em>Qbros, the genesis collection</li><li><em>05</em>May 16th, 2025: 3% of supply burned</li>
     </ul>
   </div>
   <ul class="timeline panel rv d3">
@@ -540,6 +556,7 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
     <li><em>02</em><strong>Fair airdrop</strong><span>No pre-sale. Distributed to the entire community.</span></li>
     <li><em>03</em><strong>QubicBay</strong><span>Becomes the main token of Qubic's NFT marketplace.</span></li>
     <li><em>04</em><strong>Qbros</strong><span>The first NFT collection in the ecosystem.</span></li>
+    <li><em>05</em><strong>May 16th, 2025</strong><span>3% of the total supply burned, first step toward a 15% burn goal.</span></li>
   </ul>
   <div class="rm-head"><div class="kicker rv d1"><b>2024</b> The original roadmap</div></div>
   <div class="roadmap rv d2">
@@ -708,8 +725,13 @@ const CFB_CONFIG={
   assetName:"CFB",
   launchDate:"2024-05-04",
   supply:{initial:420690000000,
-    // Fill these (or serve them from /api/burn later) to light up the burn radar:
-    burned:null, circulating:null, asOf:null},
+    goalPct:15,
+    // Verified burns (add a line for each new one; totals are computed from this list)
+    burns:[
+      {date:"2025-05-16",amount:12620700000,label:"Community burn: 3% of the total supply",tx:"uxolklzyzarwibebudnqesoppxwaljlnfzhiuicmvfwtbsordcjotbvgipye"},
+      {date:"2026",amount:45400000,label:"QubicBay: BITE collection launch, first after the Qbay smart contract upgrade",tx:"jgroxukvilsshcubufaaicxcmwneqsxfzcpymvkebeunclvyprqbtrpfktnm"}
+    ],
+    asOf:"Oct 31, 2026"},
   api:{market:"/api/market",status:"/api/status",paprika:"https://api.coinpaprika.com/v1/tickers/cfb-cfb-token",burn:null},
   links:{
     qubicbay:"https://qubicbay.io/",
@@ -782,20 +804,23 @@ fetchCFBMarketData();setInterval(fetchCFBMarketData,60000);
 
 /* ---- MODULE 2 · burn radar ---- */
 async function fetchBurnStats(){
-  let s={...CFB_CONFIG.supply};
-  const d=await getJSON(CFB_CONFIG.api.burn); if(d)s={...s,...d};
-  const radar=$('#radar'),ok=s.burned!=null;
-  radar.classList.toggle('idle',!ok);
-  if(ok){
-    const circ=s.circulating??(s.initial-s.burned);
-    $('#barBurned').style.width=(s.burned/s.initial*100)+'%';$('#barCirc').style.width=(circ/s.initial*100)+'%';
-    countUp($('#rBurned'),s.burned);countUp($('#rCirc'),circ);
-    document.querySelector('[data-stat="burned"]').textContent=fmt(s.burned);
-    document.querySelector('[data-stat="circulating"]').textContent=fmt(circ);
-    $('#radarState').textContent=s.asOf?'As of '+s.asOf:'Live';
-  }
+  const S=CFB_CONFIG.supply,list=S.burns||[];
+  const burned=list.reduce((t,b)=>t+b.amount,0),remain=S.initial-burned,pct=burned/S.initial*100,goal=S.goalPct;
+  $('#radar').classList.toggle('idle',!burned);if(!burned)return;
+  const prog=Math.min(pct/goal*100,100);
+  setTimeout(()=>{$('#barGoal').style.width=prog+'%'},200);
+  countUp($('#rBurned'),burned);countUp($('#rCirc'),remain);
+  $('#rPct').textContent='('+pct.toFixed(2)+'%)';$('#rGoal').textContent=prog.toFixed(1)+'%';
+  document.querySelector('[data-stat="burned"]').textContent=fmt(burned);
+  document.querySelector('[data-stat="burnedPct"]').textContent=pct.toFixed(2)+'% of the supply';
+  document.querySelector('[data-stat="circulating"]').textContent=fmt(remain);
+  $('#radarState').textContent='Verified burns · '+S.asOf;
+  const EXP='https://explorer.qubic.org/network/tx/';
+  $('#burnLog').innerHTML=list.slice().sort((a,b)=>String(b.date).localeCompare(String(a.date))).map(b=>{
+    const d=/^\d{4}-\d{2}-\d{2}$/.test(b.date)?new Date(b.date+'T12:00:00Z').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):b.date;
+    return `<li><time>${d}</time><span>🔥 <b>${fmt(b.amount)} $CFB</b> · ${b.label}</span><a href="${EXP+b.tx}" target="_blank" rel="noopener noreferrer">View TX ↗</a></li>`}).join('');
 }
-fetchBurnStats(); // idle stripes until real numbers exist; counters animate when they do
+fetchBurnStats();
 
 /* ---- MODULE 3 · lore terminal ---- */
 let NET=null;
@@ -808,6 +833,8 @@ const LORE=[
   ()=>"Initial supply: 420,690,000,000 $CFB. Yes, those numbers are on purpose.",
   ()=>"2024 roadmap: Phase 1: launch. Phase 2: vibe and hodl. Phase 3: meme takeover.",
   ()=>"Launching a collection on QubicBay? Buy $CFB, burn it, get minting slots.",
+  ()=>"May 16th, 2025: 12,620,700,000 $CFB burned, 3% of the supply. Goal: 15%.",
+  ()=>"Since the Qbay smart contract upgrade, $CFB spent on QubicBay goes straight to the burn address.",
   ()=>"Qbros: 1,001 unique collectibles. The genesis NFT collection of Qubic.",
   ()=>"Qubic runs on 676 Computors. A tick is final when a quorum of 451 agrees.",
   ()=>NET?`Live from the network: epoch ${NET.epoch??'?'}, tick ${fmt(NET.tick)}.`:"Live network status unavailable right now. Try again in a minute.",
