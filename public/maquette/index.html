@@ -324,7 +324,7 @@ section{position:relative;min-height:100vh;min-height:100svh;scroll-margin-top:5
 .out b,.rank b{display:block;font:400 18px var(--disp);margin-top:6px;overflow-wrap:anywhere}
 .rank{margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
 .rank em{display:block;margin-top:6px;font:400 10.5px/1.5 var(--mono);font-style:normal;text-transform:uppercase;letter-spacing:.04em;color:var(--dim)}
-.rank b{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.rank b{color:var(--o1)}
 
 /* ---------- 7 COMMUNITY ---------- */
 #community{padding:16vh 0 8vh;display:flex;flex-direction:column;justify-content:space-between}
@@ -732,8 +732,9 @@ const CFB_CONFIG={
     ],
     // Optional nicer labels for on-chain burns, by transaction
     labels:{"jgroxukvilsshcubufaaicxcmwneqsxfzcpymvkebeunclvyprqbtrpfktnm":"QubicBay: BITE collection launch, first after the Qbay smart contract upgrade"}},
-  ranks:[ // [minimum bag, title], smallest to biggest
-    [0,"Plankton"],[1e6,"Shrimp"],[1e7,"Crab"],[1e8,"Computor Apprentice"],[1e9,"Dolphin"],[5e9,"Qbro Whale"],[2e10,"CfB Archi-Brain"]],
+  ranks:[ // CFB holder ranking (official): [minimum bag, title]
+    [0,"🦐 Shrimp"],[121150,"🦀 Crab"],[1211500,"🐟 Fish"],[12115000,"🐬 Dolphin"],[121150000,"🦈 Shark"],
+    [1211500000,"🐋 Whale"],[12115000000,"🐳 Humpback"],[121150000000,"🔱 Aquaman"]],
   api:{market:"/api/market",status:"/api/status",paprika:"https://api.coinpaprika.com/v1/tickers/cfb-cfb-token",burn:"/api/burn"},
   links:{
     qubicbay:"https://qubicbay.io/",
@@ -800,7 +801,7 @@ function calc(){
   $('#vQu').textContent=(v!=null&&M.qubic)?big(v/M.qubic):'…';
   const R=CFB_CONFIG.ranks;let k=0;R.forEach(([min],i)=>{if(n>=min)k=i});
   $('#rank').textContent=R[k][1];
-  $('#rankNext').textContent=R[k+1]?`${big(R[k+1][0]-n)} $CFB more to become ${R[k+1][1]}`:'Top of the food chain. Respect.';
+  $('#rankNext').textContent=R[k+1]?`${big(R[k+1][0]-n)} $CFB more to become ${R[k+1][1].replace(/^\S+ /,'')}`:'King of the seas. Respect.';
 }
 $('#bag').addEventListener('input',e=>{const raw=e.target.value.replace(/[^\d]/g,'').slice(0,13);e.target.value=raw?Number(raw).toLocaleString('en-US'):'';calc()});
 fetchCFBMarketData();setInterval(fetchCFBMarketData,60000);
