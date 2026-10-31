@@ -205,7 +205,7 @@ function renderGrid(){
   $('#grid').innerHTML=M.cats[c].map(it=>{
     const th=c==='background'
       ?(it.color?`<div class="th sw" style="background:${it.color}"></div>`:`<div class="th"></div>`)
-      :`<div class="th"><img loading="lazy" src="${BASE}th/${c}/${it.id}.webp?v=2" alt=""></div>`;
+      :`<div class="th"><img loading="lazy" src="${BASE}th/${c}/${it.id}.webp?v=3" alt=""></div>`;
     return `<button class="opt" type="button" data-id="${it.id}" aria-pressed="${state[c]===it.id}">${th}<span>${it.name}</span></button>`}).join('');
 }
 function pick(c,id){state[c]=id;renderGrid();draw();}
