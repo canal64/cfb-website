@@ -237,7 +237,15 @@ function flip(card){
 let AC=null,muted=store.get('cfb-hm-mute')===true;
 const sndBtn=$('#snd');function paintSnd(){sndBtn.textContent=muted?'🔇':'🔊';sndBtn.classList.toggle('off',muted);sndBtn.setAttribute('aria-label',muted?'Sound off':'Sound on')}
 paintSnd();sndBtn.onclick=()=>{muted=!muted;store.set('cfb-hm-mute',muted);paintSnd()};
-function ac(){if(muted)return null;if(!AC){const C=window.AudioContext||window.webkitAudioContext;if(!C)return null;AC=new C()}if(AC.state==='suspended')AC.resume();return AC}
+/* iPhone: Web Audio is silenced by the ring/silent switch unless the page asks for a "playback" audio session.
+   Safari 17+: navigator.audioSession; older iOS: playing a short silent <audio> element switches the session. */
+let unlocked=false;
+function unlockIOS(){if(unlocked)return;unlocked=true;
+  try{if(navigator.audioSession)navigator.audioSession.type='playback'}catch(e){}
+  try{const el=new Audio('data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=');el.setAttribute('playsinline','');el.volume=0.01;el.play().catch(()=>{})}catch(e){}}
+function ac(){if(muted)return null;unlockIOS();if(!AC){const C=window.AudioContext||window.webkitAudioContext;if(!C)return null;AC=new C()}if(AC.state!=='running')AC.resume();return AC}
+/* create/resume the audio engine on the very first touch, before any sound is needed */
+['touchstart','pointerdown'].forEach(ev=>addEventListener(ev,()=>{ac()},{once:true,passive:true}));
 /* card flip: short filtered noise "swish" + tiny click */
 function sFlip(){const a=ac();if(!a)return;const t=a.currentTime,len=.13;
   const buf=a.createBuffer(1,a.sampleRate*len,a.sampleRate),d=buf.getChannelData(0);
