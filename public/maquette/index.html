@@ -358,6 +358,10 @@ footer .disc+.disc{margin-top:10px}
 footer .built{display:inline-flex;align-items:center;gap:12px;margin-top:4vh;padding:12px 18px;border:1px solid var(--line);border-radius:999px;text-decoration:none;transition:border-color .25s,color .25s;color:#fff}
 footer .built span{font:400 11px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--dim)}
 footer .built svg{height:22px;width:76px}
+footer .listed{display:inline-flex;vertical-align:top;margin:4vh 0 0 10px;border-radius:7px;transition:transform .25s,box-shadow .25s}
+footer .listed img{display:block;height:46px;width:auto}
+footer .listed:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(62,240,255,.18)}
+@media (max-width:900px){footer .listed{margin-left:0}}
 footer .built:hover{border-color:var(--o2);color:var(--o1)}
 .totop{position:fixed;right:max(18px,env(safe-area-inset-right));bottom:max(18px,env(safe-area-inset-bottom));z-index:24;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,212,107,.55);
   background:var(--btn);color:#fff;cursor:pointer;display:grid;place-items:center;box-shadow:inset 0 -3px 0 rgba(0,0,0,.25),0 10px 30px rgba(0,0,0,.45);
@@ -706,6 +710,7 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
   <p class="disc">$CFB token has no association with Sergey Ivancheglo (aka Come-from-Beyond) or his creation. This token is simply paying homage to a meme well loved and recognized in Qubic's community. $CFB is a meme token with no intrinsic value or expectation of financial return. There is no formal team or roadmap. The token is completely useless and for entertainment purposes only.</p>
   <p class="disc">Created by the Community for the Community, just for fun.</p>
   <a class="built" data-link="qubic" href="https://qubic.org" target="_blank" rel="noopener noreferrer"><span>Built on</span><svg role="img" aria-label="Qubic"><use href="#qubic-word"/></svg></a>
+  <a class="listed" data-link="qubicmapCfb" href="https://qubicmap.org/p/cfb" target="_blank" rel="noopener noreferrer"><img src="https://qubicmap.org/badge.svg" alt="Listed on qubicmap.org" width="190" height="40" loading="lazy"></a>
   <div class="eco"><span>Qubic ecosystem</span>
     <a data-link="qubic" href="https://qubic.org" target="_blank" rel="noopener noreferrer">qubic.org ↗</a>
     <a data-link="qubicbay" href="https://qubicbay.io" target="_blank" rel="noopener noreferrer">qubicbay.io ↗</a>
@@ -750,7 +755,7 @@ const CFB_CONFIG={
     telegram:"https://t.me/+0NJgRzFxPXMxMjk8",
     tiktok:"https://www.tiktok.com/@cfbmemecoin",
     auditSheet:"https://docs.google.com/spreadsheets/d/1fCOsFDDWO2YxI6dgRM8LPhHN6r9ZVv_U-bMEQWxMS8E/edit?gid=1212216071#gid=1212216071",
-    qubic:"https://qubic.org",qubicmap:"https://qubicmap.org",explorer:"https://explorer.qubic.org"
+    qubic:"https://qubic.org",qubicmap:"https://qubicmap.org",qubicmapCfb:"https://qubicmap.org/p/cfb",explorer:"https://explorer.qubic.org"
   }
 };
 
