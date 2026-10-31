@@ -109,7 +109,9 @@ h1 span{background:var(--grad);-webkit-background-clip:text;background-clip:text
   .stage{position:sticky;top:56px;z-index:6;margin:0 -14px;padding:10px 14px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:center;
     background:rgba(11,7,6,.94);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
   .frame{width:min(42vw,34vh);border-radius:14px;grid-row:1/3}
-  .actions{grid-template-columns:1fr;gap:8px;margin:0}
+  .actions{grid-template-columns:1fr 1fr;gap:8px;margin:0}
+  .actions .ghost{font-size:12px;padding:0 6px}
+  .dlw{display:none}
   .actions .btn{min-height:44px;font-size:12px;padding:0 12px}
   .share{grid-column:2;justify-content:flex-start;gap:14px;margin:-4px 0 0}
   .share #cpy,.picked{display:none}
@@ -131,14 +133,15 @@ h1 span{background:var(--grad);-webkit-background-clip:text;background-clip:text
 <main>
   <div class="kicker">$CFB Arcade · PFP Generator</div>
   <h1>CFB <span>Generator</span></h1>
-  <p class="lead">Pick your skin, body and gear, or roll a random one. Download your PFP in HD and wear it everywhere.</p>
+  <p class="lead">Pick your skin, body and gear, or roll a random one. Download it in SD (perfect as a profile picture) or HD.</p>
 
   <div class="app">
     <div class="stage">
       <div class="frame" id="frame"><canvas id="cv" width="1024" height="1024" role="img" aria-label="Your CFB PFP preview"></canvas><div class="ld">Loading…</div></div>
       <div class="actions">
-        <button class="btn" id="rnd" type="button">🎲 Randomize</button>
-        <button class="btn ghost" id="dl" type="button">⬇ Download HD</button>
+        <button class="btn wide" id="rnd" type="button">🎲 Randomize</button>
+        <button class="btn ghost" id="dls" type="button" title="1024×1024, light, perfect as a profile picture">⬇ <span class="dlw">Download </span>SD</button>
+        <button class="btn ghost" id="dl" type="button" title="2048×2048, for prints and big screens">⬇ <span class="dlw">Download </span>HD</button>
       </div>
       <div class="share">
         <a id="shx" href="#" target="_blank" rel="noopener noreferrer">Share on X ↗</a>
@@ -219,24 +222,26 @@ $('#tabs').addEventListener('click',e=>{const b=e.target.closest('.tab');if(!b)r
 $('#grid').addEventListener('click',e=>{const b=e.target.closest('.opt');if(b)pick(tab,b.dataset.id)});
 $('#rnd').onclick=randomize;
 $('#cpy').onclick=async()=>{try{await navigator.clipboard.writeText(traitsText());toast('Trait list copied')}catch(e){toast('Copy not available',true)}};
-$('#dl').onclick=async()=>{
-  const b=$('#dl');b.disabled=true;const old=b.textContent;b.textContent='Preparing HD…';
+async function exportPFP(size,btn,label){
+  btn.disabled=true;const old=btn.innerHTML;btn.textContent='Preparing '+label+'…';
   try{
-    const imgs=await Promise.all(ORDER.map(c=>load(BASE+'2048/'+c+'/'+file(c)+'.webp')));
-    const c=document.createElement('canvas');c.width=c.height=2048;const x=c.getContext('2d');
-    imgs.forEach(i=>x.drawImage(i,0,0,2048,2048));
+    const imgs=await Promise.all(ORDER.map(c=>load(BASE+(size>1024?'2048':'1024')+'/'+c+'/'+file(c)+'.webp')));
+    const c=document.createElement('canvas');c.width=c.height=size;const x=c.getContext('2d');
+    imgs.forEach(i=>x.drawImage(i,0,0,size,size));
     const blob=await new Promise(r=>c.toBlob(r,'image/png'));
-    const name='cfb-pfp-'+item('top',state.top).id+'-'+item('body',state.body).id+'.png';
+    const name='cfb-pfp-'+item('top',state.top).id+'-'+item('body',state.body).id+'-'+label.toLowerCase()+'.png';
     const f=new File([blob],name,{type:'image/png'});
     if(matchMedia('(hover:none)').matches&&navigator.canShare&&navigator.canShare({files:[f]})){
       try{await navigator.share({files:[f],title:'My $CFB PFP'});}catch(e){}
     }else{
       const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();
-      setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},2000);toast('Your HD PFP is downloading');
+      setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},2000);toast('Your '+label+' PFP is downloading');
     }
   }catch(e){toast('Download failed, please retry',true)}
-  finally{b.disabled=false;b.textContent=old}
-};
+  finally{btn.disabled=false;btn.innerHTML=old}
+}
+$('#dls').onclick=e=>exportPFP(1024,e.currentTarget,'SD');
+$('#dl').onclick=e=>exportPFP(2048,e.currentTarget,'HD');
 
 const DEFAULT={background:'amber',body:'tshirtwhite',skin:'skin1_rosy',eyes:'black',top:'originalbrown',mouth:'trollgrin',glasses:'cfbglasses',earrings:'noearrings'};
 fetch(BASE+'manifest.json').then(r=>r.json()).then(m=>{M=m;renderTabs();
