@@ -534,7 +534,7 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
     <div class="legend">
       <span><i class="lb b1"></i>Progress to the 15% burn goal <b id="rGoal">…</b></span>
       <span><i class="lb b2"></i>Remaining <b data-count id="rCirc">…</b></span>
-      <span><i class="lb b3"></i>Initial <b>420,690,000,000</b></span>
+      <span><i class="lb b3"></i>Initial <b>420.69B</b></span>
     </div>
     <ul class="burns" id="burnLog"></ul>
   </div>
@@ -771,8 +771,9 @@ const usd=n=>{if(n==null)return'…';if(n>=1000)return'$'+fmt(n,0);if(n>=1)retur
 const pct=n=>n==null?'':`${n>=0?'▲':'▼'} ${Math.abs(n).toFixed(2)}%`;
 async function getJSON(url,ms=5000){if(!url)return null;const c=new AbortController(),t=setTimeout(()=>c.abort(),ms);
   try{const r=await fetch(url,{signal:c.signal});return r.ok?await r.json():null}catch(e){return null}finally{clearTimeout(t)}}
-function countUp(el,to,ms=1600){if(to==null){el.textContent='…';return}const t0=performance.now();
-  (function f(t){const k=Math.min((t-t0)/ms,1),e=1-Math.pow(1-k,3);el.textContent=fmt(to*e);if(k<1)requestAnimationFrame(f)})(t0)}
+const big=n=>n==null?'…':n>=1e9?(n/1e9).toFixed(2).replace(/\.?0+$/,'')+'B':n>=1e6?(n/1e6).toFixed(2).replace(/\.?0+$/,'')+'M':fmt(n);
+function countUp(el,to,ms=1600,f2=fmt){if(to==null){el.textContent='…';return}const t0=performance.now();
+  (function f(t){const k=Math.min((t-t0)/ms,1),e=1-Math.pow(1-k,3);el.textContent=f2(k<1?to*e:to);if(k<1)requestAnimationFrame(f)})(t0)}
 
 /* ---- MODULE 1 · live market + bag calculator ---- */
 const M={cfb:null,qubic:null};
@@ -811,16 +812,16 @@ async function fetchBurnStats(){
   $('#radar').classList.toggle('idle',!burned);if(!burned)return;
   const prog=Math.min(pct/goal*100,100);
   setTimeout(()=>{$('#barGoal').style.width=prog+'%'},200);
-  countUp($('#rBurned'),burned);countUp($('#rCirc'),remain);
+  countUp($('#rBurned'),burned,1600,big);countUp($('#rCirc'),remain,1600,big);
   $('#rPct').textContent='('+pct.toFixed(2)+'%)';$('#rGoal').textContent=prog.toFixed(1)+'%';
-  document.querySelector('[data-stat="burned"]').textContent=fmt(burned);
+  document.querySelector('[data-stat="burned"]').textContent=big(burned);document.querySelector('[data-stat="burned"]').title=fmt(burned)+' $CFB';
   document.querySelector('[data-stat="burnedPct"]').textContent=pct.toFixed(2)+'% of the supply';
-  document.querySelector('[data-stat="circulating"]').textContent=fmt(remain);
+  document.querySelector('[data-stat="circulating"]').textContent=big(remain);document.querySelector('[data-stat="circulating"]').title=fmt(remain)+' $CFB';
   $('#radarState').textContent=live&&live.ok?'Live from the Qubic chain':'Verified burns';$('#radar .dot').classList.toggle('on',!!(live&&live.ok));
   const EXP='https://explorer.qubic.org/network/tx/';
   $('#burnLog').innerHTML=list.slice().sort((a,b)=>String(b.date).localeCompare(String(a.date))).map(b=>{
     const d=/^\d{4}-\d{2}-\d{2}$/.test(b.date)?new Date(b.date+'T12:00:00Z').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):b.date;
-    return `<li><time>${d}</time><span>🔥 <b>${fmt(b.amount)} $CFB</b> · ${b.label}</span><a href="${EXP+b.tx}" target="_blank" rel="noopener noreferrer">View TX ↗</a></li>`}).join('');
+    return `<li><time>${d}</time><span>🔥 <b title="${fmt(b.amount)} $CFB">${big(b.amount)} $CFB</b> · ${b.label}</span><a href="${EXP+b.tx}" target="_blank" rel="noopener noreferrer">View TX ↗</a></li>`}).join('');
 }
 fetchBurnStats();
 
