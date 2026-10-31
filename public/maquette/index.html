@@ -599,7 +599,7 @@ const CFB_CONFIG={
   supply:{initial:420690000000,
     // Fill these (or serve them from /api/burn later) to light up the burn radar:
     burned:null, circulating:null, asOf:null},
-  api:{market:"/api/market",status:"/api/status",burn:null},
+  api:{market:"/api/market",status:"/api/status",paprika:"https://api.coinpaprika.com/v1/tickers/cfb-cfb-token",burn:null},
   links:{
     qubicbay:"https://qubicbay.io/",
     qbros:"https://qubicbay.io/Collections/0",
@@ -645,7 +645,10 @@ function countUp(el,to,ms=1600){if(to==null){el.textContent='—';return}const t
 /* ---- MODULE 1 · live market + bag calculator ---- */
 const M={cfb:null,qubic:null};
 async function fetchCFBMarketData(){
-  const d=await getJSON(CFB_CONFIG.api.market);
+  // Worker API (SafeTrade + CoinGecko) and CoinPaprika (called from the browser: it refuses server-side calls) in parallel
+  const [d0,pp]=await Promise.all([getJSON(CFB_CONFIG.api.market),getJSON(CFB_CONFIG.api.paprika)]);
+  const d=d0||{ok:false};const q=pp&&pp.quotes&&pp.quotes.USD;
+  if(q&&q.price){d.cfb={price:q.price,change24h:q.percent_change_24h,change7d:q.percent_change_7d,ath:q.ath_price,athDate:pp.quotes.USD.ath_date,source:'CoinPaprika'};d.ok=true}
   M.cfb=d?.cfb?.price??null;M.qubic=d?.qubic?.price??null;
   $('#pCfb').textContent=usd(M.cfb);$('#pQu').textContent=usd(M.qubic);
   const cc=$('#cCfb'),cq=$('#cQu');cc.textContent=pct(d?.cfb?.change24h);cq.textContent=pct(d?.qubic?.change24h);
