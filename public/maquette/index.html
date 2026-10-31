@@ -342,6 +342,13 @@ footer .built{display:inline-flex;align-items:center;gap:12px;margin-top:4vh;pad
 footer .built span{font:400 11px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--dim)}
 footer .built svg{height:22px;width:76px}
 footer .built:hover{border-color:var(--o2);color:var(--o1)}
+.totop{position:fixed;right:max(18px,env(safe-area-inset-right));bottom:max(18px,env(safe-area-inset-bottom));z-index:24;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,212,107,.55);
+  background:var(--btn);color:#fff;cursor:pointer;display:grid;place-items:center;box-shadow:inset 0 -3px 0 rgba(0,0,0,.25),0 10px 30px rgba(0,0,0,.45);
+  opacity:0;transform:translateY(16px) scale(.9);pointer-events:none;transition:opacity .3s,transform .3s}
+.totop.on{opacity:1;transform:none;pointer-events:auto}
+.totop:hover{transform:translateY(-3px)}
+.totop svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+@media (min-width:901px){.totop{right:150px}}
 footer .eco{margin-top:4vh;display:flex;flex-wrap:wrap;gap:8px 22px;font:400 11px var(--mono);text-transform:uppercase;letter-spacing:.05em}
 footer .eco span{color:var(--dim)}
 footer .eco a{text-decoration:none;color:rgba(255,255,255,.75);transition:color .2s}
@@ -651,6 +658,7 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
 </section>
 </main>
 
+<button class="totop" id="totop" aria-label="Back to top" title="Back to top"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
 <footer>
   <div class="big">$CFB</div>
   <p class="disc">$CFB token has no association with Sergey Ivancheglo (aka Come-from-Beyond) or his creation. This token is simply paying homage to a meme well loved and recognized in Qubic's community. $CFB is a meme token with no intrinsic value or expectation of financial return. There is no formal team or roadmap. The token is completely useless and for entertainment purposes only.</p>
@@ -783,7 +791,8 @@ const LORE=[
 let li=0,typing=null;
 $('#decode').addEventListener('click',()=>{clearInterval(typing);const msg=LORE[li++%LORE.length]();const el=$('#termText');el.textContent='';let k=0;
   typing=setInterval(()=>{el.textContent=msg.slice(0,++k);if(k>=msg.length)clearInterval(typing)},22)});
-addEventListener('scroll',()=>document.body.classList.toggle('scrolled',scrollY>40),{passive:true});
+addEventListener('scroll',()=>{document.body.classList.toggle('scrolled',scrollY>40);$('#totop').classList.toggle('on',scrollY>innerHeight*.8)},{passive:true});
+$('#totop').addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
 $('#closebar').onclick=()=>document.body.classList.add('nobar');
 
 /* typing */
