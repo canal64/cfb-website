@@ -819,7 +819,7 @@ function calc(){
   $('#rankNext').textContent=R[k+1]?`${big(R[k+1][0]-n)} $CFB more to become ${R[k+1][1].replace(/^\S+ /,'')}`:'King of the seas. Respect.';
 }
 $('#bag').addEventListener('input',e=>{const raw=e.target.value.replace(/[^\d]/g,'').slice(0,13);e.target.value=raw?Number(raw).toLocaleString('en-US'):'';calc()});
-fetchCFBMarketData();setInterval(fetchCFBMarketData,60000);
+fetchCFBMarketData();setInterval(()=>{if(!document.hidden)fetchCFBMarketData()},60000);
 
 /* ---- MODULE 2 · burn radar ---- */
 async function fetchBurnStats(){
@@ -847,7 +847,8 @@ fetchBurnStats();
 let NET=null;
 async function fetchStatus(){const d=await getJSON(CFB_CONFIG.api.status);NET=d&&d.ok?d:null;
   const b=$('#netBadge');b.innerHTML=`<i class="dot${NET?' on':''}"></i>${NET?'Qubic live':'Network'}`}
-fetchStatus();setInterval(fetchStatus,30000);
+fetchStatus();setInterval(()=>{if(!document.hidden)fetchStatus()},30000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden){fetchStatus();fetchCFBMarketData()}});
 const LORE=[
   ()=>"May 4th, 2024: $CFB is issued on Qubic. May the fourth be with you.",
   ()=>"Distribution: fair airdrop to the entire community. No pre-sale. No VC.",
