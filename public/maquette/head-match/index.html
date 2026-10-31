@@ -317,7 +317,7 @@ function win(){
   $('#wStars').textContent='★'.repeat(stars)+'☆'.repeat(3-stars);$('#wRank').textContent='Rank: '+rank;
   $('#wNew').classList.toggle('on',isBest&&!!best);
   const txt=`I matched all ${pairs} CFB heads in ${fmtT(ms)} (${moves} moves, ${'★'.repeat(stars)}) on Head Match 🔥\n\nCan you beat me? @c_f_b_token $CFB #Qubic`;
-  $('#share').href='https://x.com/intent/post?text='+encodeURIComponent(txt)+'&url='+encodeURIComponent(SITE);
+  $('#share').href='https://twitter.com/intent/tweet?text='+encodeURIComponent(txt)+'&url='+encodeURIComponent(SITE);
   $('#win').classList.add('on');$('#again').focus();
 }
 

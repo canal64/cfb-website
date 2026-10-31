@@ -356,7 +356,7 @@ function sceneRoundWin(t){X.fillStyle='#000';X.fillRect(0,0,W,H);
 function saveBest(n,fl){const b=store.get('cf-best')||{boss:0};if(n>b.boss||(n===b.boss&&fl&&!b.flawless))store.set('cf-best',{boss:n,flawless:fl})}
 let shareDone=false;
 function shareBtn(y,text){const bx=W/2-170,bw=340,bh=50;X.fillStyle='#ff8330';X.beginPath();X.roundRect(bx,y,bw,bh,25);X.fill();txt('SHARE ON X',W/2,y+26,14,'#fff');
- if(tap&&tap.x>bx&&tap.x<bx+bw&&tap.y>y&&tap.y<y+bh){tap=null;const u='https://x.com/intent/post?text='+encodeURIComponent(text)+'&url='+encodeURIComponent('https://cfb-website.rudynakamoto.workers.dev/maquette/crypto-fighter/');window.open(u,'_blank','noopener');return true}return false}
+ if(tap&&tap.x>bx&&tap.x<bx+bw&&tap.y>y&&tap.y<y+bh){tap=null;const u='https://twitter.com/intent/tweet?text='+encodeURIComponent(text)+'&url='+encodeURIComponent('https://cfb-website.rudynakamoto.workers.dev/maquette/crypto-fighter/');window.open(u,'_blank','noopener');return true}return false}
 function sceneChampion(t){X.fillStyle='#000';X.fillRect(0,0,W,H);rays(t,W/2,300);X.fillStyle='rgba(0,0,0,.55)';X.fillRect(0,0,W,H);
  gradTxt('CRYPTO CHAMPION',W/2,90,58,['#fff7c2','#ffd46b','#ff8330']);
  drawImg(HEADS[pick],W/2,250,200,200);txt(`${nameOf(HEADS[pick])} BEAT THE BEAR MARKET`,W/2,380,12,'#fff');
