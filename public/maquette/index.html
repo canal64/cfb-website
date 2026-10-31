@@ -70,7 +70,9 @@ body.scrolled nav,body.nobar nav{top:0}
 .logo{display:flex;align-items:center;gap:10px;padding-left:22px;text-decoration:none;font:400 22px var(--spice);white-space:nowrap}
 .logo img{width:34px;height:34px;object-fit:contain;border-radius:50%}
 .menu{display:flex;gap:26px;padding-left:28px;font:400 11px var(--mono);text-transform:uppercase;letter-spacing:.05em}
-.menu a{text-decoration:none;opacity:.75}.menu a:hover{opacity:1;color:var(--o1)}
+.menu a{text-decoration:none;opacity:.75;white-space:nowrap}
+@media (max-width:1280px){.menu{gap:14px;padding-left:16px}}
+@media (max-width:480px){.tbx{display:none}}.menu a:hover{opacity:1;color:var(--o1)}
 .pad{height:100%;display:flex;align-items:center;justify-content:center;border-left:1px solid var(--line);border-right:1px solid var(--line);
   font:400 11px var(--mono);text-transform:uppercase;text-decoration:none}
 .pad:hover{color:var(--o1)}
@@ -478,6 +480,7 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 @media (hover:none){.btn:hover,.sbtn:hover,.step:hover,.play:hover,.totop:hover,footer .listed:hover{transform:none}.marquee img:hover{transform:none}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+@media (min-width:901px) and (max-width:1180px){.pad{display:none}nav{grid-template-columns:var(--col) 1fr auto;padding-right:18px}}
 </style>
 </head>
 <body>
@@ -492,12 +495,12 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
 <div class="guides" aria-hidden="true"><i></i><i hidden></i><i></i></div>
 
 <header>
-<div class="topbar"><a data-link="qubicbay" href="https://qubicbay.io/" target="_blank" rel="noopener noreferrer"><b>New:</b> $CFB powers QubicBay, Qubic's NFT marketplace ↗</a><button id="closebar" type="button" aria-label="Close announcement">×</button></div>
+<div class="topbar"><a href="generator/"><b>New:</b> CFB Generator<span class="tbx"> · Make your $CFB PFP</span> ▶</a><button id="closebar" type="button" aria-label="Close announcement">×</button></div>
 
 <nav aria-label="Main">
   <a class="logo" href="#intro"><img src="../assets/brand/cfb-head.webp" alt=""><span>$CFB</span></a>
   <div class="menu">
-    <a href="#manifesto">Manifesto</a><a href="#story">Story</a><a href="#qubicbay">QubicBay</a><a href="#qbros">Qbros</a><a href="#start">Get $CFB</a><a href="#community">Community</a><a href="head-match/">Play ▶</a>
+    <a href="#manifesto">Manifesto</a><a href="#story">Story</a><a href="#qubicbay">QubicBay</a><a href="#qbros">Qbros</a><a href="#start">Get $CFB</a><a href="#community">Community</a><a href="generator/">PFP Generator</a><a href="head-match/">Play ▶</a>
   </div>
   <a class="pad" data-link="genesisTx" href="https://explorer.qubic.org/network/tx/ptthaqjjuyelsdcabjfpzvihriycuquoylnjcnplwclvijofvlkindsatntk" target="_blank" rel="noopener noreferrer">Genesis TX ↗</a>
   <a class="navplay" href="head-match/" aria-label="Play Head Match">🎮 Play</a>
