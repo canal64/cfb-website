@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CFB Generator · Make your $CFB PFP</title>
+<meta name="description" content="Build your own $CFB profile picture: pick a skin, a body, eyes, a top, a mouth, glasses and earrings, or roll a random one. Download it in HD.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0b0706">
+<meta property="og:site_name" content="$CFB">
+<meta property="og:type" content="website">
+<meta property="og:title" content="CFB Generator · Make your $CFB PFP">
+<meta property="og:description" content="Pick your traits or roll a random one. Download your $CFB PFP in HD.">
+<meta property="og:url" content="https://cfb-website.rudynakamoto.workers.dev/maquette/generator/">
+<meta property="og:image" content="https://cfb-website.rudynakamoto.workers.dev/assets/brand/og-image-v2.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@c_f_b_token">
+<meta name="twitter:title" content="CFB Generator · Make your $CFB PFP">
+<meta name="twitter:image" content="https://cfb-website.rudynakamoto.workers.dev/assets/brand/og-image-v2.png">
+<link rel="icon" href="../../assets/brand/favicon-48.png">
+<link rel="apple-touch-icon" href="../../assets/brand/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Bungee+Spice&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0706;--ink:#fff;--dim:rgba(255,255,255,.55);--line:rgba(255,255,255,.1);--panel:rgba(11,7,6,.88);
+  --o1:#ffd46b;--o2:#ff8330;--o3:#d3633d;--o4:#c43d2f;
+  --grad:linear-gradient(90deg,#ffd46b,#ff8330 45%,#c43d2f);--btn:linear-gradient(#ff8330,#d3633d);
+  --disp:"Bungee",system-ui,sans-serif;--spice:"Bungee Spice","Bungee",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;--sans:"Instrument Sans",system-ui,sans-serif;
+  --check:repeating-conic-gradient(#2a201c 0 25%,#1a1310 0 50%) 0 0/20px 20px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{background:var(--bg);overflow-x:clip}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);min-height:100vh}
+a{color:inherit}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--o1);outline-offset:3px;border-radius:8px}
+.rays{position:fixed;inset:-50vmax;z-index:0;pointer-events:none;
+  background:repeating-conic-gradient(from 0deg,rgba(214,105,65,.2) 0deg 7deg,rgba(91,39,20,.08) 7deg 14deg);
+  -webkit-mask:radial-gradient(circle,#000 0,#000 16vmax,transparent 60vmax);mask:radial-gradient(circle,#000 0,#000 16vmax,transparent 60vmax);
+  animation:spin 140s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.glow{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(60vmax 45vmax at 35% 45%,rgba(255,131,48,.16),transparent 60%)}
+
+header{position:sticky;top:0;z-index:20;height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;
+  background:rgba(11,7,6,.86);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;font:400 20px var(--disp)}
+.logo img{width:32px;height:32px;object-fit:contain}
+.back{display:inline-block;padding:8px 0;font:400 11px var(--mono);text-transform:uppercase;letter-spacing:.06em;text-decoration:none;color:var(--dim)}
+.back:hover{color:var(--o1)}
+
+main{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:26px 18px 50px}
+.kicker{font:400 11px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--o1)}
+h1{font:400 clamp(34px,6vw,64px)/.95 var(--disp);margin-top:8px}
+h1 span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+@supports font-tech(color-COLRv1){h1 span{font-family:var(--spice);background:none;color:var(--ink)}}
+.lead{margin-top:10px;color:rgba(255,255,255,.75);font-size:15px;max-width:52ch;line-height:1.5}
+
+.app{display:grid;grid-template-columns:minmax(0,440px) minmax(0,1fr);gap:28px;margin-top:26px;align-items:start}
+.stage{position:sticky;top:74px}
+.frame{position:relative;aspect-ratio:1;border:1px solid var(--o2);border-radius:20px;overflow:hidden;background:var(--check);box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 50px rgba(255,131,48,.12)}
+.frame canvas{display:block;width:100%;height:100%}
+.frame .ld{position:absolute;inset:0;display:grid;place-items:center;background:rgba(11,7,6,.35);font:400 11px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--o1);opacity:0;pointer-events:none;transition:opacity .2s}
+.frame.busy .ld{opacity:1}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 18px;border-radius:999px;border:0;cursor:pointer;
+  background:var(--btn);color:#fff;font:400 13px var(--disp);letter-spacing:.02em;text-decoration:none;box-shadow:inset 0 -3px 0 rgba(0,0,0,.25),0 8px 30px rgba(255,131,48,.25);transition:transform .2s,box-shadow .2s,opacity .2s}
+.btn:hover{transform:translateY(-2px);box-shadow:inset 0 -3px 0 rgba(0,0,0,.25),0 12px 40px rgba(255,131,48,.4)}
+.btn:active{transform:translateY(1px) scale(.98)}
+.btn.ghost{background:rgba(11,7,6,.72);border:1px solid rgba(255,212,107,.55);color:var(--o1);box-shadow:none}
+.btn.ghost:hover{border-color:var(--o1);background:rgba(255,212,107,.08)}
+.btn[disabled]{opacity:.6;cursor:wait}
+.btn.wide{grid-column:1/-1}
+.share{display:flex;justify-content:center;gap:18px;margin-top:12px;font:400 11px var(--mono);text-transform:uppercase;letter-spacing:.06em}
+.share a,.share button{display:inline-block;padding:8px 0;background:none;border:0;cursor:pointer;text-decoration:none;color:var(--dim)}
+.share a:hover,.share button:hover{color:var(--o1)}
+.picked{margin-top:14px;display:grid;grid-template-columns:1fr 1fr;column-gap:18px;border-top:1px solid var(--line)}
+.picked li{list-style:none;display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-bottom:1px solid var(--line);font-size:13px;min-width:0}
+.picked li span{font:400 10.5px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--dim);padding-top:2px}
+.picked li b{font-weight:500;text-align:right}
+
+.panel{border:1px solid rgba(255,131,48,.45);border-radius:20px;background:var(--panel);overflow:hidden}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;padding:10px;border-bottom:1px solid var(--line)}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:none;min-height:38px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:none;cursor:pointer;font:500 11px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:rgba(255,255,255,.75);transition:background .2s,border-color .2s,color .2s}
+.tab:hover{border-color:rgba(255,212,107,.55);color:#fff}
+.tab[aria-selected="true"]{background:var(--btn);border-color:transparent;color:#fff}
+.tab small{opacity:.65;margin-left:4px}
+.hint{padding:12px 16px 0;font:400 10.5px/1.5 var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--dim);min-height:12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:10px;padding:14px 16px 18px}
+.opt{position:relative;display:flex;flex-direction:column;align-items:stretch;gap:6px;padding:6px 6px 8px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.03);cursor:pointer;text-align:center;transition:border-color .2s,background .2s,transform .15s}
+@media (hover:hover){.opt:hover{border-color:rgba(255,212,107,.6);background:rgba(255,131,48,.06)}}
+.opt:active{transform:scale(.97)}
+.opt[aria-pressed="true"]{border-color:var(--o1);background:rgba(255,131,48,.12);box-shadow:0 0 0 1px var(--o1) inset}
+.opt[aria-pressed="true"]::after{content:"✓";position:absolute;top:6px;right:6px;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;background:var(--o1);color:#2a0f05;font:700 11px var(--sans)}
+.opt .th{aspect-ratio:1;border-radius:10px;background:var(--check);overflow:hidden;display:grid;place-items:center}
+.opt .th img{width:100%;height:100%;object-fit:contain;display:block}
+.opt .th.sw{background:none}
+.opt span{font-size:12px;line-height:1.25;color:rgba(255,255,255,.85);overflow-wrap:anywhere}
+.credit{margin-top:22px;font:400 10.5px/1.6 var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--dim)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);z-index:40;padding:12px 18px;border-radius:999px;background:#16a34a;color:#fff;font:500 13px var(--sans);opacity:0;pointer-events:none;transition:opacity .25s,transform .25s}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+@media (max-width:860px){
+  main{padding:18px 14px 40px}
+  .app{grid-template-columns:1fr;gap:18px}
+  .stage{position:sticky;top:56px;z-index:6;margin:0 -14px;padding:10px 14px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:center;
+    background:rgba(11,7,6,.94);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .frame{width:min(42vw,34vh);border-radius:14px;grid-row:1/3}
+  .actions{grid-template-columns:1fr;gap:8px;margin:0}
+  .actions .btn{min-height:44px;font-size:12px;padding:0 12px}
+  .share{grid-column:2;justify-content:flex-start;gap:14px;margin:-4px 0 0}
+  .share #cpy,.picked{display:none}
+  .tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:12px}
+  .opt span{font-size:11.5px}
+}
+@media (hover:none){.btn:hover{transform:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="rays" aria-hidden="true"></div><div class="glow" aria-hidden="true"></div>
+<header>
+  <a class="logo" href="../"><img src="../../assets/brand/cfb-head.webp" alt=""><span>$CFB</span></a>
+  <a class="back" href="../">← Back to site</a>
+</header>
+<main>
+  <div class="kicker">$CFB Arcade · PFP Generator</div>
+  <h1>CFB <span>Generator</span></h1>
+  <p class="lead">Pick your skin, body and gear, or roll a random one. Download your PFP in HD and wear it everywhere.</p>
+
+  <div class="app">
+    <div class="stage">
+      <div class="frame" id="frame"><canvas id="cv" width="1024" height="1024" role="img" aria-label="Your CFB PFP preview"></canvas><div class="ld">Loading…</div></div>
+      <div class="actions">
+        <button class="btn" id="rnd" type="button">🎲 Randomize</button>
+        <button class="btn ghost" id="dl" type="button">⬇ Download HD</button>
+      </div>
+      <div class="share">
+        <a id="shx" href="#" target="_blank" rel="noopener noreferrer">Share on X ↗</a>
+        <button id="cpy" type="button">Copy trait list</button>
+      </div>
+      <ul class="picked" id="picked"></ul>
+    </div>
+
+    <section class="panel" aria-label="Traits">
+      <div class="tabs" role="tablist" id="tabs"></div>
+      <p class="hint" id="hint"></p>
+      <div class="grid" id="grid"></div>
+    </section>
+  </div>
+
+  <p class="credit">Art by the $CFB community (M4R71N) · Original CFB Generator, rebuilt for cfbtoken.com</p>
+</main>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(()=>{
+const BASE='../../assets/gen/';
+const $=s=>document.querySelector(s);
+const cv=$('#cv'),ctx=cv.getContext('2d'),frame=$('#frame');
+let M,state={},tab='skin';
+const ORDER=['background','body','skin','eyes','top','mouth','glasses','earrings'];
+const TABS=['skin','body','eyes','top','mouth','glasses','earrings','background'];
+const LABEL={background:'Background',body:'Body',skin:'Skin',eyes:'Eyes',top:'Top',mouth:'Mouth',glasses:'Glasses',earrings:'Earrings'};
+const NO_RANDOM={background:'0transparent',body:'0nobody'};
+const cache=new Map();
+const load=src=>{if(cache.has(src))return cache.get(src);const p=new Promise((res,rej)=>{const i=new Image();i.decoding='async';i.onload=()=>res(i);i.onerror=()=>rej(new Error('img '+src));i.src=src});cache.set(src,p);p.catch(()=>cache.delete(src));return p};
+const item=(cat,id)=>M.cats[cat].find(x=>x.id===id);
+const skinN=()=>item('skin',state.skin).n;
+function file(cat){
+  const it=item(cat,state[cat]);
+  if(cat==='body')return it.u?it.id+'_universal':it.id+'_skin'+skinN();
+  return it.id;
+}
+let drawId=0;
+async function draw(){
+  const id=++drawId;frame.classList.add('busy');
+  try{
+    const imgs=await Promise.all(ORDER.map(c=>load(BASE+'1024/'+c+'/'+file(c)+'.webp')));
+    if(id!==drawId)return;
+    ctx.clearRect(0,0,1024,1024);imgs.forEach(i=>ctx.drawImage(i,0,0,1024,1024));
+  }catch(e){toast('Could not load a trait, please retry',true)}
+  finally{if(id===drawId)frame.classList.remove('busy')}
+  renderPicked();shareLink();
+}
+function renderPicked(){
+  $('#picked').innerHTML=ORDER.slice().reverse().map(c=>`<li><span>${LABEL[c]}</span><b>${item(c,state[c]).name}</b></li>`).join('');
+}
+function traitsText(){return ORDER.map(c=>LABEL[c]+': '+item(c,state[c]).name).join('\n')}
+function shareLink(){
+  const t='Just made my $CFB PFP with the CFB Generator 🔥\nThe first memecoin on #Qubic.\n';
+  $('#shx').href='https://x.com/intent/post?text='+encodeURIComponent(t)+'&url='+encodeURIComponent(location.origin+location.pathname);
+}
+function renderTabs(){
+  $('#tabs').innerHTML=TABS.map(c=>`<button class="tab" role="tab" type="button" data-c="${c}" aria-selected="${c===tab}">${LABEL[c]}<small>${M.cats[c].length}</small></button>`).join('');
+}
+function renderGrid(){
+  const c=tab;
+  $('#hint').textContent=c==='body'?'Bodies follow your skin color automatically.':c==='background'?'No background = transparent PNG.':'';
+  $('#grid').innerHTML=M.cats[c].map(it=>{
+    const th=c==='background'
+      ?(it.color?`<div class="th sw" style="background:${it.color}"></div>`:`<div class="th"></div>`)
+      :`<div class="th"><img loading="lazy" src="${BASE}th/${c}/${it.id}.webp" alt=""></div>`;
+    return `<button class="opt" type="button" data-id="${it.id}" aria-pressed="${state[c]===it.id}">${th}<span>${it.name}</span></button>`}).join('');
+}
+function pick(c,id){state[c]=id;renderGrid();draw();}
+function randomize(){
+  ORDER.forEach(c=>{const pool=M.cats[c].filter(x=>x.id!==NO_RANDOM[c]);state[c]=pool[Math.floor(Math.random()*pool.length)].id});
+  renderGrid();draw();
+}
+let tt;function toast(m,bad){const t=$('#toast');t.textContent=m;t.style.background=bad?'#b91c1c':'#16a34a';t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),2200)}
+
+$('#tabs').addEventListener('click',e=>{const b=e.target.closest('.tab');if(!b)return;tab=b.dataset.c;renderTabs();renderGrid();});
+$('#grid').addEventListener('click',e=>{const b=e.target.closest('.opt');if(b)pick(tab,b.dataset.id)});
+$('#rnd').onclick=randomize;
+$('#cpy').onclick=async()=>{try{await navigator.clipboard.writeText(traitsText());toast('Trait list copied')}catch(e){toast('Copy not available',true)}};
+$('#dl').onclick=async()=>{
+  const b=$('#dl');b.disabled=true;const old=b.textContent;b.textContent='Preparing HD…';
+  try{
+    const imgs=await Promise.all(ORDER.map(c=>load(BASE+'2048/'+c+'/'+file(c)+'.webp')));
+    const c=document.createElement('canvas');c.width=c.height=2048;const x=c.getContext('2d');
+    imgs.forEach(i=>x.drawImage(i,0,0,2048,2048));
+    const blob=await new Promise(r=>c.toBlob(r,'image/png'));
+    const name='cfb-pfp-'+item('top',state.top).id+'-'+item('body',state.body).id+'.png';
+    const f=new File([blob],name,{type:'image/png'});
+    if(matchMedia('(hover:none)').matches&&navigator.canShare&&navigator.canShare({files:[f]})){
+      try{await navigator.share({files:[f],title:'My $CFB PFP'});}catch(e){}
+    }else{
+      const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();
+      setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},2000);toast('Your HD PFP is downloading');
+    }
+  }catch(e){toast('Download failed, please retry',true)}
+  finally{b.disabled=false;b.textContent=old}
+};
+
+fetch(BASE+'manifest.json').then(r=>r.json()).then(m=>{M=m;renderTabs();randomize();})
+  .catch(()=>toast('Could not load the generator, please refresh',true));
+})();
+</script>
+</body>
+</html>
