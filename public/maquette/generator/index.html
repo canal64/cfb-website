@@ -238,7 +238,9 @@ $('#dl').onclick=async()=>{
   finally{b.disabled=false;b.textContent=old}
 };
 
-fetch(BASE+'manifest.json').then(r=>r.json()).then(m=>{M=m;renderTabs();randomize();})
+const DEFAULT={background:'amber',body:'tshirtwhite',skin:'skin1_rosy',eyes:'black',top:'originalbrown',mouth:'trollgrin',glasses:'cfbglasses',earrings:'noearrings'};
+fetch(BASE+'manifest.json').then(r=>r.json()).then(m=>{M=m;renderTabs();
+  if(ORDER.every(c=>item(c,DEFAULT[c]))){state={...DEFAULT};renderGrid();draw();}else randomize();})
   .catch(()=>toast('Could not load the generator, please refresh',true));
 })();
 </script>
