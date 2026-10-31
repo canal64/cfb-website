@@ -122,7 +122,7 @@ section{position:relative;min-height:100vh;min-height:100svh;scroll-margin-top:5
 
 /* ---------- 1 INTRO ---------- */
 #intro .prompt{position:absolute;left:var(--col);top:26%;width:24.4%;z-index:3}
-.prompt .tab{width:42px;height:42px;border:1px solid var(--o2);border-bottom:0;display:grid;place-items:center;font:400 24px var(--spice);background:var(--bg)}
+.prompt .tab{width:42px;height:42px;border:1px solid var(--o2);border-bottom:0;display:grid;place-items:center;font:500 15px var(--mono);color:var(--o1);background:var(--bg)}
 .prompt .box{border:1px solid var(--o2);padding:14px 16px;min-height:96px;font:400 11px/1.5 var(--mono);text-transform:uppercase;background:rgba(11,7,6,.85)}
 .caret{display:inline-block;width:6px;height:11px;background:var(--o1);vertical-align:-1px;margin-left:2px;animation:blink 1s steps(1) infinite}
 @keyframes blink{50%{opacity:0}}
@@ -471,7 +471,7 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
 <!-- 1 INTRO -->
 <section id="intro" data-label="Intro">
   <div class="prompt rv d1">
-    <div class="tab">“</div>
+    <div class="tab" aria-hidden="true">&gt;_</div>
     <div class="box br"><span id="typed"></span><span class="caret"></span></div>
     <div class="next" id="nextp"></div>
   </div>
