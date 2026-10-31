@@ -332,14 +332,15 @@ section{position:relative;min-height:100vh;min-height:100svh;scroll-margin-top:5
 .marquee .row{display:flex;gap:28px;width:max-content;animation:mq 40s linear infinite;padding:18px 0}
 .marquee img{height:110px;width:110px;object-fit:contain;transition:transform .3s}
 .marquee img:hover{transform:rotate(-8deg) scale(1.12)}
-.play{margin:0 var(--col) 6vh;display:grid;grid-template-columns:auto 1fr auto;grid-template-areas:"k k k" "t d b";align-items:center;gap:6px 26px;padding:22px 24px;border:1px solid var(--o2);border-radius:18px;text-decoration:none;
+.play{margin:0 var(--col) 6vh;display:grid;grid-template-columns:clamp(260px,34vw,440px) 1fr auto;grid-template-areas:"k k k" "t d b";align-items:center;gap:6px 26px;padding:22px 24px;border:1px solid var(--o2);border-radius:18px;text-decoration:none;
   background:linear-gradient(120deg,rgba(255,131,48,.18),rgba(196,61,47,.08) 60%,rgba(11,7,6,.9));transition:transform .25s,box-shadow .25s}
 .play:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(255,131,48,.25)}
 .play .pk{grid-area:k;font:400 11px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--o1)}
 .play .pt{grid-area:t;font:400 clamp(26px,3vw,44px) var(--disp)}
 .play .pd{grid-area:d;color:rgba(255,255,255,.78);font-size:15px;line-height:1.45;max-width:44ch}
 .play .btn{grid-area:b}
-@media (max-width:900px){.play{margin:0 16px 5vh;grid-template-columns:1fr;grid-template-areas:"k" "t" "d" "b";justify-items:start}}
+.play.gen{margin-bottom:16px}
+@media (max-width:900px){.play{margin:0 16px 5vh;grid-template-columns:1fr;grid-template-areas:"k" "t" "d" "b";justify-items:start}.play.gen{margin-bottom:14px}}
 .socials{margin:6vh var(--col) 0;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .socials a{padding:22px 20px;text-decoration:none;display:flex;justify-content:space-between;align-items:center;font:400 clamp(18px,1.7vw,26px) var(--disp);border:1px solid var(--line);border-radius:18px;background:var(--panel);transition:border-color .3s}
 .socials a small{font:400 11px var(--mono);color:var(--dim)}
@@ -715,6 +716,12 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
     <a data-link="telegram" href="https://t.me/+0NJgRzFxPXMxMjk8" target="_blank" rel="noopener noreferrer">Telegram <small>↗</small></a>
   </div>
   <div class="marquee rv d3"><div class="row" id="mq"></div></div>
+  <a class="play gen rv d3" href="generator/">
+    <span class="pk">$CFB arcade · New</span>
+    <span class="pt">CFB Generator</span>
+    <span class="pd">Pick your skin, body and gear, or roll a random one. Download your $CFB PFP in SD or HD.</span>
+    <span class="btn">Create my PFP ▶</span>
+  </a>
   <a class="play rv d3" href="head-match/">
     <span class="pk">$CFB arcade · New</span>
     <span class="pt">Head Match</span>
