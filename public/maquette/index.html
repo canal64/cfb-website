@@ -431,7 +431,7 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
       <em>Asset name: CFB</em></div>
   </div>
   <!-- MODULE · Burn radar: fed by fetchBurnStats() -->
-  <div class="radar rv d4" id="radar">
+  <div class="radar idle rv d4" id="radar">
     <div class="rh"><span><i class="dot"></i> QubicBay burn radar</span><span id="radarState">Awaiting on-chain data</span></div>
     <div class="bar"><div class="burned" id="barBurned"></div><div class="circ" id="barCirc"></div></div>
     <div class="legend">
@@ -672,7 +672,7 @@ async function fetchBurnStats(){
     $('#radarState').textContent=s.asOf?'As of '+s.asOf:'Live';
   }
 }
-new IntersectionObserver((es,o)=>es.forEach(e=>{if(e.isIntersecting){fetchBurnStats();o.disconnect()}}),{threshold:.3}).observe($('#radar'));
+fetchBurnStats(); // idle stripes until real numbers exist; counters animate when they do
 
 /* ---- MODULE 3 · lore terminal ---- */
 let NET=null;

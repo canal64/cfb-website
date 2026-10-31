@@ -36,16 +36,25 @@ async function cfbTicker() {
   return null;
 }
 
-/* $QUBIC/USD from CoinGecko */
+/* $QUBIC/USD: CoinGecko first, SafeTrade QUBIC/USDT as fallback (CoinGecko rate-limits shared IPs) */
 async function qubicPrice() {
   const j = await getJSON('https://api.coingecko.com/api/v3/simple/price?ids=qubic-network&vs_currencies=usd&include_24hr_change=true');
   const q = j?.['qubic-network'];
-  return q?.usd ? { price: q.usd, change24h: num(q.usd_24h_change), source: 'CoinGecko' } : null;
+  if (q?.usd) return { price: q.usd, change24h: num(q.usd_24h_change), source: 'CoinGecko' };
+  for (const u of [
+    'https://safe.trade/api/v2/peatio/public/markets/qubicusdt/tickers',
+    'https://safe.trade/api/v2/trade/public/markets/qubicusdt/tickers',
+  ]) {
+    const t = (await getJSON(u))?.ticker;
+    const last = num(t?.last);
+    if (last) return { price: last, change24h: num(t?.price_change_percent), source: 'SafeTrade' };
+  }
+  return null;
 }
 
 async function market() {
   const [cfb, qubic] = await Promise.all([cfbTicker(), qubicPrice()]);
-  return { ok: !!(cfb || qubic), cfb, qubic, issuer: CFB_ISSUER, updated: new Date().toISOString() };
+  return { ok: !!(cfb || qubic), complete: !!(cfb && qubic), cfb, qubic, issuer: CFB_ISSUER, updated: new Date().toISOString() };
 }
 
 /* Qubic network status from the public RPC */
@@ -70,7 +79,8 @@ async function cached(request, ctx, ttl, producer) {
   const res = new Response(JSON.stringify(body), {
     headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': `public, max-age=${ttl}`, 'Access-Control-Allow-Origin': '*' },
   });
-  if (body.ok) ctx.waitUntil(cache.put(key, res.clone()));
+  // cache only complete answers, so a temporary upstream miss isn't frozen for a minute
+  if (body.ok && body.complete !== false) ctx.waitUntil(cache.put(key, res.clone()));
   return res;
 }
 
