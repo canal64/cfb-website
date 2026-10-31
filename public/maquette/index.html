@@ -70,6 +70,7 @@ body.scrolled nav,body.nobar nav{top:0}
 .pad{height:100%;display:flex;align-items:center;justify-content:center;border-left:1px solid var(--line);border-right:1px solid var(--line);
   font:400 11px var(--mono);text-transform:uppercase;text-decoration:none}
 .pad:hover{color:var(--o1)}
+.navplay{display:none;align-items:center;height:32px;padding:0 12px;border:1px solid rgba(255,212,107,.5);border-radius:999px;font:500 11px var(--mono);text-transform:uppercase;letter-spacing:.05em;text-decoration:none;color:var(--o1);white-space:nowrap}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:40px;padding:0 20px;border-radius:999px;background:var(--btn);color:#fff;
   font:400 13px var(--disp);letter-spacing:.02em;text-decoration:none;box-shadow:inset 0 -3px 0 rgba(0,0,0,.25),0 8px 30px rgba(255,131,48,.25);transition:transform .2s,box-shadow .2s;white-space:nowrap}
 .btn:hover{transform:translateY(-2px);box-shadow:inset 0 -3px 0 rgba(0,0,0,.25),0 12px 40px rgba(255,131,48,.4)}
@@ -330,7 +331,8 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
 @media (max-width:900px){
   :root{--col:16px}
   .guides i:nth-child(1),.guides i:nth-child(3),.menu,.pad,.rail,.feat,.timeline,.scroll{display:none}
-  nav{grid-template-columns:1fr auto;padding-right:16px}
+  nav{grid-template-columns:1fr auto auto;gap:8px;padding-right:16px}
+  .navplay{display:inline-flex}
   .logo{padding-left:16px}
   .hero-head{width:86vw;left:50%;top:44%}
   #intro .prompt{left:16px;right:16px;width:auto;top:13%}
@@ -388,6 +390,7 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
     <a href="#manifesto">Manifesto</a><a href="#story">Story</a><a href="#qubicbay">QubicBay</a><a href="#qbros">Qbros</a><a href="#start">Get $CFB</a><a href="#community">Community</a><a href="head-match/">Play ▶</a>
   </div>
   <a class="pad" data-link="genesisTx" href="https://explorer.qubic.org/network/tx/ptthaqjjuyelsdcabjfpzvihriycuquoylnjcnplwclvijofvlkindsatntk" target="_blank" rel="noopener noreferrer">Genesis TX ↗</a>
+  <a class="navplay" href="head-match/" aria-label="Play Head Match">🎮 Play</a>
   <a class="btn sm" href="#where" data-buy>Buy now</a>
 </nav>
 
@@ -416,6 +419,7 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
     <div class="tag rv d3">Not just a meme. <em>Qubic history.</em></div>
     <div class="ctas rv d4">
       <a class="btn" href="#where" data-buy>Buy now</a>
+      <a class="btn ghost" href="head-match/">🎮 Play Head Match</a>
       <a class="btn ghost" data-link="whitepaper" href="https://drive.google.com/file/d/1Z3H7-WGgqxWhxuz--eQavSG0RdWrPyvB/view" target="_blank" rel="noopener noreferrer">View whitepaper ↗</a>
     </div>
   </div>
