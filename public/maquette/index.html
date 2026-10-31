@@ -7,6 +7,21 @@
 <meta name="description" content="$CFB is the first-ever memecoin on Qubic: fair launch, no pre-sale, QubicBay's token and the Qbros genesis collection. A piece of Qubic's cultural history.">
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#0b0706">
+<link rel="canonical" href="https://cfb-website.rudynakamoto.workers.dev/maquette/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="$CFB">
+<meta property="og:title" content="$CFB — The First Memecoin on Qubic">
+<meta property="og:description" content="Fair airdrop on May 4th, 2024. The deflationary token of QubicBay and the origin of Qbros. Not just a meme: Qubic history.">
+<meta property="og:url" content="https://cfb-website.rudynakamoto.workers.dev/maquette/">
+<meta property="og:image" content="https://cfb-website.rudynakamoto.workers.dev/assets/brand/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="$CFB — The first memecoin on Qubic">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@c_f_b_token">
+<meta name="twitter:title" content="$CFB — The First Memecoin on Qubic">
+<meta name="twitter:description" content="Fair airdrop on May 4th, 2024. The deflationary token of QubicBay and the origin of Qbros.">
+<meta name="twitter:image" content="https://cfb-website.rudynakamoto.workers.dev/assets/brand/og-image.png">
 <link rel="icon" href="../assets/brand/favicon-48.png">
 <link rel="apple-touch-icon" href="../assets/brand/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -76,7 +91,8 @@ body.scrolled nav,body.nobar nav{top:0}
 .hero-head img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 40px 50px rgba(0,0,0,.55))}
 
 main{position:relative;z-index:2}
-section{position:relative;min-height:100vh;min-height:100svh}
+section{position:relative;min-height:100vh;min-height:100svh;scroll-margin-top:56px}
+#where{scroll-margin-top:80px}
 
 .rv{opacity:0;transform:translateY(26px);transition:opacity 1s cubic-bezier(.2,.7,.2,1),transform 1s cubic-bezier(.2,.7,.2,1)}
 .in .rv{opacity:1;transform:none}
@@ -89,8 +105,10 @@ section{position:relative;min-height:100vh;min-height:100svh}
 
 .kicker{font:400 11px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--dim);display:flex;gap:10px;align-items:center}
 .kicker b{color:var(--o1);font-weight:500}
-.h2{font:400 clamp(30px,3.3vw,56px)/1.05 var(--disp);letter-spacing:-.01em;text-transform:uppercase}
-.h2 .sp{font-family:var(--spice)}
+.h2{font:400 clamp(28px,3.3vw,56px)/1.12 var(--disp);overflow-wrap:anywhere;hyphens:none;letter-spacing:-.01em;text-transform:uppercase}
+.h2 .sp,.mega,.count,.supply .num,footer .big,.logo span{font-family:var(--disp);background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.h2 .sp{display:inline-block;padding:0 .02em}
+@supports font-tech(color-COLRv1){.h2 .sp,.mega,.count,.supply .num,footer .big,.logo span{font-family:var(--spice);background:none;color:var(--ink);-webkit-text-fill-color:currentColor}}
 .p{font-size:16px;line-height:1.6;max-width:48ch;color:rgba(255,255,255,.82)}
 .link{display:inline-flex;align-items:center;gap:10px;font:500 11px var(--mono);text-transform:uppercase;letter-spacing:.05em;text-decoration:none;
   border-left:2px solid var(--o2);padding:4px 0 4px 12px;margin-top:20px}
@@ -103,15 +121,16 @@ section{position:relative;min-height:100vh;min-height:100svh}
 .prompt .box{border:1px solid var(--o2);padding:14px 16px;min-height:96px;font:400 11px/1.5 var(--mono);text-transform:uppercase;background:rgba(11,7,6,.85)}
 .caret{display:inline-block;width:6px;height:11px;background:var(--o1);vertical-align:-1px;margin-left:2px;animation:blink 1s steps(1) infinite}
 @keyframes blink{50%{opacity:0}}
-.prompt .next{margin-top:10px;font:400 11px/1.45 var(--mono);text-transform:uppercase;color:rgba(255,255,255,.28)}
+.prompt .next{display:inline-block;margin-top:10px;padding:5px 8px;font:400 11px/1.45 var(--mono);text-transform:uppercase;letter-spacing:.04em;color:rgba(255,255,255,.78);background:rgba(11,7,6,.72);border:1px solid var(--line);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.prompt .next::before{content:"NEXT › ";color:var(--o2)}
 .feat{position:absolute;right:var(--col);top:26%;width:23%;font:400 11px var(--mono);text-transform:uppercase;letter-spacing:.05em;background:var(--panel);z-index:3;border-top:1px solid var(--line)}
 .feat li{list-style:none;height:26px;display:flex;align-items:center;border-bottom:1px solid var(--line);padding-left:18%;position:relative}
 .feat li::before{content:"";position:absolute;left:8%;width:5px;height:5px;border-radius:50%;background:var(--o2)}
 .feat li.dim{color:var(--dim)}.feat li.dim::before{background:var(--dim)}
 .hl{position:absolute;left:var(--col);bottom:15%;padding-left:18px;z-index:3}
-.hl .pre{font:400 12px var(--mono);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;color:var(--o1)}
+.hl .pre{display:inline-block;padding:4px 8px;background:rgba(11,7,6,.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:1px solid var(--line);font:400 12px var(--mono);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;color:var(--o1)}
 .mega{font:400 clamp(72px,10vw,170px)/.9 var(--spice);letter-spacing:-.01em}
-.tag{font:400 clamp(20px,2.3vw,38px)/1.1 var(--disp);text-transform:uppercase;margin-top:10px}
+.tag{display:inline-block;font:400 clamp(20px,2.3vw,38px)/1.1 var(--disp);text-transform:uppercase;margin-top:10px;padding:4px 10px;background:rgba(11,7,6,.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
 .tag em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 .ctas{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap}
 .sub{position:absolute;bottom:calc(8% + 56px);right:calc(var(--col) + 18px);max-width:260px;text-align:right;font-size:14.5px;line-height:1.5;color:rgba(255,255,255,.8);z-index:3}
@@ -134,6 +153,20 @@ section{position:relative;min-height:100vh;min-height:100svh}
 .supply .num{font:400 clamp(40px,7vw,120px)/.9 var(--spice);letter-spacing:-.02em}
 .supply .cap{font:400 11px/1.6 var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--dim);max-width:30ch;padding-bottom:10px}
 .supply .cap b{color:var(--ink);font-weight:500;display:block}
+
+.stats{margin:5vh var(--col) 0;display:grid;grid-template-columns:repeat(3,1fr) 1.6fr;border:1px solid var(--o2);border-radius:18px;overflow:hidden;background:var(--panel)}
+.st{padding:18px 18px 20px;min-width:0}
+.st+.st{border-left:1px solid rgba(255,131,48,.35)}
+.st small{display:block;font:400 10.5px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--o1)}
+.st strong{display:block;font:400 clamp(18px,1.6vw,26px)/1.15 var(--disp);margin:12px 0 6px;overflow-wrap:anywhere}
+.st em{font:400 10px var(--mono);font-style:normal;text-transform:uppercase;letter-spacing:.05em;color:var(--dim)}
+.st.hot{background:linear-gradient(rgba(255,131,48,.14),rgba(196,61,47,.08))}
+.st .flame{display:inline-block;animation:flick 1.2s ease-in-out infinite}
+.copy{display:flex;align-items:center;gap:10px;width:100%;margin:12px 0 6px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:rgba(0,0,0,.35);color:var(--ink);cursor:pointer;text-align:left;transition:border-color .25s}
+.copy:hover{border-color:var(--o2)}
+.copy code{flex:1;min-width:0;font:400 11px/1.4 var(--mono);word-break:break-all;color:rgba(255,255,255,.85)}
+.copy .cp{flex:none;font:500 10px var(--mono);text-transform:uppercase;letter-spacing:.06em;padding:5px 8px;border-radius:999px;background:var(--btn);color:#fff;transition:background .25s}
+.copy.ok{border-color:#4ade80}.copy.ok .cp{background:#16a34a}
 
 /* ---------- 3 STORY ---------- */
 #story{padding:16vh 0 12vh}
@@ -177,7 +210,7 @@ section{position:relative;min-height:100vh;min-height:100svh}
 #qbros{display:flex;align-items:center}
 #qbros .inner{margin-left:var(--col);width:calc(100% - 2*var(--col));display:grid;grid-template-columns:1fr 1fr;gap:4vw;align-items:center}
 .count{font:400 clamp(90px,13vw,220px)/.85 var(--spice);letter-spacing:-.02em}
-.count small{display:block;font:400 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink);margin-top:18px}
+.count small{display:block;-webkit-text-fill-color:var(--ink);background:none;font:400 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink);margin-top:18px}
 #qbros .txt{padding:14px 0}
 #qbros .h2{margin:16px 0 18px}
 
@@ -196,7 +229,11 @@ section{position:relative;min-height:100vh;min-height:100svh}
 .where h4{font:400 18px var(--disp);display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px}
 .where h4 span{font:400 10px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--dim)}
 .ex{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-top:1px solid var(--line);text-decoration:none;font-size:18px;font-weight:500}
-.ex:hover{color:var(--o1)}
+.ex{border-radius:10px;padding:14px 10px;margin:0 -10px;border:1px solid transparent;transition:color .25s,border-color .25s,background .25s,box-shadow .25s}
+.ex small{transition:transform .25s;display:inline-block}
+.ex:hover{color:var(--o1);border-color:rgba(255,212,107,.7);background:rgba(255,131,48,.08);box-shadow:0 0 24px rgba(255,131,48,.18)}
+.ex:hover small{transform:translate(3px,-3px);color:var(--o1)}
+.ex+.ex{border-top-color:var(--line)}
 .ex small{font:400 10px var(--mono);text-transform:uppercase;color:var(--dim)}
 .wp{margin:5vh var(--col) 0;padding-left:18px;display:flex;gap:12px;flex-wrap:wrap}
 
@@ -213,12 +250,17 @@ section{position:relative;min-height:100vh;min-height:100svh}
 .socials a:hover{border-color:var(--o2)}
 .trust{margin:6vh var(--col) 0;padding:22px 20px;border:1px dashed rgba(255,131,48,.5);border-radius:18px;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center;background:var(--panel)}
 .trust p{font-size:14.5px;line-height:1.55;color:rgba(255,255,255,.8);max-width:70ch}
+.trust .mini{display:block;margin-top:10px;font:400 10.5px/1.5 var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--dim)}
 .trust b{display:block;font:400 11px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--o1);margin-bottom:8px;font-weight:500}
 
 footer{position:relative;z-index:2;padding:8vh var(--col) 6vh;border-top:1px solid var(--line);background:var(--bg)}
 footer .big{font:400 clamp(48px,9vw,150px)/.9 var(--spice);margin-bottom:5vh}
 footer .disc{font-size:13px;line-height:1.65;color:rgba(255,255,255,.55);max-width:72ch}
 footer .disc+.disc{margin-top:10px}
+footer .eco{margin-top:4vh;display:flex;flex-wrap:wrap;gap:8px 22px;font:400 11px var(--mono);text-transform:uppercase;letter-spacing:.05em}
+footer .eco span{color:var(--dim)}
+footer .eco a{text-decoration:none;color:rgba(255,255,255,.75);transition:color .2s}
+footer .eco a:hover{color:var(--o1)}
 footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font:400 11px var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--dim)}
 
 /* ---------- MOBILE ---------- */
@@ -256,6 +298,13 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
   .wp{margin:4vh 16px 0;padding-left:0}
   .socials{grid-template-columns:1fr;margin:0 16px}
   .trust{grid-template-columns:1fr;margin:5vh 16px 0}
+  .stats{grid-template-columns:1fr 1fr;margin:5vh 16px 0}
+  .st+.st{border-left:0}.st:nth-child(2n){border-left:1px solid rgba(255,131,48,.35)}
+  .st:nth-child(n+3){border-top:1px solid rgba(255,131,48,.35)}
+  .st.issuer{grid-column:1/-1;border-left:0!important}
+  .h2{font-size:clamp(26px,7.4vw,34px)}
+  section{scroll-margin-top:52px}
+  .mega{font-size:clamp(64px,22vw,110px)}
   .marquee img{height:80px;width:80px}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
@@ -270,7 +319,7 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
 <div class="topbar"><a href="https://qubicbay.io/" target="_blank" rel="noopener"><b>New:</b> $CFB powers QubicBay — Qubic's NFT marketplace ↗</a><button id="closebar" aria-label="Close">×</button></div>
 
 <nav>
-  <a class="logo" href="#intro"><img src="../assets/brand/cfb-head.webp" alt="">$CFB</a>
+  <a class="logo" href="#intro"><img src="../assets/brand/cfb-head.webp" alt=""><span>$CFB</span></a>
   <div class="menu">
     <a href="#manifesto">Manifesto</a><a href="#story">Story</a><a href="#qubicbay">QubicBay</a><a href="#qbros">Qbros</a><a href="#start">Get $CFB</a><a href="#community">Community</a>
   </div>
@@ -320,6 +369,15 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
   <div class="supply rv d3">
     <div class="num">420,690,000,000</div>
     <div class="cap"><b>Initial total supply</b>Shrinking with every collection launched on QubicBay.</div>
+  </div>
+  <div class="stats rv d4">
+    <div class="st"><small>Initial supply</small><strong title="420,690,000,000 $CFB">420.69B</strong><em>420,690,000,000 $CFB</em></div>
+    <div class="st hot"><small><span class="flame">🔥</span> Burned $CFB</small><strong data-stat="burned">—</strong><em>Live data coming soon</em></div>
+    <div class="st"><small>Circulating supply</small><strong data-stat="circulating">—</strong><em>Live data coming soon</em></div>
+    <div class="st issuer"><small>Issuer · Token ID on Qubic</small>
+      <button class="copy" id="copyIssuer" data-copy="CFBMEMZOIDEXQAUXYYSZIURADQLAPWPMNJXQSNVQZAHYVOPYUKKJBJUCTVJL" aria-label="Copy the $CFB issuer address">
+        <code>CFBMEMZOIDEXQAUXYYSZIURADQLAPWPMNJXQSNVQZAHYVOPYUKKJBJUCTVJL</code><span class="cp">Copy</span></button>
+      <em>Asset name: CFB</em></div>
   </div>
 </section>
 
@@ -388,8 +446,8 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
     <h2 class="h2 rv d2" style="margin-top:18px">3 simple steps to join the <span class="sp">$CFB</span> ecosystem.</h2>
   </div>
   <div class="steps rv d3">
-    <a href="https://qubic.org/#wallets" target="_blank" rel="noopener"><div class="num"><span>01</span><span>↗</span></div><h3>Choose your wallet</h3><p>A wallet is necessary to use, trade, or hold $CFB.</p></a>
-    <a href="https://docs.qubic.org/learn/invest#2-create-a-qubic-wallet" target="_blank" rel="noopener"><div class="num"><span>02</span><span>↗</span></div><h3>Configure your wallet</h3><p>Follow Qubic's official documentation to set up your wallet.</p></a>
+    <a href="https://qubic.org/#wallets" target="_blank" rel="noopener"><div class="num"><span>01</span><span>↗</span></div><h3>Choose your wallet</h3><p>Install the official Qubic Wallet app, or use the Qubic Web Wallet. A wallet is necessary to use, trade, or hold $CFB.</p></a>
+    <a href="https://docs.qubic.org/learn/invest#2-create-a-qubic-wallet" target="_blank" rel="noopener"><div class="num"><span>02</span><span>↗</span></div><h3>Configure your wallet</h3><p>Follow Qubic's official guide. Write down your 55-letter seed offline and never share it: it's the only way to recover your $CFB.</p></a>
     <a href="#where"><div class="num"><span>03</span><span>↓</span></div><h3>Get some $CFB</h3><p>There are lots of ways to get your hands on some $CFB.</p></a>
   </div>
   <div class="where rv d4" id="where">
@@ -419,7 +477,7 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
     <a href="https://t.me/+0NJgRzFxPXMxMjk8" target="_blank" rel="noopener">Telegram <small>↗</small></a>
   </div>
   <div class="trust rv d4">
-    <p><b>Community-led · Transparency</b>$CFB is a community-led project, so the community keeps track of how the funds are managed. The community auditor maintains a public spreadsheet, updated periodically.</p>
+    <p><b>Community-led · Transparency</b>$CFB is a community-led project, so the community keeps track of how the funds are managed. The community auditor maintains a public spreadsheet, updated periodically.<span class="mini">Memecoin · No intrinsic value · No expected financial return · Not financial advice. Always do your own research.</span></p>
     <a class="btn ghost" href="https://docs.google.com/spreadsheets/d/1fCOsFDDWO2YxI6dgRM8LPhHN6r9ZVv_U-bMEQWxMS8E/edit?gid=1212216071#gid=1212216071" target="_blank" rel="noopener">View sheet ↗</a>
   </div>
 </section>
@@ -429,6 +487,12 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
   <div class="big">$CFB</div>
   <p class="disc">$CFB token has no association with Sergey Ivancheglo (aka Come-from-Beyond) or his creation. This token is simply paying homage to a meme well loved and recognized in Qubic's community. $CFB is a meme token with no intrinsic value or expectation of financial return. There is no formal team or roadmap. The token is completely useless and for entertainment purposes only.</p>
   <p class="disc">Created by the Community for the Community, just for fun.</p>
+  <div class="eco"><span>Qubic ecosystem</span>
+    <a href="https://qubic.org" target="_blank" rel="noopener">qubic.org ↗</a>
+    <a href="https://qubicbay.io" target="_blank" rel="noopener">qubicbay.io ↗</a>
+    <a href="https://qubicmap.org" target="_blank" rel="noopener">qubicmap.org ↗</a>
+    <a href="https://explorer.qubic.org" target="_blank" rel="noopener">explorer.qubic.org ↗</a>
+  </div>
   <div class="bot"><span>$CFB · The first memecoin on Qubic · Since May 4th, 2024</span><span>Community website</span></div>
 </footer>
 
@@ -467,6 +531,11 @@ upd();setInterval(()=>{a=(a+1)%(L.length-1);upd()},2400);
 /* community heads (original designs only) */
 const H=["classic","crown","snapback","deal-with-it","headband","aviators","purple-shades","shutter-shades","3d-glasses","cyborg","android","cyberpunk","visor","tube-head","cyber-samurai","big-brain","cyclops","grey-alien","green-alien","tentacle","devil","orc","goblin","elf","dwarf"];
 const html=H.map(h=>`<img src="../assets/heads/${h}.webp" alt="" loading="lazy">`).join('');$('#mq').innerHTML=html+html;
+
+/* copy issuer */
+const cb=$('#copyIssuer');cb.addEventListener('click',async()=>{const v=cb.dataset.copy,lab=cb.querySelector('.cp');
+  try{await navigator.clipboard.writeText(v)}catch(e){const t=document.createElement('textarea');t.value=v;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove()}
+  cb.classList.add('ok');lab.textContent='Copied!';clearTimeout(cb._t);cb._t=setTimeout(()=>{cb.classList.remove('ok');lab.textContent='Copy'},1800)});
 
 /* floating head + rays */
 const head=$('#head'),tilt=$('#tilt'),rays=$('#rays');let sp=0,px=0,py=0,tx=0,ty=0;
