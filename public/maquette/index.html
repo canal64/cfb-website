@@ -279,6 +279,11 @@ section{position:relative;min-height:100vh;min-height:100svh;scroll-margin-top:5
 .alert strong{display:block;font:500 12px var(--mono);text-transform:uppercase;letter-spacing:.07em;color:var(--o1);margin-bottom:8px}
 .alert p{font-size:15px;line-height:1.6;color:rgba(255,255,255,.88);max-width:75ch}
 .alert p b{color:#fff;font-weight:600}
+.step .alert{margin:16px 0 0;padding:14px 14px;gap:10px;border-radius:12px}
+.step .alert .ai{font-size:20px}
+.step .alert strong{font-size:11px;margin-bottom:6px}
+.step .alert p{font-size:13.5px;line-height:1.5}
+.step .alert .ok{margin-top:8px;font-size:13px}
 .alert .ok{margin-top:10px;font-size:14px;color:#86efac}
 .where{margin:9vh var(--col) 0;display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--o2);border-radius:18px;overflow:hidden;background:var(--bg)}
 .where>div{padding:20px}
@@ -628,6 +633,14 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
       <div class="sh"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg></span><span class="n">Step 02</span></div>
       <h3>Configure your wallet</h3>
       <p>Follow Qubic's official documentation. <strong>Write down your 55-letter seed offline</strong> and never share it: it's the only way to recover your $CFB.</p>
+      <aside class="alert in-step" role="note" aria-labelledby="alertT">
+        <span class="ai" aria-hidden="true">⚠️</span>
+        <div>
+          <strong id="alertT">Security notice: wallet seeds</strong>
+          <p>If you created your seed <b>on an iPhone or iPad</b>, or <b>in Safari on a Mac</b>, <b>before October 18, 2026</b>, create a new one with an up-to-date Qubic wallet (version 4.26.4 or later) and move your funds to it. Seeds made on Windows, Android or Linux are not on the affected list.</p>
+          <p class="ok">✓ Qubic will never ask for your seed. Nobody from $CFB will either.</p>
+        </div>
+      </aside>
       <a class="sbtn" data-link="walletGuide" href="https://docs.qubic.org/learn/invest#2-create-a-qubic-wallet" target="_blank" rel="noopener noreferrer">Read the official guide ↗</a>
     </article>
     <article class="step">
@@ -637,14 +650,6 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
       <a class="sbtn" href="#where" data-buy>See where to buy ↓</a>
     </article>
   </div>
-  <aside class="alert rv d4" role="note" aria-labelledby="alertT">
-    <span class="ai" aria-hidden="true">⚠️</span>
-    <div>
-      <strong id="alertT">Security notice: wallet seeds</strong>
-      <p>If you created your seed <b>on an iPhone or iPad</b>, or <b>in Safari on a Mac</b>, <b>before October 18, 2026</b>, create a new one with an up-to-date Qubic wallet (version 4.26.4 or later) and move your funds to it. Seeds made on Windows, Android or Linux are not on the affected list.</p>
-      <p class="ok">✓ Qubic will never ask for your seed. Nobody from $CFB will either.</p>
-    </div>
-  </aside>
   <div class="where rv d4" id="where">
     <div>
       <h4>DEX <span>Decentralized exchanges</span></h4>
