@@ -80,6 +80,28 @@ async function status() {
   return { ok: false };
 }
 
+/* Exchange logos: fetched from each exchange's own site (fixed allowlist), cached at the edge for a week.
+   Falls back to Google's favicon service if the site doesn't answer. */
+const LOGOS = {
+  qx:        ['https://app.qubicportal.org/assets/logos/favicon.svg', 'app.qubicportal.org'],
+  qswap:     ['https://swap.qubicportal.org/logo.svg', 'swap.qubicportal.org'],
+  safetrade: ['https://safetrade.com/favicon.ico', 'safetrade.com'],
+};
+async function logo(request, ctx, name) {
+  const entry = LOGOS[name];
+  if (!entry) return new Response('Not found', { status: 404 });
+  const cache = caches.default, key = new Request(new URL(request.url).toString());
+  const hit = await cache.match(key); if (hit) return hit;
+  let up = null;
+  for (const u of [entry[0], `https://www.google.com/s2/favicons?domain=${entry[1]}&sz=128`]) {
+    try { const r = await fetch(u, { headers: { 'User-Agent': 'cfb-website' } }); if (r.ok) { up = r; break; } } catch {}
+  }
+  if (!up) return new Response('Logo unavailable', { status: 502 });
+  const res = new Response(up.body, { headers: { 'Content-Type': up.headers.get('Content-Type') || 'image/png', 'Cache-Control': 'public, max-age=604800' } });
+  ctx.waitUntil(cache.put(key, res.clone()));
+  return res;
+}
+
 /* small edge cache so a busy page doesn't hammer the APIs */
 async function cached(request, ctx, ttl, producer) {
   const cache = caches.default;
@@ -100,6 +122,7 @@ export default {
     const { pathname } = new URL(request.url);
     if (pathname === '/api/market') return cached(request, ctx, 60, market);
     if (pathname === '/api/status') return cached(request, ctx, 20, status);
+    const lm = pathname.match(/^\/logos\/([a-z]+)$/); if (lm) return logo(request, ctx, lm[1]);
     return env.ASSETS.fetch(request); // everything else = static site
   },
 };

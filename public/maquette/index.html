@@ -274,6 +274,9 @@ section{position:relative;min-height:100vh;min-height:100svh;scroll-margin-top:5
 .ex{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-top:1px solid var(--line);text-decoration:none;font-size:18px;font-weight:500}
 .ex{border-radius:10px;padding:14px 10px;margin:0 -10px;border:1px solid transparent;transition:color .25s,border-color .25s,background .25s,box-shadow .25s}
 .ex small{transition:transform .25s;display:inline-block}
+.exn{display:inline-flex;align-items:center;gap:14px}
+.exl{width:36px;height:36px;flex:none;border-radius:10px;object-fit:contain;padding:5px;background:#fff;box-shadow:0 0 0 1px rgba(255,255,255,.12)}
+.exl.off{display:none}
 .ex:hover{color:var(--o1);border-color:rgba(255,212,107,.7);background:rgba(255,131,48,.08);box-shadow:0 0 24px rgba(255,131,48,.18)}
 .ex:hover small{transform:translate(3px,-3px);color:var(--o1)}
 .ex+.ex{border-top-color:var(--line)}
@@ -643,12 +646,12 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
   <div class="where rv d4" id="where">
     <div>
       <h4>DEX <span>Decentralized exchanges</span></h4>
-      <a class="ex" data-link="qx" href="https://app.qubicportal.org/trade?asset=CFB&amp;issuer=CFBMEMZOIDEXQAUXYYSZIURADQLAPWPMNJXQSNVQZAHYVOPYUKKJBJUCTVJL" target="_blank" rel="noopener noreferrer">QX · Qubic Exchange <small>↗</small></a>
-      <a class="ex" data-link="qswap" href="https://swap.qubicportal.org/swap?from=QUBIC&amp;to=CFBMEMZOIDEXQAUXYYSZIURADQLAPWPMNJXQSNVQZAHYVOPYUKKJBJUCTVJL%3ACFB" target="_blank" rel="noopener noreferrer">QSwap <small>↗</small></a>
+      <a class="ex" data-link="qx" href="https://app.qubicportal.org/trade?asset=CFB&amp;issuer=CFBMEMZOIDEXQAUXYYSZIURADQLAPWPMNJXQSNVQZAHYVOPYUKKJBJUCTVJL" target="_blank" rel="noopener noreferrer"><span class="exn"><img class="exl" src="/logos/qx" alt="" width="36" height="36" loading="lazy">QX · Qubic Exchange</span> <small>↗</small></a>
+      <a class="ex" data-link="qswap" href="https://swap.qubicportal.org/swap?from=QUBIC&amp;to=CFBMEMZOIDEXQAUXYYSZIURADQLAPWPMNJXQSNVQZAHYVOPYUKKJBJUCTVJL%3ACFB" target="_blank" rel="noopener noreferrer"><span class="exn"><img class="exl" src="/logos/qswap" alt="" width="36" height="36" loading="lazy">QSwap</span> <small>↗</small></a>
     </div>
     <div>
       <h4>CEX <span>Centralized exchanges</span></h4>
-      <a class="ex" data-link="safetrade" href="https://safetrade.com/exchange/CFB-USDT?type=pro" target="_blank" rel="noopener noreferrer">Safetrade <small>CFB/USDT ↗</small></a>
+      <a class="ex" data-link="safetrade" href="https://safetrade.com/exchange/CFB-USDT?type=pro" target="_blank" rel="noopener noreferrer"><span class="exn"><img class="exl" src="/logos/safetrade" alt="" width="36" height="36" loading="lazy">SafeTrade</span> <small>CFB/USDT ↗</small></a>
     </div>
   </div>
   <div class="wp rv d4"><a class="btn ghost" data-link="whitepaper" href="https://drive.google.com/file/d/1Z3H7-WGgqxWhxuz--eQavSG0RdWrPyvB/view" target="_blank" rel="noopener noreferrer">Read the whitepaper ↗</a></div>
@@ -732,6 +735,7 @@ const CFB_CONFIG={
 (()=>{
 const $=s=>document.querySelector(s);
 
+document.querySelectorAll('.exl').forEach(i=>i.addEventListener('error',()=>i.classList.add('off')));
 /* ---- links from config ---- */
 document.querySelectorAll('[data-link]').forEach(a=>{const u=CFB_CONFIG.links[a.dataset.link];if(u){a.href=u;a.target='_blank';a.rel='noopener noreferrer'}});
 
