@@ -552,7 +552,7 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
     <p class="p rv d3">$CFB is the first-ever meme launched on Qubic. It was distributed fairly via airdrop to the entire community. It began as a pure memecoin and grew a real use case: it's the main token of QubicBay, Qubic's NFT marketplace, and it introduced the ecosystem's first NFT collection, Qbros.</p>
     <a class="link rv d4" data-link="genesisTx" href="https://explorer.qubic.org/network/tx/ptthaqjjuyelsdcabjfpzvihriycuquoylnjcnplwclvijofvlkindsatntk" target="_blank" rel="noopener noreferrer">View the Genesis TX on Qubic Explorer ↗</a>
     <ul class="timeline-m rv d4">
-      <li><em>01</em>May 4th, 2024: deployed</li><li><em>02</em>Fair airdrop · no pre-sale</li><li><em>03</em>Main token of QubicBay</li><li><em>04</em>Qbros, the genesis collection</li><li><em>05</em>May 16th, 2025: 3% of supply burned</li>
+      <li><em>01</em>May 4th, 2024: deployed</li><li><em>02</em>Fair airdrop · no pre-sale</li><li><em>03</em>Main token of QubicBay</li><li><em>04</em>Qbros, the genesis collection</li><li><em>05</em>May 16th, 2025: 3% of supply burned</li><li><em>06</em>Oct 8th, 2025: another 3% burned</li>
     </ul>
   </div>
   <ul class="timeline panel rv d3">
@@ -561,6 +561,7 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
     <li><em>03</em><strong>QubicBay</strong><span>Becomes the main token of Qubic's NFT marketplace.</span></li>
     <li><em>04</em><strong>Qbros</strong><span>The first NFT collection in the ecosystem.</span></li>
     <li><em>05</em><strong>May 16th, 2025</strong><span>3% of the total supply burned, first step toward a 15% burn goal.</span></li>
+    <li><em>06</em><strong>Oct 8th, 2025</strong><span>Another 3% burned: 6% of the supply gone.</span></li>
   </ul>
   <div class="rm-head"><div class="kicker rv d1"><b>2024</b> The original roadmap</div></div>
   <div class="roadmap rv d2">
@@ -733,7 +734,8 @@ const CFB_CONFIG={
     goalPct:15,
     // Burns not visible as transfers to the burn address (asset-share burns). QubicBay burns are read live from the chain via /api/burn.
     burns:[
-      {date:"2025-05-16",amount:12620700000,label:"Community burn: 3% of the total supply",tx:"uxolklzyzarwibebudnqesoppxwaljlnfzhiuicmvfwtbsordcjotbvgipye"}
+      {date:"2025-05-16",amount:12620700000,label:"Burn #1: 3% of the total supply",tx:"uxolklzyzarwibebudnqesoppxwaljlnfzhiuicmvfwtbsordcjotbvgipye"},
+      {date:"2025-10-08",amount:12620700000,label:"Burn #2: another 3% of the total supply",tx:"lneccduplfvhaczhkclagcbgjsffokjettpfwjryiecxbtojqvweruafpaei"}
     ],
     // Optional nicer labels for on-chain burns, by transaction
     labels:{"jgroxukvilsshcubufaaicxcmwneqsxfzcpymvkebeunclvyprqbtrpfktnm":"QubicBay: BITE collection launch, first after the Qbay smart contract upgrade"}},
@@ -841,7 +843,7 @@ const LORE=[
   ()=>"Initial supply: 420,690,000,000 $CFB. Yes, those numbers are on purpose.",
   ()=>"2024 roadmap: Phase 1: launch. Phase 2: vibe and hodl. Phase 3: meme takeover.",
   ()=>"Launching a collection on QubicBay? Buy $CFB, burn it, get minting slots.",
-  ()=>"May 16th, 2025: 12,620,700,000 $CFB burned, 3% of the supply. Goal: 15%.",
+  ()=>"May 16th and Oct 8th, 2025: two burns of 3% each. 6% of the supply gone. Goal: 15%.",
   ()=>"Since the Qbay smart contract upgrade, $CFB spent on QubicBay goes straight to the burn address.",
   ()=>"Qbros: 1,001 unique collectibles. The genesis NFT collection of Qubic.",
   ()=>"Qubic runs on 676 Computors. A tick is final when a quorum of 451 agrees.",
