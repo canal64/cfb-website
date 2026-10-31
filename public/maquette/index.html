@@ -43,7 +43,7 @@
   --mono:"IBM Plex Mono",ui-monospace,monospace; --sans:"Instrument Sans",system-ui,sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;background:var(--bg)}
+html{scroll-behavior:smooth;background:var(--bg);overflow-x:clip}
 body{background:var(--bg);color:var(--ink);font-family:var(--sans);overflow-x:hidden;-webkit-font-smoothing:antialiased}
 a{color:inherit}
 
@@ -61,8 +61,8 @@ a{color:inherit}
 /* top bar + nav */
 .topbar{position:fixed;top:0;left:0;right:0;height:30px;z-index:30;display:flex;align-items:center;justify-content:center;
   font:500 11px var(--mono);text-transform:uppercase;letter-spacing:.05em;background:var(--grad);color:#2a0f05;transition:transform .5s cubic-bezier(.6,0,.2,1)}
-.topbar a{text-decoration:none}.topbar b{font-weight:600}
-.topbar button{position:absolute;right:14px;background:none;border:0;color:inherit;font:inherit;cursor:pointer;font-size:14px}
+.topbar a{text-decoration:none;max-width:calc(100% - 96px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.topbar b{font-weight:600}
+.topbar button{position:absolute;right:0;top:0;width:44px;height:30px;background:none;border:0;color:inherit;font:inherit;cursor:pointer;font-size:16px}
 body.scrolled .topbar,body.nobar .topbar{transform:translateY(-100%)}
 nav{position:fixed;top:30px;left:0;right:0;height:56px;z-index:25;display:grid;grid-template-columns:var(--col) 1fr 12% var(--col);align-items:center;
   background:rgba(11,7,6,.82);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line);transition:top .5s cubic-bezier(.6,0,.2,1)}
@@ -116,7 +116,7 @@ section{position:relative;min-height:100vh;min-height:100svh;scroll-margin-top:5
 @supports font-tech(color-COLRv1){.h2 .sp,.mega,.count,.supply .num,footer .big,.logo span{font-family:var(--spice);background:none;color:var(--ink);-webkit-text-fill-color:currentColor}}
 .p{font-size:16px;line-height:1.6;max-width:48ch;color:rgba(255,255,255,.82)}
 .link{display:inline-flex;align-items:center;gap:10px;font:500 11px var(--mono);text-transform:uppercase;letter-spacing:.05em;text-decoration:none;
-  border-left:2px solid var(--o2);padding:4px 0 4px 12px;margin-top:20px}
+  border-left:2px solid var(--o2);padding:8px 0 8px 12px;margin-top:20px}
 .link:hover{color:var(--o1)}
 .panel{background:var(--panel)}
 
@@ -139,9 +139,6 @@ section{position:relative;min-height:100vh;min-height:100svh;scroll-margin-top:5
 .tag em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 .ctas{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap}
 .sub{position:absolute;bottom:calc(8% + 56px);right:calc(var(--col) + 18px);max-width:260px;text-align:right;font-size:14.5px;line-height:1.5;color:rgba(255,255,255,.8);z-index:3}
-.scroll{position:absolute;right:calc(var(--col) + 18px);bottom:calc(10% + 52px);display:flex;gap:10px;align-items:center;padding:6px 10px;font:400 11px var(--mono);text-transform:uppercase;text-decoration:none;z-index:3}
-.scroll span{display:inline-block;animation:bob 2s ease-in-out infinite}
-@keyframes bob{50%{transform:translateY(4px)}}
 .ticker{position:absolute;left:0;right:0;bottom:0;height:56px;overflow:hidden;background:var(--grad);border-top:2px solid #2a0f05;z-index:4}
 .ticker .row{display:flex;align-items:center;gap:34px;height:100%;width:max-content;animation:mq 26s linear infinite}
 .ticker span{display:flex;align-items:center;gap:12px;font:400 24px var(--disp);color:#2a0f05}
@@ -154,9 +151,9 @@ section{position:relative;min-height:100vh;min-height:100svh;scroll-margin-top:5
 .quote{font:500 clamp(22px,2.4vw,40px)/1.28 var(--sans);letter-spacing:-.01em;max-width:30ch;margin:22px 0 0}
 .quote .hi{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 .quote .strike{text-decoration:line-through;text-decoration-color:var(--o2);text-decoration-thickness:2px;color:rgba(255,255,255,.45)}
-.supply{display:grid;grid-template-columns:auto 1fr;gap:2vw;align-items:end;margin:9vh var(--col) 0;padding-left:18px}
+.supply{display:grid;gap:14px;margin:9vh var(--col) 0;padding-left:18px}
 .supply .num{font:400 clamp(40px,7vw,120px)/.9 var(--spice);letter-spacing:-.02em}
-.supply .cap{font:400 11px/1.6 var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--dim);max-width:30ch;padding-bottom:10px}
+.supply .cap{font:400 11px/1.6 var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--dim);max-width:46ch}
 .supply .cap b{color:var(--ink);font-weight:500;display:block}
 
 .stats{margin:5vh var(--col) 0;display:grid;grid-template-columns:repeat(3,1fr) 1.6fr;border:1px solid var(--o2);border-radius:18px;overflow:hidden;background:var(--panel)}
@@ -207,7 +204,8 @@ section{position:relative;min-height:100vh;min-height:100svh;scroll-margin-top:5
 /* ---------- 3 STORY ---------- */
 #story{padding:16vh 0 12vh}
 #story .wrap{margin-left:var(--col);width:calc(33% - 18px);padding:14px 18px}
-#story .h2{margin:18px 0 22px}
+#story .h2,.qb .h2{margin:18px 0 22px}
+#start .h2,#community .h2{margin-top:18px}
 .timeline{position:absolute;right:var(--col);top:16vh;width:26%;font:400 11px var(--mono);text-transform:uppercase;letter-spacing:.05em}
 .timeline li{list-style:none;border-top:1px solid var(--line);padding:14px 0 14px 18%;position:relative;line-height:1.45}
 .timeline li:last-child{border-bottom:1px solid var(--line)}
@@ -290,16 +288,13 @@ section{position:relative;min-height:100vh;min-height:100svh;scroll-margin-top:5
 .where>div+div{border-left:1px solid rgba(255,131,48,.4)}
 .where h4{font:400 18px var(--disp);display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px}
 .where h4 span{font:400 10px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--dim)}
-.ex{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-top:1px solid var(--line);text-decoration:none;font-size:18px;font-weight:500}
-.ex{border-radius:10px;padding:14px 10px;margin:0 -10px;border:1px solid transparent;transition:color .25s,border-color .25s,background .25s,box-shadow .25s}
-.ex small{transition:transform .25s;display:inline-block}
+.ex{display:flex;justify-content:space-between;align-items:center;padding:14px 10px;margin:0 -10px;border:1px solid transparent;border-top-color:var(--line);border-radius:10px;text-decoration:none;font-size:18px;font-weight:500;transition:color .25s,border-color .25s,background .25s,box-shadow .25s}
 .exn{display:inline-flex;align-items:center;gap:14px}
 .exl{width:36px;height:36px;flex:none;border-radius:10px;object-fit:contain;padding:5px;background:#fff;box-shadow:0 0 0 1px rgba(255,255,255,.12)}
 .exl.off{display:none}
 .ex:hover{color:var(--o1);border-color:rgba(255,212,107,.7);background:rgba(255,131,48,.08);box-shadow:0 0 24px rgba(255,131,48,.18)}
 .ex:hover small{transform:translate(3px,-3px);color:var(--o1)}
-.ex+.ex{border-top-color:var(--line)}
-.ex small{font:400 10px var(--mono);text-transform:uppercase;color:var(--dim)}
+.ex small{display:inline-block;font:400 10px var(--mono);text-transform:uppercase;color:var(--dim);transition:transform .25s}
 .wp{margin:5vh var(--col) 0;padding-left:18px;display:flex;gap:12px;flex-wrap:wrap}
 
 .live{margin:6vh var(--col) 0;display:grid;grid-template-columns:1.5fr 1fr;border:1px solid var(--o2);border-radius:18px;overflow:hidden;background:var(--panel)}
@@ -345,17 +340,11 @@ section{position:relative;min-height:100vh;min-height:100svh;scroll-margin-top:5
 .play .pt{grid-area:t;font:400 clamp(26px,3vw,44px) var(--disp)}
 .play .pd{grid-area:d;color:rgba(255,255,255,.78);font-size:15px;line-height:1.45;max-width:44ch}
 .play .btn{grid-area:b}
-.play.cf{margin-bottom:6vh;background:linear-gradient(120deg,rgba(56,189,248,.16),rgba(192,38,211,.12) 55%,rgba(11,7,6,.9));border-color:#38bdf8}
-.play.cf .pk{color:#7fe7ff}
 @media (max-width:900px){.play{margin:0 16px 5vh;grid-template-columns:1fr;grid-template-areas:"k" "t" "d" "b";justify-items:start}}
 .socials{margin:6vh var(--col) 0;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .socials a{padding:22px 20px;text-decoration:none;display:flex;justify-content:space-between;align-items:center;font:400 clamp(18px,1.7vw,26px) var(--disp);border:1px solid var(--line);border-radius:18px;background:var(--panel);transition:border-color .3s}
 .socials a small{font:400 11px var(--mono);color:var(--dim)}
 .socials a:hover{border-color:var(--o2)}
-.trust{margin:6vh var(--col) 0;padding:22px 20px;border:1px dashed rgba(255,131,48,.5);border-radius:18px;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center;background:var(--panel)}
-.trust p{font-size:14.5px;line-height:1.55;color:rgba(255,255,255,.8);max-width:70ch}
-.trust .mini{display:block;margin-top:10px;font:400 10.5px/1.5 var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--dim)}
-.trust b{display:block;font:400 11px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--o1);margin-bottom:8px;font-weight:500}
 
 footer{position:relative;z-index:2;padding:8vh var(--col) 6vh;border-top:1px solid var(--line);background:var(--bg)}
 footer .big{font:400 clamp(48px,9vw,150px)/.9 var(--spice);margin-bottom:5vh}
@@ -390,18 +379,19 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
 .timeline-m li em{font-style:normal;color:var(--o2);margin-right:10px}
 @media (max-width:900px){
   :root{--col:16px}
-  .guides i:nth-child(1),.guides i:nth-child(3),.menu,.pad,.rail,.feat,.timeline,.scroll{display:none}
+  .guides i:nth-child(1),.guides i:nth-child(3),.menu,.pad,.rail,.feat,.timeline{display:none}
   nav{grid-template-columns:1fr auto auto;gap:8px;padding-right:16px}
   .navplay{display:inline-flex}
   .logo{padding-left:16px}
   .hero-head{width:86vw;left:50%;top:44%}
   #intro .prompt{left:16px;right:16px;width:auto;top:13%}
-  .hl{left:16px;right:16px;bottom:calc(56px + 13%);padding-left:0}
+  .hl{left:16px;right:16px;bottom:calc(46px + 2.2% + 72px);padding-left:0}
   .hl .pre,.tag{background:rgba(11,7,6,.75);display:inline-block;padding:2px 6px}
-  .sub{left:16px;right:16px;bottom:calc(56px + 3%);max-width:none;text-align:left;background:rgba(11,7,6,.75);padding:4px 6px;font-size:13.5px}
+  .sub{left:16px;right:16px;max-width:none;text-align:left}
   .ticker{height:46px}.ticker span{font-size:18px}.ticker img{width:26px;height:26px}
   #manifesto .inner{margin:0 16px;padding:28px 0}
-  .supply{grid-template-columns:1fr;margin:6vh 16px 0;padding-left:0}
+  .supply{margin:6vh 16px 0;padding-left:0}
+  .supply .num{font-size:clamp(28px,9.6vw,64px)}
   #story .wrap,#start .head,#community .head{width:auto;margin:0 16px;padding:12px 0}
   .timeline-m{display:block}
   .rm-head{margin:8vh 16px 0;padding-left:0}
@@ -423,28 +413,28 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
   .where>div+div{border-left:0;border-top:1px solid rgba(255,131,48,.4)}
   .wp{margin:4vh 16px 0;padding-left:0}
   .socials{grid-template-columns:1fr;margin:5vh 16px 0}
-  .trust{grid-template-columns:1fr;margin:5vh 16px 0}
   .stats{grid-template-columns:1fr 1fr;margin:5vh 16px 0}
   .radar,.term{margin-left:16px;margin-right:16px}
-  .live{grid-template-columns:1fr;margin:5vh 16px 0}
+  .live{grid-template-columns:minmax(0,1fr);margin:5vh 16px 0}
+  .navplay,nav .btn.sm{height:36px}
   .calc{border-left:0;border-top:1px solid rgba(255,131,48,.35)}
   .lgrid{grid-template-columns:1fr 1fr}
   .st+.st{border-left:0}.st:nth-child(2n){border-left:1px solid rgba(255,131,48,.35)}
   .st:nth-child(n+3){border-top:1px solid rgba(255,131,48,.35)}
   .st.issuer{grid-column:1/-1;border-left:0!important}
   .h2{font-size:clamp(26px,7.4vw,34px)}
-  section{scroll-margin-top:52px}
+  section{scroll-margin-top:52px;min-height:0}
+  #intro{min-height:100vh;min-height:100svh}
+  #manifesto,#story,#qubicbay,#start,#community{padding-top:10vh;padding-bottom:8vh}
   .mega{font-size:clamp(64px,22vw,110px)}
   .marquee img{height:80px;width:80px}
 }
 /* ---------- MOBILE HERO (cleaner: head on top, text on a soft fade, 2 buttons) ---------- */
 @media (max-width:900px){
-  #intro::after{content:"";position:absolute;left:0;right:0;bottom:0;height:62%;z-index:2;pointer-events:none;
+  #intro::after{content:"";position:absolute;left:0;right:0;bottom:0;height:52%;z-index:2;pointer-events:none;
     background:linear-gradient(to bottom,rgba(11,7,6,0) 0%,rgba(11,7,6,.78) 34%,rgba(11,7,6,.96) 70%)}
-  .hl{bottom:calc(46px + 2.2% + 72px)}
   #intro .prompt .box{min-height:66px;padding:12px 14px}
   #intro .prompt .next{display:none}
-  #intro::after{height:52%}
   .hl .pre{margin-bottom:10px}
   .mega{font-size:clamp(64px,21vw,96px)}
   .tag{background:none;backdrop-filter:none;-webkit-backdrop-filter:none;padding:0;margin-top:8px;font-size:clamp(22px,6.6vw,28px);line-height:1.12}
@@ -459,6 +449,20 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
     text-decoration:underline;text-underline-offset:4px;text-decoration-color:rgba(255,212,107,.5)}
   .sub{background:none;padding:0;bottom:calc(46px + 2.2%);color:rgba(255,255,255,.72);font-size:13.5px}
 }
+@media (min-width:901px) and (max-width:1280px){
+  main,footer,.guides{--col:7%}
+  .rail{display:none}
+  .hl{bottom:calc(56px + 4% + 64px)}
+  .sub{left:var(--col);right:auto;bottom:calc(56px + 4%);padding-left:18px;max-width:60ch;text-align:left}
+}
+/* focus, press states, touch */
+:focus-visible{outline:2px solid var(--o1);outline-offset:3px;border-radius:6px}
+.btn:active,.sbtn:active,.totop:active,.navplay:active{transform:translateY(1px) scale(.98)}
+.ex:active,.socials a:active,.play:active,.copy:active{transform:scale(.99)}
+.navplay:hover{border-color:var(--o1);background:rgba(255,212,107,.08)}
+.menu a,footer .eco a,.lv .track a,.burns a{display:inline-block;padding:6px 0}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (hover:none){.btn:hover,.sbtn:hover,.step:hover,.play:hover,.totop:hover,footer .listed:hover{transform:none}.marquee img:hover{transform:none}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
 </style>
 </head>
@@ -473,9 +477,10 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
 <div class="glow" aria-hidden="true"></div>
 <div class="guides" aria-hidden="true"><i></i><i></i><i></i></div>
 
-<div class="topbar"><a data-link="qubicbay" href="https://qubicbay.io/" target="_blank" rel="noopener noreferrer"><b>New:</b> $CFB powers QubicBay, Qubic's NFT marketplace ↗</a><button id="closebar" aria-label="Close">×</button></div>
+<header>
+<div class="topbar"><a data-link="qubicbay" href="https://qubicbay.io/" target="_blank" rel="noopener noreferrer"><b>New:</b> $CFB powers QubicBay, Qubic's NFT marketplace ↗</a><button id="closebar" type="button" aria-label="Close announcement">×</button></div>
 
-<nav>
+<nav aria-label="Main">
   <a class="logo" href="#intro"><img src="../assets/brand/cfb-head.webp" alt=""><span>$CFB</span></a>
   <div class="menu">
     <a href="#manifesto">Manifesto</a><a href="#story">Story</a><a href="#qubicbay">QubicBay</a><a href="#qbros">Qbros</a><a href="#start">Get $CFB</a><a href="#community">Community</a><a href="head-match/">Play ▶</a>
@@ -484,6 +489,7 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
   <a class="navplay" href="head-match/" aria-label="Play Head Match">🎮 Play</a>
   <a class="btn sm" href="#where" data-buy>Buy now</a>
 </nav>
+</header>
 
 <aside class="rail" aria-hidden="true">
   <div class="dots"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
@@ -521,6 +527,7 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
 <!-- 2 MANIFESTO -->
 <section id="manifesto" data-label="Manifesto">
   <div class="inner panel">
+    <h2 class="sr">The original $CFB manifesto</h2>
     <div class="kicker rv d1"><b>00</b> The original manifesto · 2024</div>
     <p class="quote rv d2">CFB is tired of watching everyone play with the same old blockchains: <span class="strike">Solana, Ethereum, L1, L2, L3, cats, dogs</span> and various wives' boyfriends. Their memecoins have had their day. It's time for <span class="hi">$Qubic</span> to take over, and <span class="hi">$CFB</span> is here to make it mainstream.</p>
     <a class="link rv d3" href="#story">Launched fairly without pre-sale. A coin for the community, for the people, forever.</a>
@@ -591,7 +598,7 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
   <div class="qb">
     <div class="l panel">
       <div class="kicker rv d1"><b>02</b> QubicBay · Burn mechanics</div>
-      <h2 class="h2 rv d2" style="margin:18px 0 22px"><span class="sp">Burned</span> to build Qubic's NFT culture.</h2>
+      <h2 class="h2 rv d2"><span class="sp">Burned</span> to build Qubic's NFT culture.</h2>
       <p class="p rv d3">QubicBay is Qubic's definitive NFT marketplace, where $CFB became deflationary. To launch an NFT collection, creators must buy and burn $CFB to obtain minting slots. Every new collection reduces the supply, fully automated and managed exclusively by the Qbay smart contract.</p>
       <a class="link rv d4" data-link="qubicbay" href="https://qubicbay.io/" target="_blank" rel="noopener noreferrer">Discover QubicBay ↗</a>
     </div>
@@ -622,7 +629,7 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
 <section id="start" data-label="Get $CFB">
   <div class="head panel">
     <div class="kicker rv d1"><b>04</b> Getting started</div>
-    <h2 class="h2 rv d2" style="margin-top:18px">3 simple steps to join the <span class="sp">$CFB</span> ecosystem.</h2>
+    <h2 class="h2 rv d2">3 simple steps to join the <span class="sp">$CFB</span> ecosystem.</h2>
   </div>
   <div class="steps rv d3">
     <article class="step">
@@ -688,7 +695,7 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
 <section id="community" data-label="Community">
   <div class="head panel">
     <div class="kicker rv d1"><b>05</b> Join our community</div>
-    <h2 class="h2 rv d2" style="margin-top:18px">Be part of the <span class="sp">first meme</span> on Qubic.</h2>
+    <h2 class="h2 rv d2">Be part of the <span class="sp">first meme</span> on Qubic.</h2>
   </div>
   <div class="socials rv d3">
     <a data-link="x" href="https://x.com/c_f_b_token" target="_blank" rel="noopener noreferrer">X <small>↗</small></a>
@@ -832,7 +839,7 @@ async function fetchBurnStats(){
   const EXP='https://explorer.qubic.org/network/tx/';
   $('#burnLog').innerHTML=list.slice().sort((a,b)=>String(b.date).localeCompare(String(a.date))).map(b=>{
     const d=/^\d{4}-\d{2}-\d{2}$/.test(b.date)?new Date(b.date+'T12:00:00Z').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):b.date;
-    return `<li><time>${d}</time><span>🔥 <b title="${fmt(b.amount)} $CFB">${big(b.amount)} $CFB</b> · ${b.label}</span><a href="${EXP+b.tx}" target="_blank" rel="noopener noreferrer">View TX ↗</a></li>`}).join('');
+    return `<li><time>${d}</time><span>🔥 <b title="${fmt(b.amount)} $CFB">${big(b.amount)} $CFB</b> · ${b.label}</span><a href="${EXP+b.tx}" target="_blank" rel="noopener noreferrer" aria-label="View burn transaction of ${d} on the Qubic explorer">View TX ↗</a></li>`}).join('');
 }
 fetchBurnStats();
 
