@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Head Match — $CFB memory game</title>
+<meta name="description" content="Flip the cards, match the CFB heads, beat the clock. A memory game made with the $CFB community's memes.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0b0706">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Head Match — $CFB memory game">
+<meta property="og:description" content="Match all the CFB heads. Beat the clock. Share your score.">
+<meta property="og:image" content="https://cfb-website.rudynakamoto.workers.dev/assets/brand/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@c_f_b_token">
+<link rel="icon" href="../../assets/brand/favicon-48.png">
+<link rel="apple-touch-icon" href="../../assets/brand/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Bungee+Spice&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0706;--ink:#fff;--dim:rgba(255,255,255,.55);--line:rgba(255,255,255,.1);--panel:rgba(11,7,6,.88);
+  --o1:#ffd46b;--o2:#ff8330;--o3:#d3633d;--o4:#c43d2f;
+  --grad:linear-gradient(90deg,#ffd46b,#ff8330 45%,#c43d2f);--btn:linear-gradient(#ff8330,#d3633d);
+  --disp:"Bungee",system-ui,sans-serif;--spice:"Bungee Spice","Bungee",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;--sans:"Instrument Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{background:var(--bg);color:var(--ink);font-family:var(--sans);min-height:100%;overflow-x:hidden}
+a{color:inherit}
+.rays{position:fixed;inset:-50vmax;z-index:0;pointer-events:none;
+  background:repeating-conic-gradient(from 0deg,rgba(214,105,65,.2) 0deg 7deg,rgba(91,39,20,.08) 7deg 14deg);
+  -webkit-mask:radial-gradient(circle,#000 0,#000 16vmax,transparent 60vmax);mask:radial-gradient(circle,#000 0,#000 16vmax,transparent 60vmax);
+  animation:spin 140s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.glow{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(60vmax 45vmax at 50% 45%,rgba(255,131,48,.18),transparent 60%)}
+
+header{position:sticky;top:0;z-index:10;height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;
+  background:rgba(11,7,6,.82);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;font:400 20px var(--disp)}
+.logo img{width:32px;height:32px;object-fit:contain}
+.back{font:400 11px var(--mono);text-transform:uppercase;letter-spacing:.06em;text-decoration:none;color:var(--dim)}
+.back:hover{color:var(--o1)}
+
+main{position:relative;z-index:1;max-width:980px;margin:0 auto;padding:26px 16px 50px}
+.top{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.kicker{font:400 11px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--o1)}
+h1{font:400 clamp(38px,7vw,74px)/.95 var(--disp);margin-top:8px}
+h1 span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+@supports font-tech(color-COLRv1){h1 span{font-family:var(--spice);background:none;color:var(--ink)}}
+.lead{margin-top:10px;color:rgba(255,255,255,.75);font-size:15px;max-width:44ch;line-height:1.5}
+
+.levels{display:flex;gap:6px;padding:4px;border:1px solid var(--line);border-radius:999px;background:var(--panel)}
+.levels button{border:0;background:none;color:var(--dim);font:500 11px var(--mono);text-transform:uppercase;letter-spacing:.06em;padding:9px 14px;border-radius:999px;cursor:pointer}
+.levels button.on{background:var(--btn);color:#fff}
+
+.hud{display:grid;grid-template-columns:repeat(4,1fr);margin:22px 0 16px;border:1px solid var(--o2);border-radius:16px;overflow:hidden;background:var(--panel)}
+.hud div{padding:12px 14px}
+.hud div+div{border-left:1px solid rgba(255,131,48,.3)}
+.hud small{display:block;font:400 10px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--dim)}
+.hud b{display:block;font:400 clamp(16px,2.4vw,24px) var(--disp);margin-top:4px}
+.hud .combo b{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+.board{display:grid;gap:clamp(6px,1.4vw,12px);perspective:1000px;margin:0 auto}
+.board.l6{grid-template-columns:repeat(4,1fr);max-width:min(560px,calc(133vh - 400px))}
+.board.l8{grid-template-columns:repeat(4,1fr);max-width:min(560px,calc(100vh - 300px))}
+.board.l12{grid-template-columns:repeat(6,1fr);max-width:min(980px,calc(150vh - 450px))}
+.card{position:relative;aspect-ratio:1;border:0;background:none;cursor:pointer;transform-style:preserve-3d;transition:transform .45s cubic-bezier(.2,.7,.2,1)}
+.card.flip,.card.done{transform:rotateY(180deg)}
+.card .f{position:absolute;inset:0;border-radius:14px;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:grid;place-items:center;overflow:hidden}
+.card .back{background:linear-gradient(145deg,#ff8330,#c43d2f);border:1px solid rgba(255,212,107,.5);box-shadow:inset 0 -4px 0 rgba(0,0,0,.25)}
+.card .back::before{content:"";position:absolute;inset:0;background:repeating-conic-gradient(from 0deg,rgba(255,255,255,.08) 0 10deg,transparent 10deg 20deg)}
+.card .back img{position:relative;width:52%;filter:drop-shadow(0 4px 6px rgba(0,0,0,.35))}
+.card .back span{position:absolute;bottom:6%;font:400 clamp(8px,1.4vw,12px) var(--disp);color:#2a0f05}
+.card .front{transform:rotateY(180deg);background:radial-gradient(circle at 50% 40%,#2a140c,#0b0706);border:1px solid var(--line)}
+.card .front img{width:84%;height:84%;object-fit:contain;filter:drop-shadow(0 6px 10px rgba(0,0,0,.5))}
+.card:hover:not(.flip):not(.done){transform:translateY(-3px)}
+.card.done .front{border-color:var(--o2);box-shadow:0 0 0 1px var(--o2),0 0 22px rgba(255,131,48,.45)}
+.card.done{animation:pop .5s ease}
+@keyframes pop{50%{transform:rotateY(180deg) scale(1.08)}}
+.card.miss .front{border-color:#f87171;animation:shake .35s}
+@keyframes shake{25%{translate:-4px 0}75%{translate:4px 0}}
+
+.actions{display:flex;justify-content:center;gap:10px;margin-top:22px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:42px;padding:0 20px;border-radius:999px;border:0;background:var(--btn);color:#fff;
+  font:400 13px var(--disp);text-decoration:none;cursor:pointer;box-shadow:inset 0 -3px 0 rgba(0,0,0,.25),0 8px 30px rgba(255,131,48,.25)}
+.btn.ghost{background:transparent;border:1px solid rgba(255,255,255,.35);box-shadow:none;font:500 11px var(--mono);text-transform:uppercase;letter-spacing:.06em}
+.btn.ghost:hover{border-color:var(--o1);color:var(--o1)}
+
+.win{position:fixed;inset:0;z-index:20;display:none;place-items:center;background:rgba(11,7,6,.78);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding:16px}
+.win.on{display:grid}
+.box{width:min(440px,100%);border:1px solid var(--o2);border-radius:22px;background:var(--bg);padding:26px 22px;text-align:center;box-shadow:0 30px 80px rgba(0,0,0,.6);animation:rise .5s cubic-bezier(.2,.7,.2,1)}
+@keyframes rise{from{transform:translateY(30px);opacity:0}}
+.box img{width:120px;margin:-70px auto 6px;display:block;filter:drop-shadow(0 10px 20px rgba(0,0,0,.5))}
+.box h2{font:400 30px var(--disp)}
+.box .rank{font:400 12px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--o1);margin-top:6px}
+.stars{font-size:30px;margin:12px 0;letter-spacing:6px}
+.res{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);border-radius:14px;margin:8px 0 16px}
+.res div{padding:10px}.res div+div{border-left:1px solid var(--line)}
+.res small{display:block;font:400 10px var(--mono);text-transform:uppercase;color:var(--dim)}
+.res b{font:400 18px var(--disp)}
+.new{display:none;font:500 11px var(--mono);text-transform:uppercase;color:#4ade80;margin-bottom:12px}
+.new.on{display:block}
+.box .actions{margin-top:6px}
+
+footer{position:relative;z-index:1;text-align:center;padding:10px 16px 40px;font:400 11px var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--dim)}
+@media (max-width:640px){
+  .board.l12{grid-template-columns:repeat(4,1fr)}
+  .hud{grid-template-columns:repeat(2,1fr)}
+  .hud div:nth-child(3){border-left:0}
+  .hud div:nth-child(n+3){border-top:1px solid rgba(255,131,48,.3)}
+  .levels{width:100%}.levels button{flex:1}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="rays" aria-hidden="true"></div><div class="glow" aria-hidden="true"></div>
+
+<header>
+  <a class="logo" href="../"><img src="../../assets/brand/cfb-head.webp" alt="">$CFB</a>
+  <a class="back" href="../">← Back to site</a>
+</header>
+
+<main>
+  <div class="top">
+    <div>
+      <div class="kicker">$CFB arcade · Memory game</div>
+      <h1>Head <span>Match</span></h1>
+      <p class="lead">Flip the cards, find the pairs of CFB heads made by the community. Fewer moves, faster time, more stars.</p>
+    </div>
+    <div class="levels" role="group" aria-label="Difficulty">
+      <button data-p="6">Easy</button><button data-p="8" class="on">Medium</button><button data-p="12">Hard</button>
+    </div>
+  </div>
+
+  <div class="hud">
+    <div><small>Time</small><b id="time">0.0s</b></div>
+    <div><small>Moves</small><b id="moves">0</b></div>
+    <div><small>Pairs</small><b id="pairs">0/8</b></div>
+    <div class="combo"><small>Best</small><b id="best">—</b></div>
+  </div>
+
+  <div class="board l8" id="board" aria-label="Cards"></div>
+
+  <div class="actions">
+    <button class="btn" id="restart">New game</button>
+    <a class="btn ghost" href="../#community">Join the community ↗</a>
+  </div>
+</main>
+
+<div class="win" id="win" role="dialog" aria-modal="true" aria-labelledby="wt">
+  <div class="box">
+    <img src="../../assets/heads/crown.webp" alt="">
+    <h2 id="wt">GM, champion!</h2>
+    <div class="rank" id="wRank"></div>
+    <div class="stars" id="wStars"></div>
+    <div class="new" id="wNew">★ New personal best</div>
+    <div class="res">
+      <div><small>Time</small><b id="wTime"></b></div>
+      <div><small>Moves</small><b id="wMoves"></b></div>
+      <div><small>Level</small><b id="wLevel"></b></div>
+    </div>
+    <div class="actions">
+      <a class="btn" id="share" target="_blank" rel="noopener noreferrer">Share on X</a>
+      <button class="btn ghost" id="again">Play again</button>
+    </div>
+  </div>
+</div>
+
+<footer>$CFB · The first memecoin on Qubic · Memes by the community</footer>
+
+<script>
+(()=>{
+const HEADS=["3d-glasses","android","aviators","bat-mask","big-brain","captain-shield","classic","claws-mask","claws-unmasked","crown","cyber-samurai","cyberpunk","cyborg","cyclops","deal-with-it","devil","dwarf","elf","goblin","golden-hair","green-alien","green-saiyan","grey-alien","headband","mad-scientist","noir","optic-blast","orc","pirate-cook","pirate-doctor","pirate-swordsman","purple-shades","purple-tyrant","red-laser-eyes","red-mask-merc","scouter","shutter-shades","snapback","spider-angry","spider-mask","straw-hat","super-saiyan","tentacle","tube-head","visor","winged-helmet"];
+const LEVEL={6:"Easy",8:"Medium",12:"Hard"};
+const SITE="https://cfb-website.rudynakamoto.workers.dev/maquette/head-match/";
+const $=s=>document.querySelector(s);
+const store={get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+
+let pairs=8,deck=[],open=[],lock=false,moves=0,found=0,t0=0,timer=null,started=false;
+
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+const fmtT=ms=>(ms/1000).toFixed(1)+'s';
+
+function bestText(){const b=store.get('cfb-hm-'+pairs);return b?`${fmtT(b.ms)} · ${b.moves}`:'—'}
+
+function newGame(){
+  clearInterval(timer);started=false;moves=0;found=0;open=[];lock=false;
+  $('#time').textContent='0.0s';$('#moves').textContent='0';$('#pairs').textContent=`0/${pairs}`;$('#best').textContent=bestText();
+  const pick=shuffle([...HEADS]).slice(0,pairs);deck=shuffle([...pick,...pick]);
+  const b=$('#board');b.className='board l'+pairs;
+  b.innerHTML=deck.map((h,i)=>`<button class="card" data-i="${i}" data-h="${h}" aria-label="Hidden card">
+    <span class="f back"><img src="../../assets/brand/cfb-head.webp" alt=""><span>$CFB</span></span>
+    <span class="f front"><img src="../../assets/heads/${h}.webp" alt="${h.replace(/-/g,' ')}"></span></button>`).join('');
+}
+
+function tick(){$('#time').textContent=fmtT(performance.now()-t0)}
+
+function flip(card){
+  if(lock||card.classList.contains('flip')||card.classList.contains('done'))return;
+  if(!started){started=true;t0=performance.now();timer=setInterval(tick,100)}
+  card.classList.add('flip');card.setAttribute('aria-label',card.dataset.h.replace(/-/g,' '));open.push(card);
+  if(open.length<2)return;
+  moves++;$('#moves').textContent=moves;
+  const [a,b]=open;
+  if(a.dataset.h===b.dataset.h){
+    a.classList.add('done');b.classList.add('done');open=[];found++;$('#pairs').textContent=`${found}/${pairs}`;
+    if(navigator.vibrate)navigator.vibrate(20);
+    if(found===pairs)setTimeout(win,500);
+  }else{
+    lock=true;a.classList.add('miss');b.classList.add('miss');
+    setTimeout(()=>{a.classList.remove('flip','miss');b.classList.remove('flip','miss');a.setAttribute('aria-label','Hidden card');b.setAttribute('aria-label','Hidden card');open=[];lock=false},800);
+  }
+}
+
+function win(){
+  clearInterval(timer);const ms=performance.now()-t0;tick();
+  const ratio=moves/pairs; const stars=ratio<=1.4?3:ratio<=2?2:1;
+  const ranks=["Shrimp","Computor Apprentice","Qbro Whale","CfB Archi-Brain"];
+  const rank=ranks[Math.min(3,stars-1+(pairs===12&&stars===3?1:0))];
+  const key='cfb-hm-'+pairs,best=store.get(key),isBest=!best||ms<best.ms;
+  if(isBest)store.set(key,{ms,moves});
+  $('#best').textContent=bestText();
+  $('#wTime').textContent=fmtT(ms);$('#wMoves').textContent=moves;$('#wLevel').textContent=LEVEL[pairs];
+  $('#wStars').textContent='★'.repeat(stars)+'☆'.repeat(3-stars);$('#wRank').textContent='Rank: '+rank;
+  $('#wNew').classList.toggle('on',isBest&&!!best);
+  const txt=`I matched all ${pairs} CFB heads in ${fmtT(ms)} (${moves} moves, ${'★'.repeat(stars)}) on Head Match 🔥\n\nCan you beat me? @c_f_b_token $CFB #Qubic`;
+  $('#share').href='https://x.com/intent/post?text='+encodeURIComponent(txt)+'&url='+encodeURIComponent(SITE);
+  $('#win').classList.add('on');$('#again').focus();
+}
+
+$('#board').addEventListener('click',e=>{const c=e.target.closest('.card');if(c)flip(c)});
+document.querySelectorAll('.levels button').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('.levels button').forEach(x=>x.classList.toggle('on',x===b));pairs=+b.dataset.p;newGame()}));
+$('#restart').onclick=newGame;
+$('#again').onclick=()=>{$('#win').classList.remove('on');newGame()};
+$('#win').addEventListener('click',e=>{if(e.target.id==='win'){$('#win').classList.remove('on')}});
+addEventListener('keydown',e=>{if(e.key==='Escape')$('#win').classList.remove('on')});
+
+/* preload heads so flips are instant */
+HEADS.forEach(h=>{const i=new Image();i.src=`../../assets/heads/${h}.webp`});
+newGame();
+})();
+</script>
+</body>
+</html>
