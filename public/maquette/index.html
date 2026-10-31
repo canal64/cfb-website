@@ -56,7 +56,7 @@ a{color:inherit}
 .glow{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(60vmax 50vmax at 58% 52%,rgba(255,131,48,.22),transparent 60%)}
 .guides{position:fixed;inset:0;pointer-events:none;z-index:0}
 .guides i{position:absolute;top:0;bottom:0;width:1px;background:var(--line)}
-.guides i:nth-child(1){left:var(--col)}.guides i:nth-child(2){left:50%}.guides i:nth-child(3){left:calc(100% - var(--col))}
+.guides i[hidden]{display:none}.guides i:nth-child(1){left:var(--col)}.guides i:nth-child(2){left:50%}.guides i:nth-child(3){left:calc(100% - var(--col))}
 
 /* top bar + nav */
 .topbar{position:fixed;top:0;left:0;right:0;height:30px;z-index:30;display:flex;align-items:center;justify-content:center;
@@ -490,7 +490,7 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
 </svg>
 <div class="rays" id="rays" aria-hidden="true"></div>
 <div class="glow" aria-hidden="true"></div>
-<div class="guides" aria-hidden="true"><i></i><i></i><i></i></div>
+<div class="guides" aria-hidden="true"><i></i><i hidden></i><i></i></div>
 
 <header>
 <div class="topbar"><a data-link="qubicbay" href="https://qubicbay.io/" target="_blank" rel="noopener noreferrer"><b>New:</b> $CFB powers QubicBay, Qubic's NFT marketplace ↗</a><button id="closebar" type="button" aria-label="Close announcement">×</button></div>
