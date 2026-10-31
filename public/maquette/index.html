@@ -644,7 +644,7 @@ async function fetchCFBMarketData(){
   cc.className=(d?.cfb?.change24h??0)>=0?'up':'down';cq.className=(d?.qubic?.change24h??0)>=0?'up':'down';
   $('#fdv').textContent=M.cfb?usd(M.cfb*CFB_CONFIG.supply.initial):'—';
   const live=!!(d&&d.ok);$('#liveDot').classList.toggle('on',live);
-  $('#liveSrc').textContent=live?[d.cfb&&d.cfb.source,d.qubic&&d.qubic.source].filter(Boolean).join(' · ')+' · '+new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}):'Market data unavailable';
+  $('#liveSrc').textContent=live?[...new Set([d.cfb&&d.cfb.source,d.qubic&&d.qubic.source].filter(Boolean))].join(' · ')+' · '+new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}):'Market data unavailable';
   calc();
 }
 function calc(){
