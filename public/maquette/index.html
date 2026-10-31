@@ -4,12 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>$CFB · The First Memecoin on Qubic</title>
-<meta name="description" content="$CFB is the first-ever memecoin on Qubic: fair launch, no pre-sale, QubicBay's token and the Qbros genesis collection. A piece of Qubic's cultural history.">
+<meta name="description" content="$CFB is the first meme ever launched on Qubic: fair airdrop on May 4th, 2024, deflationary token of the QubicBay NFT marketplace and origin of the Qbros genesis collection.">
+<meta name="keywords" content="CFB, $CFB, Qubic, memecoin, QubicBay, Qbros, NFT, Qubic token, burn">
+<meta name="author" content="$CFB community">
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#0b0706">
 <link rel="canonical" href="https://cfb-website.rudynakamoto.workers.dev/maquette/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="$CFB">
+<meta property="og:locale" content="en_US">
+<meta property="og:image:type" content="image/png">
 <meta property="og:title" content="$CFB · The First Memecoin on Qubic">
 <meta property="og:description" content="Fair airdrop on May 4th, 2024. The deflationary token of QubicBay and the origin of Qbros. Not just a meme: Qubic history.">
 <meta property="og:url" content="https://cfb-website.rudynakamoto.workers.dev/maquette/">
@@ -243,15 +247,25 @@ section{position:relative;min-height:100vh;min-height:100svh;scroll-margin-top:5
 /* ---------- 6 GET STARTED ---------- */
 #start{padding:16vh 0 10vh}
 #start .head{margin-left:var(--col);padding:14px 18px;width:fit-content}
-.steps{margin:7vh var(--col) 0;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.steps a{text-decoration:none;padding:22px 20px 30px;border:1px solid var(--line);border-radius:18px;background:var(--panel);transition:border-color .3s,transform .3s}
-.steps a:hover{border-color:var(--o2);transform:translateY(-4px)}
-.steps .num{font:400 11px var(--mono);color:var(--o1);display:flex;justify-content:space-between}
-.steps h3{font:400 clamp(20px,1.8vw,28px) var(--disp);text-transform:uppercase;margin:36px 0 10px}
-.steps .warn{display:block;margin-top:10px;padding:8px 10px;border:1px solid rgba(255,212,107,.35);border-radius:10px;font:400 10.5px/1.5 var(--mono);text-transform:uppercase;letter-spacing:.03em;color:var(--o1);background:rgba(255,131,48,.06)}
-.steps p{font-size:14.5px;line-height:1.5;color:var(--dim)}
-.where.pulse{animation:pulse 1.4s ease-out}
-@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,131,48,.7)}100%{box-shadow:0 0 0 22px rgba(255,131,48,0)}}
+.steps{margin:6vh var(--col) 0;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.step{display:flex;flex-direction:column;padding:24px 22px 22px;border:1px solid rgba(255,131,48,.35);border-radius:20px;background:var(--panel);transition:border-color .3s,transform .3s}
+.step:hover{border-color:var(--o2);transform:translateY(-3px)}
+.step .sh{display:flex;align-items:center;justify-content:space-between}
+.step .ic{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(145deg,rgba(255,131,48,.25),rgba(196,61,47,.15));border:1px solid rgba(255,212,107,.35)}
+.step .ic svg{width:24px;height:24px;fill:none;stroke:var(--o1);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.step .n{font:500 11px var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--o1)}
+.step h3{font:400 clamp(20px,1.7vw,26px)/1.15 var(--disp);text-transform:uppercase;margin:22px 0 10px}
+.step p{font-size:15px;line-height:1.6;color:rgba(255,255,255,.78);flex:1}
+.step p strong{color:#fff;font-weight:600}
+.sbtn{align-self:flex-start;margin-top:20px;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:10px 18px;border-radius:999px;background:var(--btn);color:#fff;text-decoration:none;
+  font:400 12px var(--disp);box-shadow:inset 0 -3px 0 rgba(0,0,0,.25);transition:transform .2s,box-shadow .2s}
+.sbtn:hover{transform:translateY(-2px);box-shadow:inset 0 -3px 0 rgba(0,0,0,.25),0 10px 30px rgba(255,131,48,.35)}
+.alert{margin:20px var(--col) 0;display:flex;gap:16px;align-items:flex-start;padding:20px 22px;border:1px solid rgba(255,212,107,.45);border-left:4px solid var(--o1);border-radius:16px;background:rgba(255,190,80,.08)}
+.alert .ai{font-size:26px;line-height:1;flex:none;margin-top:2px}
+.alert strong{display:block;font:500 12px var(--mono);text-transform:uppercase;letter-spacing:.07em;color:var(--o1);margin-bottom:8px}
+.alert p{font-size:15px;line-height:1.6;color:rgba(255,255,255,.88);max-width:75ch}
+.alert p b{color:#fff;font-weight:600}
+.alert .ok{margin-top:10px;font-size:14px;color:#86efac}
 .where{margin:9vh var(--col) 0;display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--o2);border-radius:18px;overflow:hidden;background:var(--bg)}
 .where>div{padding:20px}
 .where>div+div{border-left:1px solid rgba(255,131,48,.4)}
@@ -285,6 +299,10 @@ section{position:relative;min-height:100vh;min-height:100svh;scroll-margin-top:5
 .inp:focus-within{border-color:var(--o2)}
 .inp input{flex:1;min-width:0;background:none;border:0;outline:0;color:var(--ink);font:400 16px var(--mono);padding:12px}
 .inp span{font:400 11px var(--mono);color:var(--dim);padding-right:12px}
+.calc .bal{font-size:14px;line-height:1.5;color:rgba(255,255,255,.78);margin:8px 0 12px}
+.calc .hint{font:400 10.5px/1.5 var(--mono);text-transform:uppercase;letter-spacing:.04em;color:var(--dim);margin:-6px 0 14px}
+.calc .hint.bad{color:#f87171}
+.calc .btn{width:100%;height:auto;min-height:44px;padding:10px 16px;text-align:center;line-height:1.3;font-size:12px}
 .out{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .out b,.rank b{display:block;font:400 18px var(--disp);margin-top:6px;overflow-wrap:anywhere}
 .rank{margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
@@ -359,8 +377,12 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
   .burn{grid-column:1;justify-self:stretch;margin:0 16px;width:auto}
   #qbros{padding:12vh 0}
   #qbros .inner{grid-template-columns:1fr;margin:0 16px;width:auto;gap:4vh}
-  .steps{grid-template-columns:1fr;margin:5vh 16px 0}
-  .steps h3{margin-top:18px}
+  .steps{grid-template-columns:1fr;gap:14px;margin:5vh 16px 0}
+  .step{padding:22px 20px}
+  .step h3{margin-top:18px}
+  .sbtn{align-self:stretch;justify-content:center}
+  .alert{margin:16px 16px 0;padding:18px;gap:12px}
+  .alert p{font-size:14.5px}
   .where{grid-template-columns:1fr;margin:6vh 16px 0}
   .where>div+div{border-left:0;border-top:1px solid rgba(255,131,48,.4)}
   .wp{margin:4vh 16px 0;padding-left:0}
@@ -552,17 +574,43 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
       <div class="track"><span>Track $CFB</span><a data-link="coinpaprika" href="https://coinpaprika.com/coin/cfb-cfb-token" target="_blank" rel="noopener noreferrer">CoinPaprika ↗</a><a data-link="coinmarketcap" href="https://coinmarketcap.com/currencies/cfb/" target="_blank" rel="noopener noreferrer">CoinMarketCap ↗</a><a data-link="safetrade" href="https://safetrade.com/exchange/CFB-USDT?type=pro" target="_blank" rel="noopener noreferrer">SafeTrade ↗</a></div>
     </div>
     <div class="calc">
-      <label for="bag"><small>Your bag</small></label>
-      <div class="inp"><input id="bag" type="text" inputmode="numeric" placeholder="e.g. 1,000,000,000" autocomplete="off"><span>$CFB</span></div>
-      <div class="out"><div><small>≈ USD</small><b id="vUsd">…</b></div><div><small>≈ $QUBIC</small><b id="vQu">…</b></div></div>
-      <div class="rank"><small>Community rank</small><b id="rank">Type your bag</b></div>
+      <small>Your $CFB balance</small>
+      <p class="bal">Paste your public Qubic address to see your $CFB and QUBIC on the official explorer.</p>
+      <form id="balForm" class="inp" autocomplete="off">
+        <input id="addr" type="text" placeholder="Your Qubic address" spellcheck="false" autocapitalize="characters" aria-label="Your public Qubic address">
+      </form>
+      <p class="hint" id="addrHint">Public address only. Never paste your seed anywhere.</p>
+      <a class="btn" id="balBtn" data-link="explorer" href="https://explorer.qubic.org" target="_blank" rel="noopener noreferrer">Check my balance on Qubic Explorer ↗</a>
     </div>
   </div>
   <div class="steps rv d3">
-    <a data-link="wallets" href="https://qubic.org/#wallets" target="_blank" rel="noopener noreferrer"><div class="num"><span>01</span><span>↗</span></div><h3>Choose your wallet</h3><p>Install the official Qubic Wallet app, or use the Qubic Web Wallet. A wallet is necessary to use, trade, or hold $CFB.</p></a>
-    <a data-link="walletGuide" href="https://docs.qubic.org/learn/invest#2-create-a-qubic-wallet" target="_blank" rel="noopener noreferrer"><div class="num"><span>02</span><span>↗</span></div><h3>Configure your wallet</h3><p>Follow Qubic's official guide. Write down your 55-letter seed offline and never share it: it's the only way to recover your $CFB.<span class="warn">⚠ Seed created on an iPhone/iPad, or in Safari on Mac, before Oct 18, 2026? Make a new one with an updated wallet (v4.26.4+) and move your funds.</span></p></a>
-    <a href="#where"><div class="num"><span>03</span><span>↓</span></div><h3>Get some $CFB</h3><p>There are lots of ways to get your hands on some $CFB.</p></a>
+    <article class="step">
+      <div class="sh"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 7.5A2.5 2.5 0 0 1 5.5 5H18v3"/><rect x="3" y="7" width="18" height="13" rx="2.5"/><circle cx="16.5" cy="13.5" r="1.4"/></svg></span><span class="n">Step 01</span></div>
+      <h3>Choose your wallet</h3>
+      <p>A wallet is necessary to use, trade, or hold $CFB. Use the <strong>official Qubic Wallet</strong> app or the <strong>Qubic Web Wallet</strong>.</p>
+      <a class="sbtn" data-link="wallets" href="https://qubic.org/#wallets" target="_blank" rel="noopener noreferrer">Get Qubic Wallet ↗</a>
+    </article>
+    <article class="step">
+      <div class="sh"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg></span><span class="n">Step 02</span></div>
+      <h3>Configure your wallet</h3>
+      <p>Follow Qubic's official documentation. <strong>Write down your 55-letter seed offline</strong> and never share it: it's the only way to recover your $CFB.</p>
+      <a class="sbtn" data-link="walletGuide" href="https://docs.qubic.org/learn/invest#2-create-a-qubic-wallet" target="_blank" rel="noopener noreferrer">Read the official guide ↗</a>
+    </article>
+    <article class="step">
+      <div class="sh"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M14.5 9.2c-.5-.8-1.4-1.2-2.5-1.2-1.6 0-2.7.8-2.7 2s1.1 1.6 2.7 2 2.7.9 2.7 2.1-1.2 2-2.7 2c-1.2 0-2.2-.5-2.7-1.3M12 6.5V8m0 8v1.5"/></svg></span><span class="n">Step 03</span></div>
+      <h3>Get some $CFB</h3>
+      <p>There are lots of ways to get your hands on some $CFB: on Qubic's decentralized exchanges or on SafeTrade.</p>
+      <a class="sbtn" href="#where" data-buy>See where to buy ↓</a>
+    </article>
   </div>
+  <aside class="alert rv d4" role="note" aria-labelledby="alertT">
+    <span class="ai" aria-hidden="true">⚠️</span>
+    <div>
+      <strong id="alertT">Security notice: wallet seeds</strong>
+      <p>If you created your seed <b>on an iPhone or iPad</b>, or <b>in Safari on a Mac</b>, <b>before October 18, 2026</b>, create a new one with an up-to-date Qubic wallet (version 4.26.4 or later) and move your funds to it. Seeds made on Windows, Android or Linux are not on the affected list.</p>
+      <p class="ok">✓ Qubic will never ask for your seed. Nobody from $CFB will either.</p>
+    </div>
+  </aside>
   <div class="where rv d4" id="where">
     <div>
       <h4>DEX <span>Decentralized exchanges</span></h4>
@@ -648,9 +696,7 @@ const CFB_CONFIG={
     tiktok:"https://www.tiktok.com/@cfbmemecoin",
     auditSheet:"https://docs.google.com/spreadsheets/d/1fCOsFDDWO2YxI6dgRM8LPhHN6r9ZVv_U-bMEQWxMS8E/edit?gid=1212216071#gid=1212216071",
     qubic:"https://qubic.org",qubicmap:"https://qubicmap.org",explorer:"https://explorer.qubic.org"
-  },
-  ranks:[ // [minimum bag, title]
-    [0,"Shrimp"],[1e6,"Crab"],[1e8,"Computor Apprentice"],[1e9,"Qbro Whale"],[1e10,"CfB Archi-Brain"]]
+  }
 };
 
 (()=>{
@@ -687,16 +733,17 @@ async function fetchCFBMarketData(){
   $('#fdv').textContent=M.cfb?usd(M.cfb*CFB_CONFIG.supply.initial):'…';
   const live=!!(d&&d.ok);$('#liveDot').classList.toggle('on',live);
   $('#liveSrc').textContent=live?[...new Set([d.cfb&&d.cfb.source,d.qubic&&d.qubic.source].filter(Boolean))].join(' · ')+' · '+new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}):'Market data unavailable';
-  calc();
 }
-function calc(){
-  const n=parseFloat(($('#bag').value||'').replace(/[^\d.]/g,''));
-  if(!n){$('#vUsd').textContent='…';$('#vQu').textContent='…';$('#rank').textContent='Type your bag';return}
-  const v=M.cfb?n*M.cfb:null;$('#vUsd').textContent=v==null?'…':usd(v);
-  $('#vQu').textContent=(v!=null&&M.qubic)?fmt(v/M.qubic):'…';
-  let r=CFB_CONFIG.ranks[0][1];for(const [min,t] of CFB_CONFIG.ranks)if(n>=min)r=t;$('#rank').textContent=r;
-}
-$('#bag').addEventListener('input',e=>{const raw=e.target.value.replace(/[^\d]/g,'');e.target.value=raw?Number(raw).toLocaleString('en-US'):'';calc()});
+/* public address -> official explorer page (the address is validated, never stored) */
+const addr=$('#addr'),balBtn=$('#balBtn'),hint=$('#addrHint'),EXP='https://explorer.qubic.org/network/address/';
+function updBal(){const raw=addr.value.trim();
+  if(/^[a-z]{50,}$/.test(raw)||raw.split(/\s+/).length>6){addr.value='';balBtn.href=CFB_CONFIG.links.explorer;hint.textContent='⚠ This looks like a seed. Never paste or share it!';hint.classList.add('bad');return}
+  const v=raw.toUpperCase().replace(/[^A-Z]/g,'');addr.value=v;
+  if(!v){balBtn.href=CFB_CONFIG.links.explorer;hint.textContent='Public address only. Never paste your seed anywhere.';hint.classList.remove('bad');return}
+  const ok=/^[A-Z]{60}$/.test(v);hint.classList.toggle('bad',!ok);hint.textContent=ok?'Address OK. Opens the official explorer.':`${v.length}/60 letters`;
+  balBtn.href=ok?EXP+v:CFB_CONFIG.links.explorer}
+addr.addEventListener('input',updBal);
+$('#balForm').addEventListener('submit',e=>{e.preventDefault();if(/^[A-Z]{60}$/.test(addr.value))window.open(balBtn.href,'_blank','noopener,noreferrer')});
 fetchCFBMarketData();setInterval(fetchCFBMarketData,60000);
 
 /* ---- MODULE 2 · burn radar ---- */
