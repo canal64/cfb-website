@@ -408,6 +408,28 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
   .mega{font-size:clamp(64px,22vw,110px)}
   .marquee img{height:80px;width:80px}
 }
+/* ---------- MOBILE HERO (cleaner: head on top, text on a soft fade, 2 buttons) ---------- */
+@media (max-width:900px){
+  #intro::after{content:"";position:absolute;left:0;right:0;bottom:0;height:62%;z-index:2;pointer-events:none;
+    background:linear-gradient(to bottom,rgba(11,7,6,0) 0%,rgba(11,7,6,.78) 34%,rgba(11,7,6,.96) 70%)}
+  .hl{bottom:calc(46px + 7%)}
+  #intro .prompt .box{min-height:66px;padding:12px 14px}
+  #intro .prompt .next{display:none}
+  #intro::after{height:52%}
+  .hl .pre{margin-bottom:10px}
+  .mega{font-size:clamp(64px,21vw,96px)}
+  .tag{background:none;backdrop-filter:none;-webkit-backdrop-filter:none;padding:0;margin-top:8px;font-size:clamp(22px,6.6vw,28px);line-height:1.12}
+  .tag .l1{display:block}
+  .ctas{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}
+  .ctas .btn{height:48px;padding:0 12px;font-size:13px}
+  .ctas .play-h{background:rgba(11,7,6,.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:1px solid rgba(255,212,107,.55);
+    font:400 13px var(--disp);letter-spacing:0;text-transform:none;color:var(--o1)}
+  .ctas .play-h span{display:none}
+  .ctas .play-h::after{content:"Play";}
+  .ctas .wp-h{grid-column:1/-1;justify-self:start;height:auto;padding:4px 0;border:0;border-radius:0;background:none;color:rgba(255,255,255,.7);
+    text-decoration:underline;text-underline-offset:4px;text-decoration-color:rgba(255,212,107,.5)}
+  .sub{background:none;padding:0;bottom:calc(46px + 2.2%);color:rgba(255,255,255,.72);font-size:13.5px}
+}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
 </style>
 </head>
@@ -456,11 +478,11 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
   <div class="hl">
     <div class="pre rv d1">The first memecoin on <svg class="qw" role="img" aria-label="Qubic"><use href="#qubic-word"/></svg></div>
     <h1 class="mega rv d2">$CFB</h1>
-    <div class="tag rv d3">Not just a meme. <em>Qubic history.</em></div>
+    <div class="tag rv d3"><span class="l1">Not just a meme.</span> <em>Qubic history.</em></div>
     <div class="ctas rv d4">
       <a class="btn" href="#where" data-buy>Buy now</a>
-      <a class="btn ghost" href="head-match/">🎮 Play Head Match</a>
-      <a class="btn ghost" data-link="whitepaper" href="https://drive.google.com/file/d/1Z3H7-WGgqxWhxuz--eQavSG0RdWrPyvB/view" target="_blank" rel="noopener noreferrer">View whitepaper ↗</a>
+      <a class="btn ghost play-h" href="head-match/">🎮 <span>Play Head Match</span></a>
+      <a class="btn ghost wp-h" data-link="whitepaper" href="https://drive.google.com/file/d/1Z3H7-WGgqxWhxuz--eQavSG0RdWrPyvB/view" target="_blank" rel="noopener noreferrer">View whitepaper ↗</a>
     </div>
   </div>
   <p class="sub rv d4">Deployed on May the 4th, airdropped to everyone, burned to build Qubic's NFT culture.</p>
@@ -838,7 +860,7 @@ const mob=()=>innerWidth<=900;
 function frame(t){
   const p=Math.min(Math.max(scrollY/innerHeight,0),6);sp+=(p-sp)*.08;px+=(tx-px)*.06;py+=(ty-py)*.06;
   const a=ease(Math.min(sp,1)),b=ease(Math.min(Math.max(sp-1,0),1));
-  let x=mob()?50:56,y=mob()?44:57,s=1,o=1;
+  let x=mob()?50:56,y=mob()?41:57,s=mob()?.8:1,o=1;
   x+=(mob()?0:16)*a; s-=.2*a; o-=(mob()?.7:.25)*a; y+=(mob()?-4:-4)*a;
   x+=(mob()?0:4)*b;  s-=.3*b; y+=(mob()?0:18)*b; o-=(mob()?.12:.45)*b;
   const bob=Math.sin(t/1000*1.4)*8;
