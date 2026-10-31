@@ -42,6 +42,9 @@ header{position:sticky;top:0;z-index:10;height:56px;display:flex;align-items:cen
 .logo img{width:32px;height:32px;object-fit:contain}
 .back{font:400 11px var(--mono);text-transform:uppercase;letter-spacing:.06em;text-decoration:none;color:var(--dim)}
 .back:hover{color:var(--o1)}
+.hr{display:flex;align-items:center;gap:14px}
+.snd{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:none;font-size:16px;cursor:pointer;line-height:1}
+.snd.off{opacity:.45}
 
 main{position:relative;z-index:1;max-width:980px;margin:0 auto;padding:26px 16px 50px}
 .top{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
@@ -134,7 +137,7 @@ footer{position:relative;z-index:1;text-align:center;padding:10px 16px 40px;font
 
 <header>
   <a class="logo" href="../"><img src="../../assets/brand/cfb-head.webp" alt="">$CFB</a>
-  <a class="back" href="../">← Back to site</a>
+  <span class="hr"><button class="snd" id="snd" aria-label="Sound on">🔊</button><a class="back" href="../">← Back to site</a></span>
 </header>
 
 <main>
@@ -216,19 +219,38 @@ function tick(){$('#time').textContent=fmtT(performance.now()-t0)}
 function flip(card){
   if(lock||card.classList.contains('flip')||card.classList.contains('done'))return;
   if(!started){started=true;t0=performance.now();timer=setInterval(tick,100)}
-  card.classList.add('flip');card.setAttribute('aria-label',card.dataset.h.replace(/-/g,' '));open.push(card);
+  sFlip();card.classList.add('flip');card.setAttribute('aria-label',card.dataset.h.replace(/-/g,' '));open.push(card);
   if(open.length<2)return;
   moves++;$('#moves').textContent=moves;
   const [a,b]=open;
   if(a.dataset.h===b.dataset.h){
     a.classList.add('done');b.classList.add('done');open=[];found++;$('#pairs').textContent=`${found}/${pairs}`;
-    streak++;celebrate(a,b,streak);
+    streak++;celebrate(a,b,streak);setTimeout(()=>sPair(streak),120);
     if(found===pairs)setTimeout(()=>{bigBurst();setTimeout(win,450)},350);
   }else{
     lock=true;streak=0;a.classList.add('miss');b.classList.add('miss');
     setTimeout(()=>{a.classList.remove('flip','miss');b.classList.remove('flip','miss');a.setAttribute('aria-label','Hidden card');b.setAttribute('aria-label','Hidden card');open=[];lock=false},800);
   }
 }
+
+/* ================= sound effects (generated, no files) ================= */
+let AC=null,muted=store.get('cfb-hm-mute')===true;
+const sndBtn=$('#snd');function paintSnd(){sndBtn.textContent=muted?'🔇':'🔊';sndBtn.classList.toggle('off',muted);sndBtn.setAttribute('aria-label',muted?'Sound off':'Sound on')}
+paintSnd();sndBtn.onclick=()=>{muted=!muted;store.set('cfb-hm-mute',muted);paintSnd()};
+function ac(){if(muted)return null;if(!AC){const C=window.AudioContext||window.webkitAudioContext;if(!C)return null;AC=new C()}if(AC.state==='suspended')AC.resume();return AC}
+/* card flip: short filtered noise "swish" + tiny click */
+function sFlip(){const a=ac();if(!a)return;const t=a.currentTime,len=.09;
+  const buf=a.createBuffer(1,a.sampleRate*len,a.sampleRate),d=buf.getChannelData(0);
+  for(let i=0;i<d.length;i++){const k=i/d.length;d[i]=(Math.random()*2-1)*Math.pow(1-k,2)}
+  const src=a.createBufferSource();src.buffer=buf;const f=a.createBiquadFilter();f.type='bandpass';f.frequency.setValueAtTime(1800,t);f.frequency.exponentialRampToValueAtTime(3800,t+len);f.Q.value=.9;
+  const g=a.createGain();g.gain.setValueAtTime(.32,t);g.gain.exponentialRampToValueAtTime(.001,t+len);
+  src.connect(f).connect(g).connect(a.destination);src.start(t);src.stop(t+len)}
+/* pair found: bright two-note chime, a bit higher with each combo */
+function sPair(st){const a=ac();if(!a)return;const t=a.currentTime,base=660*Math.pow(2,Math.min(st-1,6)/12);
+  [[base,0],[base*1.5,.08]].forEach(([fr,dl])=>{const o=a.createOscillator(),o2=a.createOscillator(),g=a.createGain();
+    o.type='triangle';o2.type='sine';o.frequency.value=fr;o2.frequency.value=fr*2;
+    g.gain.setValueAtTime(0,t+dl);g.gain.linearRampToValueAtTime(.22,t+dl+.01);g.gain.exponentialRampToValueAtTime(.001,t+dl+.45);
+    o.connect(g);o2.connect(g);g.connect(a.destination);o.start(t+dl);o2.start(t+dl);o.stop(t+dl+.5);o2.stop(t+dl+.5)})}
 
 /* ================= match effects ================= */
 const fx=$('#fx'),cx=fx.getContext('2d'),parts=[];let raf=null;
