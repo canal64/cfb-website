@@ -77,7 +77,7 @@ async function cached(request, ctx, ttl, producer) {
   if (hit) return hit;
   const body = await producer();
   const res = new Response(JSON.stringify(body), {
-    headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': `public, max-age=${ttl}`, 'Access-Control-Allow-Origin': '*' },
+    headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': (body.ok && body.complete !== false) ? `public, max-age=${ttl}` : 'no-store', 'Access-Control-Allow-Origin': '*' },
   });
   // cache only complete answers, so a temporary upstream miss isn't frozen for a minute
   if (body.ok && body.complete !== false) ctx.waitUntil(cache.put(key, res.clone()));
