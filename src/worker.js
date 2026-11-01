@@ -83,7 +83,23 @@ async function status() {
 /* $CFB burns read on-chain: every CFB share sent to the Qubic burn address (QubicBay mint-slot burns).
    Uses the public query service behind explorer.qubic.org. */
 const BURN_ADDR = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFXIB';
+/* Exact CFB total supply, read on-chain from the QUtil contract (#4, input 2: issuer public key + asset name "CFB").
+   Burned = initial supply - current total supply. Method from Nik (Qubictrade), validated against the known burns. */
+const CFB_SUPPLY_REQ = 'CDC7Y799XhZKyMvThoBjD/dnCh6/OfchC0C83KJT0F9DRkIAAAAAAA==';
+async function totalSupply() {
+  try {
+    const r = await fetch('https://rpc.qubic.org/live/v1/querySmartContract', { method: 'POST', headers: { ...HEADERS, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ contractIndex: 4, inputType: 2, inputSize: 40, requestData: CFB_SUPPLY_REQ }) });
+    if (!r.ok) return null;
+    const j = await r.json(); const b = Uint8Array.from(atob(j.responseData || ''), c => c.charCodeAt(0));
+    if (b.length < 8) return null;
+    let v = 0n; for (let i = 7; i >= 0; i--) v = v * 256n + BigInt(b[i]);
+    const n = Number(v); return n > 0 && n <= 420690000000 ? n : null;
+  } catch { return null; }
+}
+
 async function burns() {
+  const supplyP = totalSupply();
   const out = [];
   for (let offset = 0; offset < 2000; offset += 100) {
     let j = null;
@@ -99,7 +115,8 @@ async function burns() {
     }
     if (!j.eventLogs || j.eventLogs.length < 100) break;
   }
-  return { ok: true, burns: out, updated: new Date().toISOString() };
+  const total = await supplyP;
+  return { ok: true, burns: out, totalSupply: total, updated: new Date().toISOString() };
 }
 
 /* Exchange logos: fetched from each exchange's own site (fixed allowlist), cached at the edge for a week.

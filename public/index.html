@@ -195,7 +195,7 @@ section{position:relative;min-height:100vh;min-height:100svh;scroll-margin-top:5
 .burns span{color:rgba(255,255,255,.82)}
 .burns b{font-weight:600;color:#fff}
 .burns a{font:500 10.5px var(--mono);text-transform:uppercase;letter-spacing:.05em;text-decoration:none;color:var(--dim);white-space:nowrap}
-.burns a:hover{color:var(--o1)}
+.burns a:hover{color:var(--o1)}.burns a.nolink{cursor:default}.burns a.nolink:hover{color:var(--dim)}
 @media (max-width:900px){.burns li{grid-template-columns:1fr auto}.burns time{grid-column:1/-1}}
 .legend{display:flex;flex-wrap:wrap;gap:8px 22px;font:400 11px var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--dim)}
 .legend b{color:var(--ink);font-weight:500;margin-left:4px}
@@ -764,7 +764,8 @@ const CFB_CONFIG={
     // Burns not visible as transfers to the burn address (asset-share burns). QubicBay burns are read live from the chain via /api/burn.
     burns:[
       {date:"2025-05-16",amount:12620700000,label:"Burn #1: 3% of the total supply",tx:"uxolklzyzarwibebudnqesoppxwaljlnfzhiuicmvfwtbsordcjotbvgipye"},
-      {date:"2025-10-08",amount:12620700000,label:"Burn #2: another 3% of the total supply",tx:"lneccduplfvhaczhkclagcbgjsffokjettpfwjryiecxbtojqvweruafpaei"}
+      {date:"2025-10-08",amount:12620700000,label:"Burn #2: another 3% of the total supply",tx:"lneccduplfvhaczhkclagcbgjsffokjettpfwjryiecxbtojqvweruafpaei"},
+      {date:"",when:"Giveaway",amount:100650000,label:"Giveaway contest burn (confirmed by the on-chain total supply)",tx:""}
     ],
     // Optional nicer labels for on-chain burns, by transaction
     labels:{"jgroxukvilsshcubufaaicxcmwneqsxfzcpymvkebeunclvyprqbtrpfktnm":"QubicBay: BITE collection launch, first after the Qbay smart contract upgrade"}},
@@ -847,7 +848,12 @@ async function fetchBurnStats(){
   const S=CFB_CONFIG.supply,live=await getJSON(CFB_CONFIG.api.burn);
   const list=[...(S.burns||[])];
   if(live&&live.ok)live.burns.forEach(b=>{if(!list.some(x=>x.tx===b.tx))list.push({...b,label:S.labels[b.tx]||'QubicBay: new collection launch (mint slots burned)'})});
-  const burned=list.reduce((t,b)=>t+b.amount,0),remain=S.initial-burned,pct=burned/S.initial*100,goal=S.goalPct;
+  const listed=list.reduce((t,b)=>t+b.amount,0);
+  // exact figure: initial supply minus the current on-chain total supply (QUtil), with the list as history
+  const onchain=live&&live.ok&&live.totalSupply>0?S.initial-live.totalSupply:null;
+  const burned=onchain!=null?onchain:listed;
+  if(onchain!=null&&onchain-listed>1e6)list.push({date:"",when:"On-chain",amount:onchain-listed,label:"Other burns (difference with the on-chain total supply)",tx:""});
+  const remain=S.initial-burned,pct=burned/S.initial*100,goal=S.goalPct;
   $('#radar').classList.toggle('idle',!burned);if(!burned)return;
   const prog=Math.min(pct/goal*100,100);
   setTimeout(()=>{$('#barGoal').style.width=prog+'%'},200);
@@ -856,11 +862,12 @@ async function fetchBurnStats(){
   document.querySelector('[data-stat="burned"]').textContent=big(burned);document.querySelector('[data-stat="burned"]').title=fmt(burned)+' $CFB';
   document.querySelector('[data-stat="burnedPct"]').textContent=pct.toFixed(2)+'% of the supply';
   document.querySelector('[data-stat="circulating"]').textContent=big(remain);document.querySelector('[data-stat="circulating"]').title=fmt(remain)+' $CFB';
-  $('#radarState').textContent=live&&live.ok?'Live from the Qubic chain':'Verified burns';$('#radar .dot').classList.toggle('on',!!(live&&live.ok));
+  $('#radarState').textContent=onchain!=null?'Live from the Qubic chain':'Verified burns';$('#radar .dot').classList.toggle('on',onchain!=null);
   const EXP='https://explorer.qubic.org/network/tx/';
   $('#burnLog').innerHTML=list.slice().sort((a,b)=>String(b.date).localeCompare(String(a.date))).map(b=>{
-    const d=/^\d{4}-\d{2}-\d{2}$/.test(b.date)?new Date(b.date+'T12:00:00Z').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):b.date;
-    return `<li><time>${d}</time><span>🔥 <b title="${fmt(b.amount)} $CFB">${big(b.amount)} $CFB</b> · ${b.label}</span><a href="${EXP+b.tx}" target="_blank" rel="noopener noreferrer" aria-label="View burn transaction of ${d} on the Qubic explorer">View TX ↗</a></li>`}).join('');
+    const d=/^\d{4}-\d{2}-\d{2}$/.test(b.date)?new Date(b.date+'T12:00:00Z').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):(b.when||'Other');
+    const link=b.tx?`<a href="${EXP+b.tx}" target="_blank" rel="noopener noreferrer" aria-label="View burn transaction of ${d} on the Qubic explorer">View TX ↗</a>`:'<a class="nolink" title="No single transaction: verified with the on-chain total supply">On-chain ✓</a>';
+    return `<li><time>${d}</time><span>🔥 <b title="${fmt(b.amount)} $CFB">${big(b.amount)} $CFB</b> · ${b.label}</span>${link}</li>`}).join('');
 }
 fetchBurnStats();
 
