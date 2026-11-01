@@ -2,8 +2,14 @@
   "name": "cfb-website",
   "main": "src/worker.js",
   "compatibility_date": "2026-10-01",
+  "workers_dev": true,
+  "routes": [
+    { "pattern": "cfbtoken.com", "custom_domain": true },
+    { "pattern": "www.cfbtoken.com", "custom_domain": true }
+  ],
   "assets": {
     "directory": "./public",
-    "binding": "ASSETS"
+    "binding": "ASSETS",
+    "run_worker_first": ["/", "/head-match/*", "/generator/", "/crypto-fighter/*", "/maquette*", "/api/*", "/logos/*"]
   }
 }

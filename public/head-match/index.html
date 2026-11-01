@@ -7,19 +7,19 @@
 <meta name="description" content="Flip the cards, match the CFB heads, beat the clock. A memory game made with the $CFB community's memes, on Qubic.">
 <meta property="og:site_name" content="$CFB">
 <meta property="og:locale" content="en_US">
-<meta property="og:url" content="https://cfb-website.rudynakamoto.workers.dev/maquette/head-match/">
+<link rel="canonical" href="https://cfbtoken.com/head-match/">
+<meta property="og:url" content="https://cfbtoken.com/head-match/">
 <meta name="twitter:title" content="Head Match · $CFB memory game">
-<meta name="twitter:image" content="https://cfb-website.rudynakamoto.workers.dev/assets/brand/og-image-v2.png">
-<meta name="robots" content="noindex">
+<meta name="twitter:image" content="https://cfbtoken.com/assets/brand/og-image-v2.png">
 <meta name="theme-color" content="#0b0706">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Head Match · $CFB memory game">
 <meta property="og:description" content="Match all the CFB heads. Beat the clock. Share your score.">
-<meta property="og:image" content="https://cfb-website.rudynakamoto.workers.dev/assets/brand/og-image-v2.png">
+<meta property="og:image" content="https://cfbtoken.com/assets/brand/og-image-v2.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@c_f_b_token">
-<link rel="icon" href="../../assets/brand/favicon-48.png">
-<link rel="apple-touch-icon" href="../../assets/brand/apple-touch-icon.png">
+<link rel="icon" href="/assets/brand/favicon-48.png">
+<link rel="apple-touch-icon" href="/assets/brand/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Bungee+Spice&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -144,7 +144,7 @@ footer{position:relative;z-index:1;text-align:center;padding:10px 16px 40px;font
 <div class="rays" aria-hidden="true"></div><div class="glow" aria-hidden="true"></div>
 
 <header>
-  <a class="logo" href="../"><img src="../../assets/brand/cfb-head.webp" alt="">$CFB</a>
+  <a class="logo" href="../"><img src="/assets/brand/cfb-head.webp" alt="">$CFB</a>
   <span class="hr"><button class="snd" id="snd" aria-label="Sound on">🔊</button><a class="back" href="../">← Back to site</a></span>
 </header>
 
@@ -177,7 +177,7 @@ footer{position:relative;z-index:1;text-align:center;padding:10px 16px 40px;font
 
 <div class="win" id="win" role="dialog" aria-modal="true" aria-labelledby="wt">
   <div class="box">
-    <img src="../../assets/heads/crown.webp" alt="">
+    <img src="/assets/heads/crown.webp" alt="">
     <h2 id="wt">GM, champion!</h2>
     <div class="rank" id="wRank"></div>
     <div class="stars" id="wStars"></div>
@@ -201,7 +201,7 @@ footer{position:relative;z-index:1;text-align:center;padding:10px 16px 40px;font
 (()=>{
 const HEADS=["3d-glasses","android","aviators","bat-mask","big-brain","captain-shield","classic","claws-mask","claws-unmasked","crown","cyber-samurai","cyberpunk","cyborg","cyclops","deal-with-it","devil","dwarf","elf","goblin","golden-hair","green-alien","green-saiyan","grey-alien","headband","mad-scientist","noir","optic-blast","orc","pirate-cook","pirate-doctor","pirate-swordsman","purple-shades","purple-tyrant","red-laser-eyes","red-mask-merc","scouter","shutter-shades","snapback","spider-angry","spider-mask","straw-hat","super-saiyan","tentacle","tube-head","visor","winged-helmet"];
 const LEVEL={6:"Easy",8:"Medium",12:"Hard"};
-const SITE="https://cfb-website.rudynakamoto.workers.dev/maquette/head-match/";
+const SITE="https://cfbtoken.com/head-match/";
 const $=s=>document.querySelector(s);
 const store={get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
 
@@ -218,8 +218,8 @@ function newGame(){
   const pick=shuffle([...HEADS]).slice(0,pairs);deck=shuffle([...pick,...pick]);
   const b=$('#board');b.className='board l'+pairs;
   b.innerHTML=deck.map((h,i)=>`<button class="card" data-i="${i}" data-h="${h}" aria-label="Hidden card">
-    <span class="f back"><img src="../../assets/brand/cfb-head.webp" alt=""><span>$CFB</span></span>
-    <span class="f front"><img src="../../assets/heads/${h}.webp" alt="${h.replace(/-/g,' ')}"></span></button>`).join('');
+    <span class="f back"><img src="/assets/brand/cfb-head.webp" alt=""><span>$CFB</span></span>
+    <span class="f front"><img src="/assets/heads/${h}.webp" alt="${h.replace(/-/g,' ')}"></span></button>`).join('');
 }
 
 function tick(){$('#time').textContent=fmtT(performance.now()-t0)}
@@ -330,7 +330,7 @@ $('#win').addEventListener('click',e=>{if(e.target.id==='win'){$('#win').classLi
 addEventListener('keydown',e=>{if(e.key==='Escape')$('#win').classList.remove('on')});
 
 /* preload heads so flips are instant */
-HEADS.forEach(h=>{const i=new Image();i.src=`../../assets/heads/${h}.webp`});
+HEADS.forEach(h=>{const i=new Image();i.src=`/assets/heads/${h}.webp`});
 newGame();
 })();
 </script>

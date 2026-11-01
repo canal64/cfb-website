@@ -2,18 +2,950 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>$CFB — The first meme on Qubic</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>$CFB · The First Memecoin on Qubic</title>
+<meta name="description" content="$CFB is the first meme ever launched on Qubic: fair airdrop on May 4th, 2024, deflationary token of the QubicBay NFT marketplace and origin of the Qbros genesis collection.">
+<meta name="keywords" content="CFB, $CFB, Qubic, memecoin, QubicBay, Qbros, NFT, Qubic token, burn">
+<meta name="author" content="$CFB community">
+<meta name="theme-color" content="#0b0706">
+<link rel="canonical" href="https://cfbtoken.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="$CFB">
+<meta property="og:locale" content="en_US">
+<meta property="og:image:type" content="image/png">
+<meta property="og:title" content="$CFB · The First Memecoin on Qubic">
+<meta property="og:description" content="Fair airdrop on May 4th, 2024. The deflationary token of QubicBay and the origin of Qbros. Not just a meme: Qubic history.">
+<meta property="og:url" content="https://cfbtoken.com/">
+<meta property="og:image" content="https://cfbtoken.com/assets/brand/og-image-v2.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="$CFB · The first memecoin on Qubic">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@c_f_b_token">
+<meta name="twitter:title" content="$CFB · The First Memecoin on Qubic">
+<meta name="twitter:description" content="Fair airdrop on May 4th, 2024. The deflationary token of QubicBay and the origin of Qbros.">
+<meta name="twitter:image" content="https://cfbtoken.com/assets/brand/og-image-v2.png">
+<link rel="icon" href="/assets/brand/favicon-48.png">
+<link rel="apple-touch-icon" href="/assets/brand/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Bungee+Spice&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  body{margin:0;min-height:100vh;display:grid;place-items:center;background:#0b0d10;color:#f2f2f2;font-family:system-ui,sans-serif;text-align:center}
-  h1{font-size:clamp(2.5rem,8vw,5rem);margin:0}
-  p{opacity:.7}
+:root{
+  --bg:#0b0706; --ink:#fff; --dim:rgba(255,255,255,.55); --line:rgba(255,255,255,.09);
+  --panel:rgba(11,7,6,.9); --brown:#753010;
+  --o1:#ffd46b; --o2:#ff8330; --o3:#d3633d; --o4:#c43d2f; --o5:#5b2714;
+  --grad:linear-gradient(90deg,#ffd46b,#ff8330 45%,#c43d2f);
+  --btn:linear-gradient(#ff8330,#d3633d);
+  --col:17%;
+  --disp:"Bungee",system-ui,sans-serif; --spice:"Bungee Spice","Bungee",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace; --sans:"Instrument Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;background:var(--bg);overflow-x:clip}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+
+/* sun rays (old site's signature) */
+.rays{position:fixed;inset:-50vmax;z-index:0;pointer-events:none;
+  background:repeating-conic-gradient(from 0deg at 50% 50%,rgba(214,105,65,.22) 0deg 7deg,rgba(91,39,20,.10) 7deg 14deg);
+  -webkit-mask:radial-gradient(circle at 50% 50%,#000 0,#000 18vmax,transparent 62vmax);mask:radial-gradient(circle at 50% 50%,#000 0,#000 18vmax,transparent 62vmax);
+  animation:spin 120s linear infinite;transition:opacity .6s}
+@keyframes spin{to{transform:rotate(360deg)}}
+.glow{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(60vmax 50vmax at 58% 52%,rgba(255,131,48,.22),transparent 60%)}
+.guides{position:fixed;inset:0;pointer-events:none;z-index:0}
+.guides i{position:absolute;top:0;bottom:0;width:1px;background:var(--line)}
+.guides i[hidden]{display:none}.guides i:nth-child(1){left:var(--col)}.guides i:nth-child(2){left:50%}.guides i:nth-child(3){left:calc(100% - var(--col))}
+
+/* top bar + nav */
+.topbar{position:fixed;top:0;left:0;right:0;height:30px;z-index:30;display:flex;align-items:center;justify-content:center;
+  font:500 11px var(--mono);text-transform:uppercase;letter-spacing:.05em;background:var(--grad);color:#2a0f05;transition:transform .5s cubic-bezier(.6,0,.2,1)}
+.topbar a{text-decoration:none;max-width:calc(100% - 96px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.topbar b{font-weight:600}
+.topbar button{position:absolute;right:0;top:0;width:44px;height:30px;background:none;border:0;color:inherit;font:inherit;cursor:pointer;font-size:16px}
+body.scrolled .topbar,body.nobar .topbar{transform:translateY(-100%)}
+nav{position:fixed;top:30px;left:0;right:0;height:56px;z-index:25;display:grid;grid-template-columns:var(--col) 1fr 12% var(--col);align-items:center;
+  background:rgba(11,7,6,.82);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line);transition:top .5s cubic-bezier(.6,0,.2,1)}
+body.scrolled nav,body.nobar nav{top:0}
+.logo{display:flex;align-items:center;gap:10px;padding-left:22px;text-decoration:none;font:400 22px var(--spice);white-space:nowrap}
+.logo img{width:34px;height:34px;object-fit:contain;border-radius:50%}
+.menu{display:flex;gap:26px;padding-left:28px;font:400 11px var(--mono);text-transform:uppercase;letter-spacing:.05em}
+.menu a{text-decoration:none;opacity:.75;white-space:nowrap}
+@media (max-width:1280px){.menu{gap:14px;padding-left:16px}}
+@media (max-width:480px){.tbx{display:none}}.menu a:hover{opacity:1;color:var(--o1)}
+.pad{height:100%;display:flex;align-items:center;justify-content:center;border-left:1px solid var(--line);border-right:1px solid var(--line);
+  font:400 11px var(--mono);text-transform:uppercase;text-decoration:none}
+.pad:hover{color:var(--o1)}
+.navplay{display:none;align-items:center;height:32px;padding:0 12px;border:1px solid rgba(255,212,107,.5);border-radius:999px;font:500 11px var(--mono);text-transform:uppercase;letter-spacing:.05em;text-decoration:none;color:var(--o1);white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:40px;padding:0 20px;border-radius:999px;background:var(--btn);color:#fff;
+  font:400 13px var(--disp);letter-spacing:.02em;text-decoration:none;box-shadow:inset 0 -3px 0 rgba(0,0,0,.25),0 8px 30px rgba(255,131,48,.25);transition:transform .2s,box-shadow .2s;white-space:nowrap}
+.btn:hover{transform:translateY(-2px);box-shadow:inset 0 -3px 0 rgba(0,0,0,.25),0 12px 40px rgba(255,131,48,.4)}
+.btn.sm{height:32px;padding:0 14px;font-size:11px;justify-self:center}
+.btn.ghost{background:transparent;border:1px solid rgba(255,255,255,.35);box-shadow:none;font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em}
+.btn.ghost:hover{border-color:var(--o1);color:var(--o1)}
+
+/* rail */
+.rail{position:fixed;right:22px;top:50%;transform:translateY(-50%);height:320px;width:120px;z-index:20;font:400 10px var(--mono);text-transform:uppercase;letter-spacing:.05em}
+.rail .dots{position:absolute;right:0;top:0;bottom:30px;display:flex;flex-direction:column;justify-content:space-between}
+.rail .dots i{width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,.25)}
+.rail .lab{position:absolute;right:12px;display:flex;align-items:center;gap:6px;white-space:nowrap;color:var(--o1);transition:top .7s cubic-bezier(.65,0,.2,1)}
+.rail .lab svg{width:12px;height:12px}
+.rail .m{position:absolute;bottom:0;right:0;color:var(--dim)}
+
+/* floating head */
+.hero-head{position:fixed;z-index:1;pointer-events:none;width:min(40vw,560px);aspect-ratio:1;left:56%;top:57%;transform:translate(-50%,-50%);will-change:transform}
+.hero-head .tilt{width:100%;height:100%;will-change:transform}
+.hero-head img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 40px 50px rgba(0,0,0,.55))}
+
+main{position:relative;z-index:2}
+section{position:relative;min-height:100vh;min-height:100svh;scroll-margin-top:56px}
+#where{scroll-margin-top:80px}
+
+.rv{opacity:0;transform:translateY(26px);transition:opacity 1s cubic-bezier(.2,.7,.2,1),transform 1s cubic-bezier(.2,.7,.2,1)}
+.in .rv{opacity:1;transform:none}
+.in .d1{transition-delay:.1s}.in .d2{transition-delay:.2s}.in .d3{transition-delay:.3s}.in .d4{transition-delay:.4s}
+
+.br{position:relative}
+.br::before,.br::after{content:"";position:absolute;width:7px;height:7px;border:1px solid var(--o1)}
+.br::before{left:-5px;top:-5px;border-right:0;border-bottom:0;border-top-left-radius:3px}
+.br::after{right:-5px;bottom:-5px;border-left:0;border-top:0;border-bottom-right-radius:3px}
+
+.kicker{font:400 11px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--dim);display:flex;gap:10px;align-items:center}
+.kicker b{color:var(--o1);font-weight:500}
+.h2{font:400 clamp(28px,3.3vw,56px)/1.12 var(--disp);overflow-wrap:anywhere;hyphens:none;letter-spacing:-.01em;text-transform:uppercase}
+.h2 .sp,.mega,.count,.supply .num,footer .big,.logo span{font-family:var(--disp);background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.h2 .sp{display:inline-block;padding:0 .02em}
+@supports font-tech(color-COLRv1){.h2 .sp,.mega,.count,.supply .num,footer .big,.logo span{font-family:var(--spice);background:none;color:var(--ink);-webkit-text-fill-color:currentColor}}
+.p{font-size:16px;line-height:1.6;max-width:48ch;color:rgba(255,255,255,.82)}
+.link{display:inline-flex;align-items:center;gap:10px;font:500 11px var(--mono);text-transform:uppercase;letter-spacing:.05em;text-decoration:none;
+  border-left:2px solid var(--o2);padding:8px 0 8px 12px;margin-top:20px}
+.link:hover{color:var(--o1)}
+.panel{background:var(--panel)}
+
+/* ---------- 1 INTRO ---------- */
+#intro .prompt{position:absolute;left:var(--col);top:26%;width:24.4%;z-index:3}
+.prompt .tab{width:42px;height:42px;border:1px solid var(--o2);border-bottom:0;display:grid;place-items:center;font:500 15px var(--mono);color:var(--o1);background:var(--bg)}
+.prompt .box{border:1px solid var(--o2);padding:14px 16px;min-height:96px;font:400 11px/1.5 var(--mono);text-transform:uppercase;background:rgba(11,7,6,.85)}
+.caret{display:inline-block;width:6px;height:11px;background:var(--o1);vertical-align:-1px;margin-left:2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.prompt .next{display:inline-block;margin-top:10px;padding:5px 8px;font:400 11px/1.45 var(--mono);text-transform:uppercase;letter-spacing:.04em;color:rgba(255,255,255,.78);background:rgba(11,7,6,.72);border:1px solid var(--line);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.prompt .next::before{content:"NEXT › ";color:var(--o2)}
+.feat{position:absolute;right:var(--col);top:26%;width:23%;font:400 11px var(--mono);text-transform:uppercase;letter-spacing:.05em;background:var(--panel);z-index:3;border-top:1px solid var(--line)}
+.feat li{list-style:none;height:26px;display:flex;align-items:center;border-bottom:1px solid var(--line);padding-left:18%;position:relative}
+.feat li::before{content:"";position:absolute;left:8%;width:5px;height:5px;border-radius:50%;background:var(--o2)}
+.feat li.dim{color:var(--dim)}.feat li.dim::before{background:var(--dim)}
+.hl{position:absolute;left:var(--col);bottom:15%;padding-left:18px;z-index:3}
+.hl .pre{display:inline-block;padding:4px 8px;background:rgba(11,7,6,.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:1px solid var(--line);font:400 12px var(--mono);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;color:var(--o1)}
+.mega{font:400 clamp(72px,10vw,170px)/.9 var(--spice);letter-spacing:-.01em}
+.tag{display:inline-block;font:400 clamp(20px,2.3vw,38px)/1.1 var(--disp);text-transform:uppercase;margin-top:10px;padding:4px 10px;background:rgba(11,7,6,.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.tag em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ctas{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap}
+.sub{position:absolute;bottom:calc(8% + 56px);right:calc(var(--col) + 18px);max-width:260px;text-align:right;font-size:14.5px;line-height:1.5;color:rgba(255,255,255,.8);z-index:3}
+.ticker{position:absolute;left:0;right:0;bottom:0;height:56px;overflow:hidden;background:var(--grad);border-top:2px solid #2a0f05;z-index:4}
+.ticker .row{display:flex;align-items:center;gap:34px;height:100%;width:max-content;animation:mq 26s linear infinite}
+.ticker span{display:flex;align-items:center;gap:12px;font:400 24px var(--disp);color:#2a0f05}
+.ticker img{width:34px;height:34px;object-fit:contain;border-radius:50%;background:#2a0f05}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* ---------- 2 MANIFESTO ---------- */
+#manifesto{padding:18vh 0 14vh;display:flex;flex-direction:column;justify-content:center}
+#manifesto .inner{margin:0 var(--col);padding:40px 18px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.quote{font:500 clamp(22px,2.4vw,40px)/1.28 var(--sans);letter-spacing:-.01em;max-width:30ch;margin:22px 0 0}
+.quote .hi{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.quote .strike{text-decoration:line-through;text-decoration-color:var(--o2);text-decoration-thickness:2px;color:rgba(255,255,255,.45)}
+.supply{display:grid;gap:14px;margin:9vh var(--col) 0;padding-left:18px}
+.supply .num{font:400 clamp(40px,7vw,120px)/.9 var(--spice);letter-spacing:-.02em}
+.supply .cap{font:400 11px/1.6 var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--dim);max-width:46ch}
+.supply .cap b{color:var(--ink);font-weight:500;display:block}
+
+.stats{margin:5vh var(--col) 0;display:grid;grid-template-columns:repeat(3,1fr) 1.6fr;border:1px solid var(--o2);border-radius:18px;overflow:hidden;background:var(--panel)}
+.st{padding:18px 18px 20px;min-width:0}
+.st+.st{border-left:1px solid rgba(255,131,48,.35)}
+.st small{display:block;font:400 10.5px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--o1)}
+.st strong{display:block;font:400 clamp(18px,1.6vw,26px)/1.15 var(--disp);margin:12px 0 6px;overflow-wrap:anywhere}
+.st em{font:400 10px var(--mono);font-style:normal;text-transform:uppercase;letter-spacing:.05em;color:var(--dim)}
+.st.hot{background:linear-gradient(rgba(255,131,48,.14),rgba(196,61,47,.08))}
+.st .flame{display:inline-block;animation:flick 1.2s ease-in-out infinite}
+.copy{display:flex;align-items:center;gap:10px;width:100%;margin:12px 0 6px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:rgba(0,0,0,.35);color:var(--ink);cursor:pointer;text-align:left;transition:border-color .25s}
+.copy:hover{border-color:var(--o2)}
+.copy code{flex:1;min-width:0;font:400 11px/1.4 var(--mono);word-break:break-all;color:rgba(255,255,255,.85)}
+.copy .cp{flex:none;font:500 10px var(--mono);text-transform:uppercase;letter-spacing:.06em;padding:5px 8px;border-radius:999px;background:var(--btn);color:#fff;transition:background .25s}
+.copy.ok{border-color:#4ade80}.copy.ok .cp{background:#16a34a}
+
+.radar{margin:14px var(--col) 0;padding:18px;border:1px solid var(--o2);border-radius:18px;background:var(--panel)}
+.rh{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font:400 11px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--o1)}
+.rh span:last-child{color:var(--dim)}
+.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--o2);margin-right:6px;animation:live 1.4s ease-in-out infinite;vertical-align:1px}
+.dot.on{background:#4ade80}
+@keyframes live{50%{opacity:.25}}
+.bar{position:relative;height:16px;margin:16px 0 14px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid var(--line);overflow:hidden;display:flex}
+.bar>div{height:100%;width:0;transition:width 1.6s cubic-bezier(.2,.7,.2,1)}
+.bar .burned{background:linear-gradient(90deg,#ffd46b,#ff8330,#c43d2f);box-shadow:0 0 18px rgba(255,131,48,.8)}
+.bar .circ{background:rgba(255,255,255,.18)}
+.radar.idle .bar{background:repeating-linear-gradient(45deg,rgba(255,131,48,.08) 0 10px,transparent 10px 20px);animation:stripes 1.5s linear infinite;background-size:28px 28px}
+@keyframes stripes{to{background-position:28px 0}}
+.goal{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px 16px;margin-top:16px;font:400 12px var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--dim)}
+.goal b{color:var(--ink);font-weight:500}.goal i{font-style:normal;color:var(--o1)}
+.gbar{position:relative;overflow:visible}
+.gbar .burned{border-radius:999px}
+.gbar .tick{position:absolute;top:-4px;bottom:-4px;width:2px;background:rgba(255,255,255,.35);display:none}
+.gbar .tick em{position:absolute;top:100%;left:50%;transform:translateX(-50%);font:400 9px var(--mono);font-style:normal;color:var(--dim);margin-top:4px}
+.burns{list-style:none;margin-top:16px;border-top:1px solid var(--line)}
+.burns li{display:grid;grid-template-columns:auto 1fr auto;gap:4px 14px;align-items:baseline;padding:12px 0;border-bottom:1px solid var(--line);font-size:14px;line-height:1.45}
+.burns time{font:400 11px var(--mono);text-transform:uppercase;color:var(--o1);white-space:nowrap}
+.burns span{color:rgba(255,255,255,.82)}
+.burns b{font-weight:600;color:#fff}
+.burns a{font:500 10.5px var(--mono);text-transform:uppercase;letter-spacing:.05em;text-decoration:none;color:var(--dim);white-space:nowrap}
+.burns a:hover{color:var(--o1)}
+@media (max-width:900px){.burns li{grid-template-columns:1fr auto}.burns time{grid-column:1/-1}}
+.legend{display:flex;flex-wrap:wrap;gap:8px 22px;font:400 11px var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--dim)}
+.legend b{color:var(--ink);font-weight:500;margin-left:4px}
+.lb{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.b1{background:var(--o2)}.b2{background:rgba(255,255,255,.35)}.b3{border:1px solid rgba(255,255,255,.4)}
+
+/* ---------- 3 STORY ---------- */
+#story{padding:16vh 0 12vh}
+#story .wrap{margin-left:var(--col);width:calc(33% - 18px);padding:14px 18px}
+#story .h2,.qb .h2{margin:18px 0 22px}
+#start .h2,#community .h2{margin-top:18px}
+.timeline{position:absolute;right:var(--col);top:16vh;width:26%;font:400 11px var(--mono);text-transform:uppercase;letter-spacing:.05em}
+.timeline li{list-style:none;border-top:1px solid var(--line);padding:14px 0 14px 18%;position:relative;line-height:1.45}
+.timeline li:last-child{border-bottom:1px solid var(--line)}
+.timeline li em{position:absolute;left:0;top:14px;font-style:normal;color:var(--o2)}
+.timeline li strong{display:block;font-weight:500;margin-bottom:4px}
+.timeline li span{color:var(--dim);text-transform:none;letter-spacing:0;font-family:var(--sans);font-size:14px}
+.roadmap{margin:9vh var(--col) 0;display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--o2);border-radius:18px;overflow:hidden}
+.roadmap div{padding:22px 20px 26px;background:linear-gradient(rgba(214,105,65,.18),rgba(91,39,20,.25))}
+.roadmap div+div{border-left:1px solid rgba(255,131,48,.35)}
+.roadmap small{font:400 11px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--o1)}
+.roadmap h3{font:400 clamp(20px,1.8vw,30px) var(--disp);text-transform:uppercase;margin-top:12px}
+.rm-head{margin:0 var(--col);padding:0 0 14px 18px;margin-top:10vh}
+
+.term{margin:5vh var(--col) 0;border:1px solid var(--o2);border-radius:16px;overflow:hidden;background:#070403}
+.th{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid var(--line);font:400 10.5px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--dim)}
+.th span:first-child i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;background:var(--o4)}
+.th span:first-child i+i{background:var(--o2)}.th span:first-child i+i+i{background:var(--o1)}
+.tb{min-height:104px;padding:18px 16px;font:400 13px/1.6 var(--mono);color:#ffe2b8}
+.tb .pr{color:var(--o2)}
+.tbtn{margin:0 16px 16px}
+
+/* ---------- 4 QUBICBAY ---------- */
+#qubicbay{padding:16vh 0 10vh}
+.strip{margin-left:var(--col);height:74px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;position:relative;background:var(--panel)}
+.strip .track{display:flex;height:100%;transition:transform .9s cubic-bezier(.65,0,.2,1)}
+.strip .t{flex:0 0 33vw;display:flex;align-items:center;height:100%;color:rgba(255,255,255,.14);transition:color .6s,opacity .6s;position:relative}
+.strip .t .n{width:68px;height:100%;display:grid;place-items:center;border-right:1px solid var(--line);font:400 11px var(--mono)}
+.strip .t .l{padding-left:20px;font:400 clamp(15px,1.4vw,22px) var(--disp);text-transform:uppercase}
+.strip .t.on{color:var(--ink)}.strip .t.on .n{color:var(--o1)}
+.strip .t.on::after{content:"";position:absolute;inset:10px 14px 10px 0;border:1px solid var(--o2);border-radius:10px}
+.strip .t.gone{opacity:0}
+.qb{display:grid;grid-template-columns:var(--col) 36% 1fr;margin-top:12vh}
+.qb .l{grid-column:2;padding:14px 18px}
+.burn{grid-column:3;justify-self:end;margin-right:var(--col);width:min(320px,80%);border:1px solid var(--o2);border-radius:16px;overflow:hidden;background:var(--bg);font:400 11px var(--mono);text-transform:uppercase;letter-spacing:.05em;align-self:end}
+.burn header{display:flex;justify-content:space-between;padding:12px 14px;background:var(--grad);color:#2a0f05;font-weight:500}
+.burn .step{display:flex;align-items:center;gap:12px;padding:14px;border-bottom:1px solid var(--line)}
+.burn .step:last-child{border-bottom:0}
+.burn .step i{width:26px;height:26px;border:1px solid rgba(255,255,255,.3);border-radius:50%;display:grid;place-items:center;font-style:normal;flex:none}
+.burn .step.hot i{background:var(--btn);border-color:transparent}
+.burn .flame{display:inline-block;animation:flick 1.2s ease-in-out infinite}
+@keyframes flick{50%{transform:scale(1.15) translateY(-1px)}}
+
+/* ---------- 5 QBROS ---------- */
+#qbros{display:flex;align-items:center}
+#qbros .inner{margin-left:var(--col);width:calc(100% - 2*var(--col));display:grid;grid-template-columns:1fr 1fr;gap:4vw;align-items:center}
+.count{font:400 clamp(90px,13vw,220px)/.85 var(--spice);letter-spacing:-.02em}
+.count small{display:block;-webkit-text-fill-color:var(--ink);background:none;font:400 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink);margin-top:18px}
+#qbros .txt{padding:14px 0}
+#qbros .h2{margin:16px 0 18px}
+
+/* ---------- 6 GET STARTED ---------- */
+#start{padding:16vh 0 10vh}
+#start .head{margin-left:var(--col);padding:14px 18px;width:fit-content}
+.steps{margin:6vh var(--col) 0;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.step{display:flex;flex-direction:column;padding:24px 22px 22px;border:1px solid rgba(255,131,48,.35);border-radius:20px;background:var(--panel);transition:border-color .3s,transform .3s}
+.step:hover{border-color:var(--o2);transform:translateY(-3px)}
+.step .sh{display:flex;align-items:center;justify-content:space-between}
+.step .ic{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(145deg,rgba(255,131,48,.25),rgba(196,61,47,.15));border:1px solid rgba(255,212,107,.35)}
+.step .ic svg{width:24px;height:24px;fill:none;stroke:var(--o1);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.step .n{font:500 11px var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--o1)}
+.step h3{font:400 clamp(20px,1.7vw,26px)/1.15 var(--disp);text-transform:uppercase;margin:22px 0 10px}
+.step p{font-size:15px;line-height:1.6;color:rgba(255,255,255,.78);flex:1}
+.step p strong{color:#fff;font-weight:600}
+.sbtn{align-self:flex-start;margin-top:20px;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:10px 18px;border-radius:999px;background:var(--btn);color:#fff;text-decoration:none;
+  font:400 12px var(--disp);box-shadow:inset 0 -3px 0 rgba(0,0,0,.25);transition:transform .2s,box-shadow .2s}
+.sbtn:hover{transform:translateY(-2px);box-shadow:inset 0 -3px 0 rgba(0,0,0,.25),0 10px 30px rgba(255,131,48,.35)}
+.alert{margin:20px var(--col) 0;display:flex;gap:16px;align-items:flex-start;padding:20px 22px;border:1px solid rgba(255,212,107,.45);border-left:4px solid var(--o1);border-radius:16px;background:rgba(255,190,80,.08)}
+.alert .ai{font-size:26px;line-height:1;flex:none;margin-top:2px}
+.alert strong{display:block;font:500 12px var(--mono);text-transform:uppercase;letter-spacing:.07em;color:var(--o1);margin-bottom:8px}
+.alert p{font-size:15px;line-height:1.6;color:rgba(255,255,255,.88);max-width:75ch}
+.alert p b{color:#fff;font-weight:600}
+.step .alert{margin:16px 0 0;padding:14px 14px;gap:10px;border-radius:12px}
+.step .alert .ai{font-size:20px}
+.step .alert strong{font-size:11px;margin-bottom:6px}
+.step .alert p{font-size:13.5px;line-height:1.5}
+.step .alert .ok{margin-top:8px;font-size:13px}
+.alert .ok{margin-top:10px;font-size:14px;color:#86efac}
+.where{margin:9vh var(--col) 0;display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--o2);border-radius:18px;overflow:hidden;background:var(--bg)}
+.where>div{padding:20px}
+.where>div+div{border-left:1px solid rgba(255,131,48,.4)}
+.where h4{font:400 18px var(--disp);display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px}
+.where h4 span{font:400 10px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--dim)}
+.ex{display:flex;justify-content:space-between;align-items:center;padding:14px 10px;margin:0 -10px;border:1px solid transparent;border-top-color:var(--line);border-radius:10px;text-decoration:none;font-size:18px;font-weight:500;transition:color .25s,border-color .25s,background .25s,box-shadow .25s}
+.exn{display:inline-flex;align-items:center;gap:14px}
+.exl{width:36px;height:36px;flex:none;border-radius:10px;object-fit:contain;padding:5px;background:#fff;box-shadow:0 0 0 1px rgba(255,255,255,.12)}
+.exl.off{display:none}
+.ex:hover{color:var(--o1);border-color:rgba(255,212,107,.7);background:rgba(255,131,48,.08);box-shadow:0 0 24px rgba(255,131,48,.18)}
+.ex:hover small{transform:translate(3px,-3px);color:var(--o1)}
+.ex small{display:inline-block;font:400 10px var(--mono);text-transform:uppercase;color:var(--dim);transition:transform .25s}
+
+.live{margin:6vh var(--col) 0;display:grid;grid-template-columns:1.5fr 1fr;border:1px solid var(--o2);border-radius:18px;overflow:hidden;background:var(--panel)}
+.lv{padding:18px 20px}
+.lh{display:flex;justify-content:space-between;gap:10px;font:400 11px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--o1)}
+.lh span:last-child{color:var(--dim)}
+.lgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}
+.lgrid small,.calc small{display:block;font:400 10.5px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--dim)}
+.lgrid strong{display:block;font:400 clamp(16px,1.5vw,24px)/1.2 var(--disp);margin:8px 0 4px;overflow-wrap:anywhere}
+.lgrid em{font:500 11px var(--mono);font-style:normal}
+.mx{display:block;margin-top:6px;font:400 10px/1.5 var(--mono);text-transform:uppercase;letter-spacing:.04em;color:var(--dim)}
+.lv .track{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:18px;padding-top:12px;border-top:1px solid var(--line);font:400 11px var(--mono);text-transform:uppercase;letter-spacing:.05em}
+.lv .track span{color:var(--dim)}
+.lv .track a{text-decoration:none;color:rgba(255,255,255,.8);transition:color .2s}
+.lv .track a:hover{color:var(--o1)}
+.up{color:#4ade80}.down{color:#f87171}
+.calc{padding:18px 20px;border-left:1px solid rgba(255,131,48,.35);background:rgba(255,131,48,.05)}
+.inp{display:flex;align-items:center;margin:8px 0 14px;border:1px solid var(--line);border-radius:10px;background:rgba(0,0,0,.35);transition:border-color .2s}
+.inp:focus-within{border-color:var(--o2)}
+.inp input{flex:1;min-width:0;background:none;border:0;outline:0;color:var(--ink);font:400 16px var(--mono);padding:12px}
+.inp span{font:400 11px var(--mono);color:var(--dim);padding-right:12px}
+.calc .bal{font-size:14px;line-height:1.5;color:rgba(255,255,255,.78);margin:8px 0 12px}
+.calc .hint{font:400 10.5px/1.5 var(--mono);text-transform:uppercase;letter-spacing:.04em;color:var(--dim);margin:-6px 0 14px}
+.calc .hint.bad{color:#f87171}
+.calc .btn{width:100%;height:auto;min-height:44px;padding:10px 16px;text-align:center;line-height:1.3;font-size:12px}
+.out{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.out b,.rank b{display:block;font:400 18px var(--disp);margin-top:6px;overflow-wrap:anywhere}
+.rank{margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.rank em{display:block;margin-top:6px;font:400 10.5px/1.5 var(--mono);font-style:normal;text-transform:uppercase;letter-spacing:.04em;color:var(--dim)}
+.rank b{color:var(--o1)}
+
+/* ---------- 7 COMMUNITY ---------- */
+#community{padding:16vh 0 8vh;display:flex;flex-direction:column;justify-content:space-between}
+#community .head{margin-left:var(--col);padding:14px 18px;width:fit-content}
+.marquee{margin:8vh 0 4vh;overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(11,7,6,.6)}
+.marquee .row{display:flex;gap:28px;width:max-content;animation:mq 40s linear infinite;padding:18px 0}
+.marquee img{height:110px;width:110px;object-fit:contain;transition:transform .3s}
+.marquee img:hover{transform:rotate(-8deg) scale(1.12)}
+.play{margin:0 var(--col) 6vh;display:grid;grid-template-columns:clamp(260px,34vw,440px) 1fr auto;grid-template-areas:"k k k" "t d b";align-items:center;gap:6px 26px;padding:22px 24px;border:1px solid var(--o2);border-radius:18px;text-decoration:none;
+  background:linear-gradient(120deg,rgba(255,131,48,.18),rgba(196,61,47,.08) 60%,rgba(11,7,6,.9));transition:transform .25s,box-shadow .25s}
+.play:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(255,131,48,.25)}
+.play .pk{grid-area:k;font:400 11px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--o1)}
+.play .pt{grid-area:t;font:400 clamp(26px,3vw,44px) var(--disp)}
+.play .pd{grid-area:d;color:rgba(255,255,255,.78);font-size:15px;line-height:1.45;max-width:44ch}
+.play .btn{grid-area:b}
+.play.gen{margin-bottom:16px}
+@media (max-width:900px){.play{margin:0 16px 5vh;grid-template-columns:1fr;grid-template-areas:"k" "t" "d" "b";justify-items:start}.play.gen{margin-bottom:14px}}
+.socials{margin:6vh var(--col) 0;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.socials a{padding:22px 20px;text-decoration:none;display:flex;justify-content:space-between;align-items:center;font:400 clamp(18px,1.7vw,26px) var(--disp);border:1px solid var(--line);border-radius:18px;background:var(--panel);transition:border-color .3s}
+.socials a small{font:400 11px var(--mono);color:var(--dim)}
+.socials a:hover{border-color:var(--o2)}
+
+footer{position:relative;z-index:2;padding:8vh var(--col) 6vh;border-top:1px solid var(--line);background:var(--bg)}
+footer .big{font:400 clamp(48px,9vw,150px)/.9 var(--spice);margin-bottom:5vh}
+footer .disc{font-size:13px;line-height:1.65;color:rgba(255,255,255,.55);max-width:72ch}
+footer .disc+.disc{margin-top:10px}
+.qw{display:inline-block;height:1.05em;width:3.6em;vertical-align:-.2em;color:#fff;margin-left:.15em}
+.qm{display:inline-block;height:1.15em;width:.7em;vertical-align:-.2em;color:var(--o1);margin-right:2px}
+footer .built{display:inline-flex;align-items:center;gap:12px;margin-top:4vh;padding:12px 18px;border:1px solid var(--line);border-radius:999px;text-decoration:none;transition:border-color .25s,color .25s;color:#fff}
+footer .built span{font:400 11px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--dim)}
+footer .built svg{height:22px;width:76px}
+footer .listed{display:inline-flex;vertical-align:top;margin:4vh 0 0 10px;border-radius:7px;transition:transform .25s,box-shadow .25s}
+footer .listed img{display:block;height:46px;width:auto}
+footer .listed:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(62,240,255,.18)}
+@media (max-width:900px){footer .listed{margin-left:0}}
+footer .built:hover{border-color:var(--o2);color:var(--o1)}
+.totop{position:fixed;right:max(18px,env(safe-area-inset-right));bottom:max(18px,env(safe-area-inset-bottom));z-index:24;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,212,107,.55);
+  background:var(--btn);color:#fff;cursor:pointer;display:grid;place-items:center;box-shadow:inset 0 -3px 0 rgba(0,0,0,.25),0 10px 30px rgba(0,0,0,.45);
+  opacity:0;transform:translateY(16px) scale(.9);pointer-events:none;transition:opacity .3s,transform .3s}
+.totop.on{opacity:1;transform:none;pointer-events:auto}
+.totop:hover{transform:translateY(-3px)}
+.totop svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+@media (min-width:901px){.totop{right:150px}}
+footer .eco{margin-top:4vh;display:flex;flex-wrap:wrap;gap:8px 22px;font:400 11px var(--mono);text-transform:uppercase;letter-spacing:.05em}
+footer .eco span{color:var(--dim)}
+footer .eco a{text-decoration:none;color:rgba(255,255,255,.75);transition:color .2s}
+footer .eco a:hover{color:var(--o1)}
+footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font:400 11px var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--dim)}
+
+/* ---------- MOBILE ---------- */
+.timeline-m{display:none;margin-top:26px;font:400 11px var(--mono);text-transform:uppercase}
+.timeline-m li{list-style:none;padding:10px 0;border-top:1px solid var(--line)}
+.timeline-m li em{font-style:normal;color:var(--o2);margin-right:10px}
+@media (max-width:900px){
+  :root{--col:16px}
+  .guides i:nth-child(1),.guides i:nth-child(3),.menu,.pad,.rail,.feat,.timeline{display:none}
+  nav{grid-template-columns:1fr auto auto;gap:8px;padding-right:16px}
+  .navplay{display:inline-flex}
+  .logo{padding-left:16px}
+  .hero-head{width:86vw;left:50%;top:44%}
+  #intro .prompt{left:16px;right:16px;width:auto;top:13%}
+  .hl{left:16px;right:16px;bottom:calc(46px + 2.2% + 72px);padding-left:0}
+  .hl .pre,.tag{background:rgba(11,7,6,.75);display:inline-block;padding:2px 6px}
+  .sub{left:16px;right:16px;max-width:none;text-align:left}
+  .ticker{height:46px}.ticker span{font-size:18px}.ticker img{width:26px;height:26px}
+  #manifesto .inner{margin:0 16px;padding:28px 0}
+  .supply{margin:6vh 16px 0;padding-left:0}
+  .supply .num{font-size:clamp(28px,9.6vw,64px)}
+  #story .wrap,#start .head,#community .head{width:auto;margin:0 16px;padding:12px 0}
+  .timeline-m{display:block}
+  .rm-head{margin:8vh 16px 0;padding-left:0}
+  .roadmap{grid-template-columns:1fr;margin:0 16px}
+  .roadmap div+div{border-left:0;border-top:1px solid rgba(255,131,48,.35)}
+  .strip{margin-left:0}.strip .t{flex-basis:80vw}
+  .qb{grid-template-columns:1fr;gap:6vh}
+  .qb .l{grid-column:1;margin:0 16px;padding:12px 0}
+  .burn{grid-column:1;justify-self:stretch;margin:0 16px;width:auto}
+  #qbros{padding:12vh 0}
+  #qbros .inner{grid-template-columns:1fr;margin:0 16px;width:auto;gap:4vh}
+  .steps{grid-template-columns:1fr;gap:14px;margin:5vh 16px 0}
+  .step{padding:22px 20px}
+  .step h3{margin-top:18px}
+  .sbtn{align-self:stretch;justify-content:center}
+  .alert{margin:16px 16px 0;padding:18px;gap:12px}
+  .alert p{font-size:14.5px}
+  .where{grid-template-columns:1fr;margin:6vh 16px 0}
+  .where>div+div{border-left:0;border-top:1px solid rgba(255,131,48,.4)}
+  .socials{grid-template-columns:1fr;margin:5vh 16px 0}
+  .stats{grid-template-columns:1fr 1fr;margin:5vh 16px 0}
+  .radar,.term{margin-left:16px;margin-right:16px}
+  .live{grid-template-columns:minmax(0,1fr);margin:5vh 16px 0}
+  .navplay,nav .btn.sm{height:36px}
+  .calc{border-left:0;border-top:1px solid rgba(255,131,48,.35)}
+  .lgrid{grid-template-columns:1fr 1fr}
+  .st+.st{border-left:0}.st:nth-child(2n){border-left:1px solid rgba(255,131,48,.35)}
+  .st:nth-child(n+3){border-top:1px solid rgba(255,131,48,.35)}
+  .st.issuer{grid-column:1/-1;border-left:0!important}
+  .h2{font-size:clamp(26px,7.4vw,34px)}
+  section{scroll-margin-top:52px;min-height:0}
+  #intro{min-height:100vh;min-height:100svh}
+  #manifesto,#story,#qubicbay,#start,#community{padding-top:10vh;padding-bottom:8vh}
+  .mega{font-size:clamp(64px,22vw,110px)}
+  .marquee img{height:80px;width:80px}
+}
+/* ---------- MOBILE HERO (cleaner: head on top, text on a soft fade, 2 buttons) ---------- */
+@media (max-width:900px){
+  #intro::after{content:"";position:absolute;left:0;right:0;bottom:0;height:52%;z-index:2;pointer-events:none;
+    background:linear-gradient(to bottom,rgba(11,7,6,0) 0%,rgba(11,7,6,.78) 34%,rgba(11,7,6,.96) 70%)}
+  #intro .prompt .box{min-height:66px;padding:12px 14px}
+  #intro .prompt .next{display:none}
+  .hl .pre{margin-bottom:10px}
+  .mega{font-size:clamp(64px,21vw,96px)}
+  .tag{background:none;backdrop-filter:none;-webkit-backdrop-filter:none;padding:0;margin-top:8px;font-size:clamp(22px,6.6vw,28px);line-height:1.12}
+  .tag .l1{display:block}
+  .ctas{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}
+  .ctas .btn{height:48px;padding:0 12px;font-size:13px}
+  .ctas .play-h{background:rgba(11,7,6,.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:1px solid rgba(255,212,107,.55);
+    font:400 13px var(--disp);letter-spacing:0;text-transform:none;color:var(--o1)}
+  .ctas .play-h span{display:none}
+  .ctas .play-h::after{content:"Play";}
+  .ctas .wp-h{grid-column:1/-1;justify-self:start;height:auto;padding:4px 0;border:0;border-radius:0;background:none;color:rgba(255,255,255,.7);
+    text-decoration:underline;text-underline-offset:4px;text-decoration-color:rgba(255,212,107,.5)}
+  .sub{background:none;padding:0;bottom:calc(46px + 2.2%);color:rgba(255,255,255,.72);font-size:13.5px}
+}
+@media (min-width:901px) and (max-width:1280px){
+  main,footer,.guides{--col:7%}
+  .rail{display:none}
+  .hl{bottom:calc(56px + 4% + 64px)}
+  .sub{left:var(--col);right:auto;bottom:calc(56px + 4%);padding-left:18px;max-width:60ch;text-align:left}
+}
+/* short desktop windows (laptops, remote desktops): keep the hero blocks from colliding */
+@media (min-width:901px) and (max-height:860px){
+  #intro{min-height:max(100vh,580px)}
+  #intro .prompt,.feat{top:calc(86px + 3vh)}
+  #intro .prompt .next{display:none}
+  .mega{font-size:min(10vw,15vh)}
+  .tag{font-size:min(2.3vw,4.4vh)}
+  .hl{bottom:calc(56px + 4vh)}
+  .ctas{margin-top:2.4vh}
+}
+@media (min-width:901px) and (max-width:1280px) and (max-height:860px){
+  .hl{bottom:calc(56px + 3vh + 52px)}
+  .sub{bottom:calc(56px + 2vh)}
+  .mega{font-size:min(10vw,13vh)}
+}
+/* focus, press states, touch */
+:focus-visible{outline:2px solid var(--o1);outline-offset:3px;border-radius:6px}
+.btn:active,.sbtn:active,.totop:active,.navplay:active{transform:translateY(1px) scale(.98)}
+.ex:active,.socials a:active,.play:active,.copy:active{transform:scale(.99)}
+.navplay:hover{border-color:var(--o1);background:rgba(255,212,107,.08)}
+.menu a,footer .eco a,.lv .track a,.burns a{display:inline-block;padding:6px 0}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (hover:none){.btn:hover,.sbtn:hover,.step:hover,.play:hover,.totop:hover,footer .listed:hover{transform:none}.marquee img:hover{transform:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+@media (min-width:901px) and (max-width:1180px){.pad{display:none}nav{grid-template-columns:var(--col) 1fr auto;padding-right:18px}}
 </style>
 </head>
 <body>
-  <main>
-    <h1>$CFB</h1>
-    <p>The first meme on Qubic. Community tribute website coming soon.</p>
-  </main>
+
+<!-- Official Qubic mark (from Qubic's public explorer repository, same as qubicmap.org) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="qubic-word" viewBox="-0.5 1.5 85.58 25"><path d="M5.25 2H0.75C0.335786 2 0 2.33579 0 2.75V19.25C0 19.6642 0.335786 20 0.75 20H5.25C5.66421 20 6 19.6642 6 19.25V2.75C6 2.33579 5.66421 2 5.25 2Z" fill="currentColor"/><path d="M13.25 2H8.75C8.33579 2 8 2.33579 8 2.75V25.25C8 25.6642 8.33579 26 8.75 26H13.25C13.6642 26 14 25.6642 14 25.25V2.75C14 2.33579 13.6642 2 13.25 2Z" fill="currentColor"/><path d="M78.2335 20.5641C77.0029 20.5641 75.8848 20.3041 74.8795 19.7841C73.8915 19.2641 73.1028 18.5101 72.5135 17.5221C71.9415 16.5341 71.6555 15.3467 71.6555 13.9601V13.6221C71.6555 12.2354 71.9415 11.0567 72.5135 10.0861C73.1028 9.09807 73.8915 8.34407 74.8795 7.82407C75.8848 7.28673 77.0029 7.01807 78.2335 7.01807C79.4642 7.01807 80.5128 7.2434 81.3795 7.69407C82.2462 8.14473 82.9395 8.74273 83.4595 9.48807C83.9969 10.2334 84.3435 11.0567 84.4995 11.9581L81.8995 12.5041C81.8129 11.9321 81.6308 11.4121 81.3535 10.9441C81.0762 10.4761 80.6862 10.1034 80.1835 9.82607C79.6809 9.54873 79.0482 9.41007 78.2855 9.41007C77.5402 9.41007 76.8642 9.5834 76.2575 9.93007C75.6682 10.2594 75.2002 10.7447 74.8535 11.3861C74.5068 12.0101 74.3335 12.7727 74.3335 13.6741V13.9081C74.3335 14.8094 74.5068 15.5807 74.8535 16.2221C75.2002 16.8634 75.6682 17.3487 76.2575 17.6781C76.8642 18.0074 77.5402 18.1721 78.2855 18.1721C79.4122 18.1721 80.2702 17.8861 80.8595 17.3141C81.4488 16.7247 81.8215 15.9794 81.9775 15.0781L84.5775 15.6761C84.3695 16.5601 83.9969 17.3747 83.4595 18.1201C82.9395 18.8654 82.2462 19.4634 81.3795 19.9141C80.5128 20.3474 79.4642 20.5641 78.2335 20.5641Z" fill="currentColor"/><path d="M67.4473 20.2V7.382H70.1252V20.2H67.4473ZM68.7992 5.64C68.2792 5.64 67.8372 5.47533 67.4732 5.146C67.1266 4.79933 66.9532 4.35733 66.9532 3.82C66.9532 3.28267 67.1266 2.84933 67.4732 2.52C67.8372 2.17333 68.2792 2 68.7992 2C69.3366 2 69.7786 2.17333 70.1252 2.52C70.4719 2.84933 70.6452 3.28267 70.6452 3.82C70.6452 4.35733 70.4719 4.79933 70.1252 5.146C69.7786 5.47533 69.3366 5.64 68.7992 5.64Z" fill="currentColor"/><path d="M60.021 20.564C58.773 20.564 57.811 20.3387 57.135 19.888C56.4763 19.4373 55.9823 18.9347 55.653 18.38H55.237V20.2H52.611V2H55.289V9.124H55.705C55.913 8.77733 56.1903 8.448 56.537 8.136C56.8836 7.80667 57.343 7.538 57.915 7.33C58.487 7.122 59.189 7.018 60.021 7.018C61.0956 7.018 62.0836 7.278 62.985 7.798C63.8863 8.318 64.6056 9.072 65.143 10.06C65.6803 11.048 65.949 12.2267 65.949 13.596V13.986C65.949 15.3727 65.6716 16.56 65.117 17.548C64.5796 18.5187 63.8603 19.264 62.959 19.784C62.075 20.304 61.0956 20.564 60.021 20.564ZM59.241 18.224C60.4023 18.224 61.3556 17.8513 62.101 17.106C62.8636 16.3607 63.245 15.2947 63.245 13.908V13.674C63.245 12.3047 62.8723 11.2473 62.127 10.502C61.3816 9.75667 60.4196 9.384 59.241 9.384C58.097 9.384 57.1436 9.75667 56.381 10.502C55.6356 11.2473 55.263 12.3047 55.263 13.674V13.908C55.263 15.2947 55.6356 16.3607 56.381 17.106C57.1436 17.8513 58.097 18.224 59.241 18.224Z" fill="currentColor"/><path d="M43.3742 20.4341C42.4035 20.4341 41.5369 20.2174 40.7742 19.7841C40.0115 19.3507 39.4135 18.7354 38.9802 17.9381C38.5469 17.1407 38.3302 16.1874 38.3302 15.0781V7.38208H41.0082V14.8961C41.0082 16.0054 41.2855 16.8287 41.8402 17.3661C42.3949 17.8861 43.1662 18.1461 44.1542 18.1461C45.2462 18.1461 46.1215 17.7821 46.7802 17.0541C47.4562 16.3087 47.7942 15.2427 47.7942 13.8561V7.38208H50.4722V20.2001H47.8462V18.2761H47.4302C47.1875 18.7961 46.7542 19.2901 46.1302 19.7581C45.5062 20.2087 44.5875 20.4341 43.3742 20.4341Z" fill="currentColor"/><path d="M33.66 25.4001V18.4581H33.244C33.0533 18.8047 32.776 19.1427 32.412 19.4721C32.048 19.7841 31.58 20.0441 31.008 20.2521C30.4533 20.4601 29.76 20.5641 28.928 20.5641C27.8533 20.5641 26.8653 20.3041 25.964 19.7841C25.0627 19.2641 24.3433 18.5187 23.806 17.5481C23.2687 16.5601 23 15.3727 23 13.9861V13.5961C23 12.2094 23.2687 11.0307 23.806 10.0601C24.3607 9.07207 25.0887 8.31807 25.99 7.79807C26.8913 7.27807 27.8707 7.01807 28.928 7.01807C30.176 7.01807 31.1293 7.2434 31.788 7.69407C32.464 8.14473 32.9667 8.65607 33.296 9.22807H33.712V7.38207H36.338V25.4001H33.66ZM29.682 18.2241C30.8607 18.2241 31.8227 17.8514 32.568 17.1061C33.3133 16.3607 33.686 15.2947 33.686 13.9081V13.6741C33.686 12.3047 33.3047 11.2474 32.542 10.5021C31.7967 9.75673 30.8433 9.38407 29.682 9.38407C28.538 9.38407 27.5847 9.75673 26.822 10.5021C26.0767 11.2474 25.704 12.3047 25.704 13.6741V13.9081C25.704 15.2947 26.0767 16.3607 26.822 17.1061C27.5847 17.8514 28.538 18.2241 29.682 18.2241Z" fill="currentColor"/></symbol>
+  <symbol id="qubic-mark" viewBox="-0.5 1.5 15 25"><path d="M5.25 2H0.75C0.335786 2 0 2.33579 0 2.75V19.25C0 19.6642 0.335786 20 0.75 20H5.25C5.66421 20 6 19.6642 6 19.25V2.75C6 2.33579 5.66421 2 5.25 2Z" fill="currentColor"/><path d="M13.25 2H8.75C8.33579 2 8 2.33579 8 2.75V25.25C8 25.6642 8.33579 26 8.75 26H13.25C13.6642 26 14 25.6642 14 25.25V2.75C14 2.33579 13.6642 2 13.25 2Z" fill="currentColor"/></symbol>
+</svg>
+<div class="rays" id="rays" aria-hidden="true"></div>
+<div class="glow" aria-hidden="true"></div>
+<div class="guides" aria-hidden="true"><i></i><i hidden></i><i></i></div>
+
+<header>
+<div class="topbar"><a href="generator/"><b>New:</b> CFB Generator<span class="tbx"> · Make your $CFB PFP</span> ▶</a><button id="closebar" type="button" aria-label="Close announcement">×</button></div>
+
+<nav aria-label="Main">
+  <a class="logo" href="#intro"><img src="/assets/brand/cfb-head.webp" alt=""><span>$CFB</span></a>
+  <div class="menu">
+    <a href="#manifesto">Manifesto</a><a href="#story">Story</a><a href="#qubicbay">QubicBay</a><a href="#qbros">Qbros</a><a href="#start">Get $CFB</a><a href="#community">Community</a><a href="generator/">PFP Generator</a><a href="head-match/">Play ▶</a>
+  </div>
+  <a class="pad" data-link="genesisTx" href="https://explorer.qubic.org/network/tx/ptthaqjjuyelsdcabjfpzvihriycuquoylnjcnplwclvijofvlkindsatntk" target="_blank" rel="noopener noreferrer">Genesis TX ↗</a>
+  <a class="navplay" href="head-match/" aria-label="Play Head Match">🎮 Play</a>
+  <a class="btn sm" href="#where" data-buy>Buy now</a>
+</nav>
+</header>
+
+<aside class="rail" aria-hidden="true">
+  <div class="dots"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="lab" id="railLab" style="top:0"><svg viewBox="0 0 12 12"><circle cx="6" cy="6" r="5" fill="none" stroke="currentColor"/><path d="M6 6 L6 2" stroke="currentColor"/></svg><span>Intro</span></div>
+  <div class="m">≡ Menu</div>
+</aside>
+
+<div class="hero-head" id="head" aria-hidden="true"><div class="tilt" id="tilt"><img src="/assets/brand/cfb-head.webp" alt=""></div></div>
+
+<main>
+<!-- 1 INTRO -->
+<section id="intro" data-label="Intro">
+  <div class="prompt rv d1">
+    <div class="tab" aria-hidden="true">&gt;_</div>
+    <div class="box br"><span id="typed"></span><span class="caret"></span></div>
+    <div class="next" id="nextp"></div>
+  </div>
+  <ul class="feat rv d2">
+    <li>First memecoin on Qubic</li><li>Fair launch · No pre-sale</li><li>QubicBay token</li><li>Deflationary</li><li class="dim">For the people, forever</li>
+  </ul>
+  <div class="hl">
+    <div class="pre rv d1">The first memecoin on <svg class="qw" role="img" aria-label="Qubic"><use href="#qubic-word"/></svg></div>
+    <h1 class="mega rv d2">$CFB</h1>
+    <div class="tag rv d3"><span class="l1">Not just a meme.</span> <em>Qubic history.</em></div>
+    <div class="ctas rv d4">
+      <a class="btn" href="#where" data-buy>Buy now</a>
+      <a class="btn ghost play-h" href="head-match/">🎮 <span>Play Head Match</span></a>
+      <a class="btn ghost wp-h" data-link="whitepaper" href="https://drive.google.com/file/d/1Z3H7-WGgqxWhxuz--eQavSG0RdWrPyvB/view" target="_blank" rel="noopener noreferrer">View whitepaper ↗</a>
+    </div>
+  </div>
+  <p class="sub rv d4">Deployed on May the 4th, airdropped to everyone, burned to build Qubic's NFT culture.</p>
+  <div class="ticker" aria-hidden="true"><div class="row" id="ticker"></div></div>
+</section>
+
+<!-- 2 MANIFESTO -->
+<section id="manifesto" data-label="Manifesto">
+  <div class="inner panel">
+    <h2 class="sr">The original $CFB manifesto</h2>
+    <div class="kicker rv d1"><b>00</b> The original manifesto · 2024</div>
+    <p class="quote rv d2">CFB is tired of watching everyone play with the same old blockchains: <span class="strike">Solana, Ethereum, L1, L2, L3, cats, dogs</span> and various wives' boyfriends. Their memecoins have had their day. It's time for <span class="hi">$Qubic</span> to take over, and <span class="hi">$CFB</span> is here to make it mainstream.</p>
+    <a class="link rv d3" href="#story">Launched fairly without pre-sale. A coin for the community, for the people, forever.</a>
+  </div>
+  <div class="supply rv d3">
+    <div class="num">420,690,000,000</div>
+    <div class="cap"><b>Initial total supply</b>Shrinking with every collection launched on QubicBay.</div>
+  </div>
+  <div class="stats rv d4">
+    <div class="st"><small>Initial supply</small><strong title="420,690,000,000 $CFB">420.69B</strong><em>420,690,000,000 $CFB</em></div>
+    <div class="st hot"><small><span class="flame">🔥</span> Burned $CFB</small><strong data-stat="burned">…</strong><em data-stat="burnedPct">Verified on-chain burns</em></div>
+    <div class="st"><small>Remaining supply</small><strong data-stat="circulating">…</strong><em>Initial minus burned</em></div>
+    <div class="st issuer"><small><svg class="qm" aria-hidden="true"><use href="#qubic-mark"/></svg> Issuer · Token ID on Qubic</small>
+      <button class="copy" id="copyIssuer" data-copy="CFBMEMZOIDEXQAUXYYSZIURADQLAPWPMNJXQSNVQZAHYVOPYUKKJBJUCTVJL" aria-label="Copy the $CFB issuer address">
+        <code>CFBMEMZOIDEXQAUXYYSZIURADQLAPWPMNJXQSNVQZAHYVOPYUKKJBJUCTVJL</code><span class="cp">Copy</span></button>
+      <em>Asset name: CFB</em></div>
+  </div>
+  <!-- MODULE · Burn radar: fed by fetchBurnStats() -->
+  <div class="radar idle rv d4" id="radar">
+    <div class="rh"><span><i class="dot"></i> $CFB burn radar</span><span id="radarState">Awaiting on-chain data</span></div>
+    <div class="goal"><span>🔥 Burned <b data-count id="rBurned">…</b> <i id="rPct"></i></span><span>Goal: <b>15%</b> of supply</span></div>
+    <div class="bar gbar"><div class="burned" id="barGoal"></div><i class="tick" style="left:20%"><em>3%</em></i></div>
+    <div class="legend">
+      <span><i class="lb b1"></i>Progress to the 15% burn goal <b id="rGoal">…</b></span>
+      <span><i class="lb b2"></i>Remaining <b data-count id="rCirc">…</b></span>
+      <span><i class="lb b3"></i>Initial <b>420.69B</b></span>
+    </div>
+    <ul class="burns" id="burnLog"></ul>
+  </div>
+</section>
+
+<!-- 3 STORY -->
+<section id="story" data-label="Story">
+  <div class="wrap panel">
+    <div class="kicker rv d1"><b>01</b> What is $CFB?</div>
+    <h2 class="h2 rv d2">The meme that came <span class="sp">before</span> everything else.</h2>
+    <p class="p rv d3">$CFB is the first-ever meme launched on Qubic. It was distributed fairly via airdrop to the entire community. It began as a pure memecoin and grew a real use case: it's the main token of QubicBay, Qubic's NFT marketplace, and it introduced the ecosystem's first NFT collection, Qbros.</p>
+    <a class="link rv d4" data-link="genesisTx" href="https://explorer.qubic.org/network/tx/ptthaqjjuyelsdcabjfpzvihriycuquoylnjcnplwclvijofvlkindsatntk" target="_blank" rel="noopener noreferrer">View the Genesis TX on Qubic Explorer ↗</a>
+    <ul class="timeline-m rv d4">
+      <li><em>01</em>May 4th, 2024: deployed</li><li><em>02</em>Fair airdrop · no pre-sale</li><li><em>03</em>Main token of QubicBay</li><li><em>04</em>Qbros, the genesis collection</li><li><em>05</em>May 16th, 2025: 3% of supply burned</li><li><em>06</em>Oct 8th, 2025: another 3% burned</li>
+    </ul>
+  </div>
+  <ul class="timeline panel rv d3">
+    <li><em>01</em><strong>May 4th, 2024</strong><span>Deployed on Qubic. May the fourth be with you.</span></li>
+    <li><em>02</em><strong>Fair airdrop</strong><span>No pre-sale. Distributed to the entire community.</span></li>
+    <li><em>03</em><strong>QubicBay</strong><span>Becomes the main token of Qubic's NFT marketplace.</span></li>
+    <li><em>04</em><strong>Qbros</strong><span>The first NFT collection in the ecosystem.</span></li>
+    <li><em>05</em><strong>May 16th, 2025</strong><span>3% of the total supply burned, first step toward a 15% burn goal.</span></li>
+    <li><em>06</em><strong>Oct 8th, 2025</strong><span>Another 3% burned: 6% of the supply gone.</span></li>
+  </ul>
+  <div class="rm-head"><div class="kicker rv d1"><b>2024</b> The original roadmap</div></div>
+  <div class="roadmap rv d2">
+    <div><small>Phase 1</small><h3>$CFB Launch</h3></div>
+    <div><small>Phase 2</small><h3>Vibe and Hodl</h3></div>
+    <div><small>Phase 3</small><h3>Meme takeover</h3></div>
+  </div>
+  <!-- MODULE · CFB lore terminal (facts + live Qubic tick/epoch) -->
+  <div class="term rv d3">
+    <div class="th"><span><i></i><i></i><i></i></span><span><svg class="qm" aria-hidden="true"><use href="#qubic-mark"/></svg> cfb-lore · qubic</span><span id="netBadge"><i class="dot"></i>Network</span></div>
+    <div class="tb" id="termOut" aria-live="polite"><span class="pr">$</span> <span id="termText">Press decode to read the lore.</span><span class="caret"></span></div>
+    <button class="btn ghost tbtn" id="decode">[ Decode next CFB message ]</button>
+  </div>
+</section>
+
+<!-- 4 QUBICBAY -->
+<section id="qubicbay" data-label="QubicBay">
+  <div class="strip rv d1"><div class="track" id="track"></div></div>
+  <div class="qb">
+    <div class="l panel">
+      <div class="kicker rv d1"><b>02</b> QubicBay · Burn mechanics</div>
+      <h2 class="h2 rv d2"><span class="sp">Burned</span> to build Qubic's NFT culture.</h2>
+      <p class="p rv d3">QubicBay is Qubic's definitive NFT marketplace, where $CFB became deflationary. To launch an NFT collection, creators must buy and burn $CFB to obtain minting slots. Every new collection reduces the supply, fully automated and managed exclusively by the Qbay smart contract.</p>
+      <a class="link rv d4" data-link="qubicbay" href="https://qubicbay.io/" target="_blank" rel="noopener noreferrer">Discover QubicBay ↗</a>
+    </div>
+    <div class="burn rv d3">
+      <header><span>New collection</span><span>Qbay SC</span></header>
+      <div class="step"><i>1</i>Buy $CFB</div>
+      <div class="step hot"><i class="flame">🔥</i>Burn $CFB</div>
+      <div class="step"><i>3</i>Get minting slots</div>
+      <div class="step"><i>↓</i>Supply goes down</div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 QBROS -->
+<section id="qbros" data-label="Qbros">
+  <div class="inner">
+    <div class="count rv d1">1,001<small>Unique collectibles</small></div>
+    <div class="txt panel">
+      <div class="kicker rv d1"><b>03</b> Qbros · The Genesis Collection</div>
+      <h2 class="h2 rv d2">First of its kind on Qubic.</h2>
+      <p class="p rv d3">$CFB brought NFT and meme culture into the Qubic ecosystem, pioneering and paving the way for other projects. Qbros is a highly collectible collection, the first of its kind: you can't be part of the ecosystem and not hold at least one Qbros.</p>
+      <a class="link rv d4" data-link="qbros" href="https://qubicbay.io/Collections/0" target="_blank" rel="noopener noreferrer">Join Qbros ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- 6 GET $CFB -->
+<section id="start" data-label="Get $CFB">
+  <div class="head panel">
+    <div class="kicker rv d1"><b>04</b> Getting started</div>
+    <h2 class="h2 rv d2">3 simple steps to join the <span class="sp">$CFB</span> ecosystem.</h2>
+  </div>
+  <div class="steps rv d3">
+    <article class="step">
+      <div class="sh"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 7.5A2.5 2.5 0 0 1 5.5 5H18v3"/><rect x="3" y="7" width="18" height="13" rx="2.5"/><circle cx="16.5" cy="13.5" r="1.4"/></svg></span><span class="n">Step 01</span></div>
+      <h3>Choose your wallet</h3>
+      <p>A wallet is necessary to use, trade, or hold $CFB. Use the <strong>official Qubic Wallet</strong> app or the <strong>Qubic Web Wallet</strong>.</p>
+      <a class="sbtn" data-link="wallets" href="https://qubic.org/#wallets" target="_blank" rel="noopener noreferrer">Get Qubic Wallet ↗</a>
+    </article>
+    <article class="step">
+      <div class="sh"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg></span><span class="n">Step 02</span></div>
+      <h3>Configure your wallet</h3>
+      <p>Follow Qubic's official documentation. <strong>Write down your 55-letter seed offline</strong> and never share it: it's the only way to recover your $CFB.</p>
+      <aside class="alert in-step" role="note" aria-labelledby="alertT">
+        <span class="ai" aria-hidden="true">⚠️</span>
+        <div>
+          <strong id="alertT">Security notice: wallet seeds</strong>
+          <p>If you created your seed <b>on an iPhone or iPad</b>, or <b>in Safari on a Mac</b>, <b>before October 18, 2026</b>, create a new one with an up-to-date Qubic wallet (version 4.26.4 or later) and move your funds to it. Seeds made on Windows, Android or Linux are not on the affected list.</p>
+          <p class="ok">✓ Qubic will never ask for your seed. Nobody from $CFB will either.</p>
+        </div>
+      </aside>
+      <a class="sbtn" data-link="walletGuide" href="https://docs.qubic.org/learn/invest#2-create-a-qubic-wallet" target="_blank" rel="noopener noreferrer">Read the official guide ↗</a>
+    </article>
+    <article class="step">
+      <div class="sh"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M14.5 9.2c-.5-.8-1.4-1.2-2.5-1.2-1.6 0-2.7.8-2.7 2s1.1 1.6 2.7 2 2.7.9 2.7 2.1-1.2 2-2.7 2c-1.2 0-2.2-.5-2.7-1.3M12 6.5V8m0 8v1.5"/></svg></span><span class="n">Step 03</span></div>
+      <h3>Get some $CFB</h3>
+      <p>There are lots of ways to get your hands on some $CFB: on Qubic's decentralized exchanges or on SafeTrade.</p>
+      <a class="sbtn" href="#where" data-buy>See where to buy ↓</a>
+    </article>
+  </div>
+  <div class="where rv d4" id="where">
+    <div>
+      <h4>DEX <span>Decentralized exchanges</span></h4>
+      <a class="ex" data-link="qx" href="https://app.qubicportal.org/trade?asset=CFB&amp;issuer=CFBMEMZOIDEXQAUXYYSZIURADQLAPWPMNJXQSNVQZAHYVOPYUKKJBJUCTVJL" target="_blank" rel="noopener noreferrer"><span class="exn"><img class="exl" src="/logos/qx" alt="" width="36" height="36" loading="lazy">QX · Qubic Exchange</span> <small>↗</small></a>
+      <a class="ex" data-link="qswap" href="https://swap.qubicportal.org/swap?from=QUBIC&amp;to=CFBMEMZOIDEXQAUXYYSZIURADQLAPWPMNJXQSNVQZAHYVOPYUKKJBJUCTVJL%3ACFB" target="_blank" rel="noopener noreferrer"><span class="exn"><img class="exl" src="/logos/qswap" alt="" width="36" height="36" loading="lazy">QSwap</span> <small>↗</small></a>
+    </div>
+    <div>
+      <h4>CEX <span>Centralized exchanges</span></h4>
+      <a class="ex" data-link="safetrade" href="https://safetrade.com/exchange/CFB-USDT?type=pro" target="_blank" rel="noopener noreferrer"><span class="exn"><img class="exl" src="/logos/safetrade" alt="" width="36" height="36" loading="lazy">SafeTrade</span> <small>CFB/USDT ↗</small></a>
+    </div>
+  </div>
+    <!-- MODULE · Live market + balance check: fed by fetchCFBMarketData() -->
+  <div class="live rv d3" id="live">
+    <div class="lv">
+      <div class="lh"><span><i class="dot" id="liveDot"></i> Live status</span><span id="liveSrc">Connecting…</span></div>
+      <div class="lgrid">
+        <div><small>$CFB price</small><strong id="pCfb">…</strong><em id="cCfb"></em><span class="mx" id="mCfb"></span></div>
+        <div><small><svg class="qm" aria-hidden="true"><use href="#qubic-mark"/></svg> $QUBIC price</small><strong id="pQu">…</strong><em id="cQu"></em></div>
+        <div><small>FDV · initial supply</small><strong id="fdv">…</strong><em>Price × 420.69B</em></div>
+      </div>
+      <div class="track"><span>Track $CFB</span><a data-link="coinpaprika" href="https://coinpaprika.com/coin/cfb-cfb-token" target="_blank" rel="noopener noreferrer">CoinPaprika ↗</a><a data-link="coinmarketcap" href="https://coinmarketcap.com/currencies/cfb/" target="_blank" rel="noopener noreferrer">CoinMarketCap ↗</a><a data-link="safetrade" href="https://safetrade.com/exchange/CFB-USDT?type=pro" target="_blank" rel="noopener noreferrer">SafeTrade ↗</a></div>
+    </div>
+    <div class="calc">
+      <label for="bag"><small>How big is your bag?</small></label>
+      <div class="inp"><input id="bag" type="text" inputmode="numeric" placeholder="e.g. 1,000,000,000" autocomplete="off"><span>$CFB</span></div>
+      <div class="out"><div><small>≈ USD</small><b id="vUsd">…</b></div><div><small>≈ $QUBIC</small><b id="vQu">…</b></div></div>
+      <div class="rank"><small>Your community rank</small><b id="rank">Type your bag</b><em id="rankNext"></em></div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 COMMUNITY -->
+<section id="community" data-label="Community">
+  <div class="head panel">
+    <div class="kicker rv d1"><b>05</b> Join our community</div>
+    <h2 class="h2 rv d2">Be part of the <span class="sp">first meme</span> on Qubic.</h2>
+  </div>
+  <div class="socials rv d3">
+    <a data-link="x" href="https://x.com/c_f_b_token" target="_blank" rel="noopener noreferrer">X <small>↗</small></a>
+    <a data-link="discord" href="https://discord.com/invite/cAbXK8Kx35" target="_blank" rel="noopener noreferrer">Discord <small>↗</small></a>
+    <a data-link="telegram" href="https://t.me/+0NJgRzFxPXMxMjk8" target="_blank" rel="noopener noreferrer">Telegram <small>↗</small></a>
+  </div>
+  <div class="marquee rv d3"><div class="row" id="mq"></div></div>
+  <a class="play gen rv d3" href="generator/">
+    <span class="pk">$CFB arcade · New</span>
+    <span class="pt">CFB Generator</span>
+    <span class="pd">Pick your skin, body and gear, or roll a random one. Download your $CFB PFP in SD or HD.</span>
+    <span class="btn">Create my PFP ▶</span>
+  </a>
+  <a class="play rv d3" href="head-match/">
+    <span class="pk">$CFB arcade · New</span>
+    <span class="pt">Head Match</span>
+    <span class="pd">Flip the cards, match the community's CFB heads, beat the clock and share your score.</span>
+    <span class="btn">Play now ▶</span>
+  </a>
+  <!-- Crypto Fighter card hidden for now (game kept at crypto-fighter/) -->
+</section>
+</main>
+
+<button class="totop" id="totop" aria-label="Back to top" title="Back to top"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+<footer>
+  <div class="big">$CFB</div>
+  <p class="disc">$CFB token has no association with Sergey Ivancheglo (aka Come-from-Beyond) or his creation. This token is simply paying homage to a meme well loved and recognized in Qubic's community. $CFB is a meme token with no intrinsic value or expectation of financial return. There is no formal team or roadmap. The token is completely useless and for entertainment purposes only.</p>
+  <p class="disc">Created by the Community for the Community, just for fun.</p>
+  <a class="built" data-link="qubic" href="https://qubic.org" target="_blank" rel="noopener noreferrer"><span>Built on</span><svg role="img" aria-label="Qubic"><use href="#qubic-word"/></svg></a>
+  <a class="listed" data-link="qubicmapCfb" href="https://qubicmap.org/p/cfb" target="_blank" rel="noopener noreferrer"><img src="https://qubicmap.org/badge.svg" alt="Listed on qubicmap.org" width="190" height="40" loading="lazy"></a>
+  <div class="eco"><span>Qubic ecosystem</span>
+    <a data-link="qubic" href="https://qubic.org" target="_blank" rel="noopener noreferrer">qubic.org ↗</a>
+    <a data-link="qubicbay" href="https://qubicbay.io" target="_blank" rel="noopener noreferrer">qubicbay.io ↗</a>
+    <a data-link="qubicmap" href="https://qubicmap.org" target="_blank" rel="noopener noreferrer">qubicmap.org ↗</a>
+    <a data-link="explorer" href="https://explorer.qubic.org" target="_blank" rel="noopener noreferrer">explorer.qubic.org ↗</a>
+  </div>
+  <div class="bot"><span>$CFB · The first memecoin on Qubic · Since May 4th, 2024</span><span>Community website</span></div>
+</footer>
+
+<script>
+/* =====================================================================
+   CFB_CONFIG: every URL and constant of the site in one place.
+   Edit here; elements with data-link="key" are re-linked on load.
+   ===================================================================== */
+const CFB_CONFIG={
+  issuer:"CFBMEMZOIDEXQAUXYYSZIURADQLAPWPMNJXQSNVQZAHYVOPYUKKJBJUCTVJL",
+  assetName:"CFB",
+  launchDate:"2024-05-04",
+  supply:{initial:420690000000,
+    goalPct:15,
+    // Burns not visible as transfers to the burn address (asset-share burns). QubicBay burns are read live from the chain via /api/burn.
+    burns:[
+      {date:"2025-05-16",amount:12620700000,label:"Burn #1: 3% of the total supply",tx:"uxolklzyzarwibebudnqesoppxwaljlnfzhiuicmvfwtbsordcjotbvgipye"},
+      {date:"2025-10-08",amount:12620700000,label:"Burn #2: another 3% of the total supply",tx:"lneccduplfvhaczhkclagcbgjsffokjettpfwjryiecxbtojqvweruafpaei"}
+    ],
+    // Optional nicer labels for on-chain burns, by transaction
+    labels:{"jgroxukvilsshcubufaaicxcmwneqsxfzcpymvkebeunclvyprqbtrpfktnm":"QubicBay: BITE collection launch, first after the Qbay smart contract upgrade"}},
+  ranks:[ // CFB holder ranking (official): [minimum bag, title]
+    [0,"🦐 Shrimp"],[121150,"🦀 Crab"],[1211500,"🐟 Fish"],[12115000,"🐬 Dolphin"],[121150000,"🦈 Shark"],
+    [1211500000,"🐋 Whale"],[12115000000,"🐳 Humpback"],[121150000000,"🔱 Aquaman"]],
+  api:{market:"/api/market",status:"/api/status",paprika:"https://api.coinpaprika.com/v1/tickers/cfb-cfb-token",burn:"/api/burn"},
+  links:{
+    qubicbay:"https://qubicbay.io/",
+    qbros:"https://qubicbay.io/Collections/0",
+    whitepaper:"https://drive.google.com/file/d/1Z3H7-WGgqxWhxuz--eQavSG0RdWrPyvB/view",
+    genesisTx:"https://explorer.qubic.org/network/tx/ptthaqjjuyelsdcabjfpzvihriycuquoylnjcnplwclvijofvlkindsatntk",
+    wallets:"https://qubic.org/#wallets",
+    walletGuide:"https://docs.qubic.org/learn/invest#2-create-a-qubic-wallet",
+    qx:"https://app.qubicportal.org/trade?asset=CFB&issuer=CFBMEMZOIDEXQAUXYYSZIURADQLAPWPMNJXQSNVQZAHYVOPYUKKJBJUCTVJL",
+    qswap:"https://swap.qubicportal.org/swap?from=QUBIC&to=CFBMEMZOIDEXQAUXYYSZIURADQLAPWPMNJXQSNVQZAHYVOPYUKKJBJUCTVJL%3ACFB",
+    safetrade:"https://safetrade.com/exchange/CFB-USDT?type=pro",
+    coinpaprika:"https://coinpaprika.com/coin/cfb-cfb-token",
+    coinmarketcap:"https://coinmarketcap.com/currencies/cfb/",
+    x:"https://x.com/c_f_b_token",
+    discord:"https://discord.com/invite/cAbXK8Kx35",
+    telegram:"https://t.me/+0NJgRzFxPXMxMjk8",
+    qubic:"https://qubic.org",qubicmap:"https://qubicmap.org",qubicmapCfb:"https://qubicmap.org/p/cfb",explorer:"https://explorer.qubic.org"
+  }
+};
+
+(()=>{
+const $=s=>document.querySelector(s);
+
+document.querySelectorAll('.exl').forEach(i=>i.addEventListener('error',()=>i.classList.add('off')));
+/* ---- links from config ---- */
+document.querySelectorAll('[data-link]').forEach(a=>{const u=CFB_CONFIG.links[a.dataset.link];if(u){a.href=u;a.target='_blank';a.rel='noopener noreferrer'}});
+
+/* ---- Buy now: smooth scroll to DEX / CEX + highlight ---- */
+document.querySelectorAll('[data-buy]').forEach(b=>b.addEventListener('click',e=>{e.preventDefault();const w=$('#where');
+  w.scrollIntoView({behavior:'smooth',block:'center'});w.classList.remove('pulse');void w.offsetWidth;w.classList.add('pulse')}));
+
+/* ---- helpers ---- */
+const fmt=(n,d=0)=>n==null?'…':n.toLocaleString('en-US',{maximumFractionDigits:d});
+const usd=n=>{if(n==null)return'…';if(n>=1000)return'$'+fmt(n,0);if(n>=1)return'$'+fmt(n,2);if(n>=0.01)return'$'+n.toFixed(4);const z=Math.max(0,-Math.floor(Math.log10(n))-1);return'$'+n.toFixed(z+3)};
+const pct=n=>n==null?'':`${n>=0?'▲':'▼'} ${Math.abs(n).toFixed(2)}%`;
+async function getJSON(url,ms=5000){if(!url)return null;const c=new AbortController(),t=setTimeout(()=>c.abort(),ms);
+  try{const r=await fetch(url,{signal:c.signal});return r.ok?await r.json():null}catch(e){return null}finally{clearTimeout(t)}}
+const big=n=>n==null?'…':n>=1e9?(n/1e9).toFixed(2).replace(/\.?0+$/,'')+'B':n>=1e6?(n/1e6).toFixed(2).replace(/\.?0+$/,'')+'M':fmt(n);
+function countUp(el,to,ms=1600,f2=fmt){if(to==null){el.textContent='…';return}const t0=performance.now();
+  (function f(t){const k=Math.min((t-t0)/ms,1),e=1-Math.pow(1-k,3);el.textContent=f2(k<1?to*e:to);if(k<1)requestAnimationFrame(f)})(t0)}
+
+/* ---- MODULE 1 · live market + bag calculator ---- */
+const M={cfb:null,qubic:null};
+async function fetchCFBMarketData(){
+  // Worker API (SafeTrade + CoinGecko) and CoinPaprika (called from the browser: it refuses server-side calls) in parallel
+  const [d0,pp]=await Promise.all([getJSON(CFB_CONFIG.api.market),getJSON(CFB_CONFIG.api.paprika)]);
+  const d=d0||{ok:false};const q=pp&&pp.quotes&&pp.quotes.USD;
+  if(q&&q.price){d.cfb={price:q.price,change24h:q.percent_change_24h,change7d:q.percent_change_7d,ath:q.ath_price,athDate:pp.quotes.USD.ath_date,source:'CoinPaprika'};d.ok=true}
+  M.cfb=d?.cfb?.price??null;M.qubic=d?.qubic?.price??null;
+  $('#pCfb').textContent=usd(M.cfb);$('#pQu').textContent=usd(M.qubic);
+  const cc=$('#cCfb'),cq=$('#cQu');cc.textContent=pct(d?.cfb?.change24h);cq.textContent=pct(d?.qubic?.change24h);
+  cc.className=(d?.cfb?.change24h??0)>=0?'up':'down';cq.className=(d?.qubic?.change24h??0)>=0?'up':'down';
+  const c=d?.cfb;$('#mCfb').textContent=c&&c.change7d!=null?`7D ${pct(c.change7d)}${c.ath?` · ATH ${usd(c.ath)}${c.athDate?' ('+c.athDate.slice(0,10)+')':''}`:''}`:'';
+  $('#fdv').textContent=M.cfb?usd(M.cfb*CFB_CONFIG.supply.initial):'…';
+  const live=!!(d&&d.ok);$('#liveDot').classList.toggle('on',live);
+  $('#liveSrc').textContent=live?[...new Set([d.cfb&&d.cfb.source,d.qubic&&d.qubic.source].filter(Boolean))].join(' · ')+' · '+new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}):'Market data unavailable';
+  calc();
+}
+/* bag calculator: value + fun community rank (nothing is stored or sent) */
+function calc(){
+  const n=parseFloat(($('#bag').value||'').replace(/[^\d.]/g,''));
+  if(!n){$('#vUsd').textContent='…';$('#vQu').textContent='…';$('#rank').textContent='Type your bag';$('#rankNext').textContent='';return}
+  const v=M.cfb?n*M.cfb:null;$('#vUsd').textContent=v==null?'…':usd(v);
+  $('#vQu').textContent=(v!=null&&M.qubic)?big(v/M.qubic):'…';
+  const R=CFB_CONFIG.ranks;let k=0;R.forEach(([min],i)=>{if(n>=min)k=i});
+  $('#rank').textContent=R[k][1];
+  $('#rankNext').textContent=R[k+1]?`${big(R[k+1][0]-n)} $CFB more to become ${R[k+1][1].replace(/^\S+ /,'')}`:'King of the seas. Respect.';
+}
+$('#bag').addEventListener('input',e=>{const raw=e.target.value.replace(/[^\d]/g,'').slice(0,13);e.target.value=raw?Number(raw).toLocaleString('en-US'):'';calc()});
+fetchCFBMarketData();setInterval(()=>{if(!document.hidden)fetchCFBMarketData()},60000);
+
+/* ---- MODULE 2 · burn radar ---- */
+async function fetchBurnStats(){
+  const S=CFB_CONFIG.supply,live=await getJSON(CFB_CONFIG.api.burn);
+  const list=[...(S.burns||[])];
+  if(live&&live.ok)live.burns.forEach(b=>{if(!list.some(x=>x.tx===b.tx))list.push({...b,label:S.labels[b.tx]||'QubicBay: new collection launch (mint slots burned)'})});
+  const burned=list.reduce((t,b)=>t+b.amount,0),remain=S.initial-burned,pct=burned/S.initial*100,goal=S.goalPct;
+  $('#radar').classList.toggle('idle',!burned);if(!burned)return;
+  const prog=Math.min(pct/goal*100,100);
+  setTimeout(()=>{$('#barGoal').style.width=prog+'%'},200);
+  countUp($('#rBurned'),burned,1600,big);countUp($('#rCirc'),remain,1600,big);
+  $('#rPct').textContent='('+pct.toFixed(2)+'%)';$('#rGoal').textContent=prog.toFixed(1)+'%';
+  document.querySelector('[data-stat="burned"]').textContent=big(burned);document.querySelector('[data-stat="burned"]').title=fmt(burned)+' $CFB';
+  document.querySelector('[data-stat="burnedPct"]').textContent=pct.toFixed(2)+'% of the supply';
+  document.querySelector('[data-stat="circulating"]').textContent=big(remain);document.querySelector('[data-stat="circulating"]').title=fmt(remain)+' $CFB';
+  $('#radarState').textContent=live&&live.ok?'Live from the Qubic chain':'Verified burns';$('#radar .dot').classList.toggle('on',!!(live&&live.ok));
+  const EXP='https://explorer.qubic.org/network/tx/';
+  $('#burnLog').innerHTML=list.slice().sort((a,b)=>String(b.date).localeCompare(String(a.date))).map(b=>{
+    const d=/^\d{4}-\d{2}-\d{2}$/.test(b.date)?new Date(b.date+'T12:00:00Z').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):b.date;
+    return `<li><time>${d}</time><span>🔥 <b title="${fmt(b.amount)} $CFB">${big(b.amount)} $CFB</b> · ${b.label}</span><a href="${EXP+b.tx}" target="_blank" rel="noopener noreferrer" aria-label="View burn transaction of ${d} on the Qubic explorer">View TX ↗</a></li>`}).join('');
+}
+fetchBurnStats();
+
+/* ---- MODULE 3 · lore terminal ---- */
+let NET=null;
+async function fetchStatus(){const d=await getJSON(CFB_CONFIG.api.status);NET=d&&d.ok?d:null;
+  const b=$('#netBadge');b.innerHTML=`<i class="dot${NET?' on':''}"></i>${NET?'Qubic live':'Network'}`}
+fetchStatus();setInterval(()=>{if(!document.hidden)fetchStatus()},30000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden){fetchStatus();fetchCFBMarketData()}});
+const LORE=[
+  ()=>"May 4th, 2024: $CFB is issued on Qubic. May the fourth be with you.",
+  ()=>"Distribution: fair airdrop to the entire community. No pre-sale. No VC.",
+  ()=>"Initial supply: 420,690,000,000 $CFB. Yes, those numbers are on purpose.",
+  ()=>"2024 roadmap: Phase 1: launch. Phase 2: vibe and hodl. Phase 3: meme takeover.",
+  ()=>"Launching a collection on QubicBay? Buy $CFB, burn it, get minting slots.",
+  ()=>"May 16th and Oct 8th, 2025: two burns of 3% each. 6% of the supply gone. Goal: 15%.",
+  ()=>"Since the Qbay smart contract upgrade, $CFB spent on QubicBay goes straight to the burn address.",
+  ()=>"Qbros: 1,001 unique collectibles. The genesis NFT collection of Qubic.",
+  ()=>"Qubic runs on 676 Computors. A tick is final when a quorum of 451 agrees.",
+  ()=>NET?`Live from the network: epoch ${NET.epoch??'?'}, tick ${fmt(NET.tick)}.`:"Live network status unavailable right now. Try again in a minute.",
+  ()=>"Issuer: "+CFB_CONFIG.issuer.slice(0,12)+"…"+CFB_CONFIG.issuer.slice(-6)+". Always check it before you trade.",
+  ()=>"$CFB has no association with Sergey Ivancheglo. It pays homage to a meme the community loves."
+];
+let li=0,typing=null;
+$('#decode').addEventListener('click',()=>{clearInterval(typing);const msg=LORE[li++%LORE.length]();const el=$('#termText');el.textContent='';let k=0;
+  typing=setInterval(()=>{el.textContent=msg.slice(0,++k);if(k>=msg.length)clearInterval(typing)},22)});
+addEventListener('scroll',()=>{document.body.classList.toggle('scrolled',scrollY>40);$('#totop').classList.toggle('on',scrollY>innerHeight*.8)},{passive:true});
+$('#totop').addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
+$('#closebar').onclick=()=>document.body.classList.add('nobar');
+
+/* typing */
+const P=["Tired of cats, dogs, L1, L2, L3...","Deploying $CFB on Qubic... May the 4th be with you.","Airdropping fairly to the entire community. No pre-sale.","Burning $CFB to unlock a minting slot on QubicBay.","Minting Qbros, the genesis collection.","GM. CFB is not just a meme."];
+let i=0,c=0,del=false;const T=$('#typed'),N=$('#nextp');
+function tick(){const s=P[i];N.textContent=P[(i+1)%P.length];
+  if(!del){c++;T.textContent=s.slice(0,c);if(c>=s.length){del=true;return setTimeout(tick,2600)}setTimeout(tick,38)}
+  else{c=Math.max(0,c-2);T.textContent=s.slice(0,c);if(c===0){del=false;i=(i+1)%P.length;return setTimeout(tick,250)}setTimeout(tick,14)}}
+tick();
+
+/* ticker (old site's $CFB strip) */
+$('#ticker').innerHTML=Array(16).fill('<span><img src="/assets/brand/cfb-head.webp" alt="">$CFB</span>').join('');
+
+/* reveal + rail */
+const secs=[...document.querySelectorAll('section')],lab=$('#railLab');
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:.12});
+secs.forEach(s=>io.observe(s));
+const io2=new IntersectionObserver(es=>es.forEach(e=>{if(e.intersectionRatio>.4){const k=secs.indexOf(e.target);
+  lab.style.top=(k/(secs.length-1)*82)+'%';lab.querySelector('span').textContent=e.target.dataset.label}}),{threshold:[.4]});
+secs.forEach(s=>io2.observe(s));
+
+/* carousel */
+const L=["First memecoin on Qubic","Fair launch","May the 4th, 2024","420.69B supply","QubicBay main token","Buy & burn","Minting slots","Deflationary","Qbros genesis","1,001 collectibles","Community forever"];
+const tr=$('#track');tr.innerHTML=L.map((l,k)=>`<div class="t"><div class="n">${String(k+1).padStart(2,'0')}</div><div class="l">${l}</div></div>`).join('');
+const tabs=[...tr.children];let a=0;
+function upd(){tabs.forEach((t,k)=>{t.classList.toggle('on',k===a);t.classList.toggle('gone',k<a)});tr.style.transform=`translateX(${-a*tabs[0].offsetWidth}px)`}
+upd();setInterval(()=>{a=(a+1)%(L.length-1);upd()},2400);
+
+/* community heads (original designs only) */
+const H=["classic","crown","snapback","deal-with-it","headband","aviators","purple-shades","shutter-shades","3d-glasses","cyborg","android","cyberpunk","visor","tube-head","cyber-samurai","big-brain","cyclops","grey-alien","green-alien","tentacle","devil","orc","goblin","elf","dwarf"];
+const html=H.map(h=>`<img src="/assets/heads/${h}.webp" alt="" loading="lazy">`).join('');$('#mq').innerHTML=html+html;
+
+/* copy issuer */
+const cb=$('#copyIssuer');cb.addEventListener('click',async()=>{const v=cb.dataset.copy,lab=cb.querySelector('.cp');
+  try{await navigator.clipboard.writeText(v)}catch(e){const t=document.createElement('textarea');t.value=v;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove()}
+  cb.classList.add('ok');lab.textContent='✓ Official issuer copied';clearTimeout(cb._t);cb._t=setTimeout(()=>{cb.classList.remove('ok');lab.textContent='Copy'},1800)});
+
+/* floating head + rays */
+const head=$('#head'),tilt=$('#tilt'),rays=$('#rays');let sp=0,px=0,py=0,tx=0,ty=0;
+addEventListener('pointermove',e=>{tx=e.clientX/innerWidth*2-1;ty=e.clientY/innerHeight*2-1},{passive:true});
+const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+const mob=()=>innerWidth<=900;
+function frame(t){
+  const p=Math.min(Math.max(scrollY/innerHeight,0),6);sp+=(p-sp)*.08;px+=(tx-px)*.06;py+=(ty-py)*.06;
+  const a=ease(Math.min(sp,1)),b=ease(Math.min(Math.max(sp-1,0),1));
+  let x=mob()?50:56,y=mob()?41:57,s=mob()?.8:1,o=1;
+  x+=(mob()?0:16)*a; s-=.2*a; o-=(mob()?.7:.25)*a; y+=(mob()?-4:-4)*a;
+  x+=(mob()?0:4)*b;  s-=.3*b; y+=(mob()?0:18)*b; o-=(mob()?.12:.45)*b;
+  const bob=Math.sin(t/1000*1.4)*8;
+  head.style.left=x+'%';head.style.top=`calc(${y}% + ${bob}px)`;head.style.opacity=o;
+  head.style.transform=`translate(-50%,-50%) scale(${s})`;
+  const ry=-12+px*16+Math.sin(t/1000*.7)*3,rx=py*-10+Math.sin(t/1000*.9)*2,rz=6*(1-a)+Math.sin(t/1000*.6)*2;
+  tilt.style.transform=`perspective(900px) rotateY(${ry}deg) rotateX(${rx}deg) rotateZ(${rz}deg)`;
+  rays.style.opacity=1-.75*Math.min(sp,1);
+  requestAnimationFrame(frame)}
+requestAnimationFrame(frame);
+})();
+</script>
 </body>
 </html>

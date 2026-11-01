@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /crypto-fighter/
+Disallow: /maquette-sobre/
+
+Sitemap: https://cfbtoken.com/sitemap.xml

@@ -141,7 +141,13 @@ async function cached(request, ctx, ttl, producer) {
 
 export default {
   async fetch(request, env, ctx) {
-    const { pathname } = new URL(request.url);
+    const url = new URL(request.url);
+    const { pathname } = url;
+    // www -> apex, old mockup paths -> new paths (permanent)
+    if (url.hostname === 'www.cfbtoken.com') { url.hostname = 'cfbtoken.com'; return Response.redirect(url.toString(), 301); }
+    if (pathname === '/maquette' || pathname.startsWith('/maquette/')) {
+      url.pathname = pathname.replace(/^\/maquette\/?/, '/'); return Response.redirect(url.toString(), 301);
+    }
     if (pathname === '/api/market') return cached(request, ctx, 60, market);
     if (pathname === '/api/status') return cached(request, ctx, 20, status);
     if (pathname === '/api/burn') return cached(request, ctx, 600, burns);
