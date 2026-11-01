@@ -196,7 +196,7 @@ function renderPicked(){
 }
 function traitsText(){return ORDER.map(c=>LABEL[c]+': '+item(c,state[c]).name).join('\n')}
 function shareLink(){
-  const t='Just made my $CFB PFP with the CFB Generator 🔥\nThe first memecoin on #Qubic.\n';
+  const t='Just made my $CFB PFP with the CFB Generator 🔥\nThe first memecoin on #Qubic $QUBIC\n';
   $('#shx').href='https://twitter.com/intent/tweet?text='+encodeURIComponent(t)+'&url='+encodeURIComponent(location.origin+location.pathname);
 }
 function renderTabs(){
