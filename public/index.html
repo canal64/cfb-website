@@ -473,6 +473,7 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
 }
 /* burn alert overlay */
 .ba{position:fixed;inset:0;z-index:90;display:grid;place-items:center;padding:16px;background:radial-gradient(circle at 50% 60%,rgba(255,110,30,.35),rgba(11,7,6,.82) 60%);opacity:0;transition:opacity .35s}
+.ba[hidden]{display:none}
 .ba.on{opacity:1}
 .ba-card{position:relative;max-width:520px;width:100%;text-align:center;padding:30px 26px 26px;border:2px solid var(--o2);border-radius:22px;background:rgba(11,7,6,.92);box-shadow:0 0 60px rgba(255,131,48,.5),0 20px 60px rgba(0,0,0,.6);transform:scale(.6);transition:transform .5s cubic-bezier(.34,1.56,.64,1)}
 .ba.on .ba-card{transform:scale(1)}
