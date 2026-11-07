@@ -98,6 +98,16 @@ async function totalSupply() {
   } catch { return null; }
 }
 
+/* Number of on-chain holders of $CFB (official Qubic RPC, same source as the explorer's rich list). */
+async function holders() {
+  try {
+    const r = await fetch(`https://rpc.qubic.org/v1/issuers/${CFB_ISSUER}/assets/CFB/owners?page=1&pageSize=1`, { headers: HEADERS });
+    if (!r.ok) return { ok: false };
+    const j = await r.json(); const n = +(j.pagination && j.pagination.totalRecords);
+    return n > 0 ? { ok: true, holders: n, tick: j.tick, updated: new Date().toISOString() } : { ok: false };
+  } catch { return { ok: false }; }
+}
+
 async function burns() {
   const supplyP = totalSupply();
   const out = [];
@@ -111,7 +121,7 @@ async function burns() {
     if (!j) return { ok: false };
     for (const e of j.eventLogs || []) {
       const a = e.assetOwnershipChange; if (!a) continue;
-      out.push({ date: new Date(+e.timestamp).toISOString().slice(0, 10), amount: +a.numberOfShares, tx: e.transactionHash, source: a.source, epoch: e.epoch });
+      out.push({ date: new Date(+e.timestamp).toISOString().slice(0, 10), ts: +e.timestamp, amount: +a.numberOfShares, tx: e.transactionHash, source: a.source, epoch: e.epoch });
     }
     if (!j.eventLogs || j.eventLogs.length < 100) break;
   }
@@ -167,7 +177,8 @@ export default {
     }
     if (pathname === '/api/market') return cached(request, ctx, 60, market);
     if (pathname === '/api/status') return cached(request, ctx, 20, status);
-    if (pathname === '/api/burn') return cached(request, ctx, 600, burns);
+    if (pathname === '/api/burn') return cached(request, ctx, 300, burns);
+    if (pathname === '/api/holders') return cached(request, ctx, 1800, holders);
     const lm = pathname.match(/^\/logos\/([a-z]+)$/); if (lm) return logo(request, ctx, lm[1]);
     return env.ASSETS.fetch(request); // everything else = static site
   },
