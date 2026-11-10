@@ -718,7 +718,7 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
         <div><small>FDV · initial supply</small><strong id="fdv">…</strong><em>Price × 420.69B</em></div>
         <div><small>$CFB holders</small><strong id="holders">…</strong><em class="onchain" id="holdersTag"></em></div>
       </div>
-      <div class="track"><span>Track $CFB</span><a data-link="coinpaprika" href="https://coinpaprika.com/coin/cfb-cfb-token" target="_blank" rel="noopener noreferrer">CoinPaprika ↗</a><a data-link="coinmarketcap" href="https://coinmarketcap.com/currencies/cfb/" target="_blank" rel="noopener noreferrer">CoinMarketCap ↗</a><a data-link="safetrade" href="https://safetrade.com/exchange/CFB-USDT?type=pro" target="_blank" rel="noopener noreferrer">SafeTrade ↗</a></div>
+      <div class="track"><span>Track $CFB</span><a data-link="coinmarketcap" href="https://coinmarketcap.com/currencies/cfb/" target="_blank" rel="noopener noreferrer">CoinMarketCap ↗</a><a data-link="safetrade" href="https://safetrade.com/exchange/CFB-USDT?type=pro" target="_blank" rel="noopener noreferrer">SafeTrade ↗</a></div>
     </div>
     <div class="calc">
       <label for="bag"><small>How big is your bag?</small></label>
@@ -762,7 +762,7 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
   <div class="big">$CFB</div>
   <p class="disc">$CFB token has no association with Sergey Ivancheglo (aka Come-from-Beyond) or his creation. This token is simply paying homage to a meme well loved and recognized in Qubic's community. $CFB is a meme token with no intrinsic value or expectation of financial return. There is no formal team or roadmap. The token is completely useless and for entertainment purposes only.</p>
   <p class="disc">Created by the Community for the Community, just for fun.</p>
-  <p class="disc" id="privacy"><b style="color:rgba(255,255,255,.75);font-weight:600">Privacy.</b> cfbtoken.com is hosted on Cloudflare, which processes visitors' IP addresses to deliver and protect the site, with anonymous traffic statistics. No account, no tracking or advertising cookies, no data sold or shared. Fonts are loaded from Google Fonts, the live price from CoinPaprika and the badge from qubicmap.org, so these services also receive your IP address when you visit. Your browser only keeps your best Head Match scores and the date of your last visit (to show you new burns). Nothing is sent anywhere.</p>
+  <p class="disc" id="privacy"><b style="color:rgba(255,255,255,.75);font-weight:600">Privacy.</b> cfbtoken.com is hosted on Cloudflare, which processes visitors' IP addresses to deliver and protect the site, with anonymous traffic statistics. No account, no tracking or advertising cookies, no data sold or shared. Fonts are loaded from Google Fonts and the badge from qubicmap.org, so these services also receive your IP address when you visit. Your browser only keeps your best Head Match scores and the date of your last visit (to show you new burns). Nothing is sent anywhere.</p>
   <a class="built" data-link="qubic" href="https://qubic.org" target="_blank" rel="noopener noreferrer"><span>Built on</span><svg role="img" aria-label="Qubic"><use href="#qubic-word"/></svg></a>
   <a class="listed" data-link="qubicmapCfb" href="https://qubicmap.org/p/cfb" target="_blank" rel="noopener noreferrer"><img src="https://qubicmap.org/badge.svg" alt="Listed on qubicmap.org" width="190" height="40" loading="lazy"></a>
   <div class="eco"><span>Qubic ecosystem</span>
@@ -808,7 +808,7 @@ const CFB_CONFIG={
   ranks:[ // CFB holder ranking (official): [minimum bag, title]
     [0,"🦐 Shrimp"],[121150,"🦀 Crab"],[1211500,"🐟 Fish"],[12115000,"🐬 Dolphin"],[121150000,"🦈 Shark"],
     [1211500000,"🐋 Whale"],[12115000000,"🐳 Humpback"],[121150000000,"🔱 Aquaman"]],
-  api:{market:"/api/market",status:"/api/status",paprika:"https://api.coinpaprika.com/v1/tickers/cfb-cfb-token",burn:"/api/burn",holders:"/api/holders"},
+  api:{market:"/api/market",status:"/api/status",burn:"/api/burn",holders:"/api/holders"},
   links:{
     qubicbay:"https://qubicbay.io/",
     qbros:"https://qubicbay.io/Collections/0",
@@ -852,10 +852,8 @@ function countUp(el,to,ms=1600,f2=fmt){if(to==null){el.textContent='…';return}
 /* ---- MODULE 1 · live market + bag calculator ---- */
 const M={cfb:null,qubic:null};
 async function fetchCFBMarketData(){
-  // Worker API (SafeTrade + CoinGecko) and CoinPaprika (called from the browser: it refuses server-side calls) in parallel
-  const [d0,pp]=await Promise.all([getJSON(CFB_CONFIG.api.market),getJSON(CFB_CONFIG.api.paprika)]);
-  const d=d0||{ok:false};const q=pp&&pp.quotes&&pp.quotes.USD;
-  if(q&&q.price){d.cfb={price:q.price,change24h:q.percent_change_24h,change7d:q.percent_change_7d,ath:q.ath_price,athDate:pp.quotes.USD.ath_date,source:'CoinPaprika'};d.ok=true}
+  // Worker API (SafeTrade + CoinGecko)
+  const d=(await getJSON(CFB_CONFIG.api.market))||{ok:false};
   M.cfb=d?.cfb?.price??null;M.qubic=d?.qubic?.price??null;
   $('#pCfb').textContent=usd(M.cfb);$('#pQu').textContent=usd(M.qubic);
   const cc=$('#cCfb'),cq=$('#cQu');cc.textContent=pct(d?.cfb?.change24h);cq.textContent=pct(d?.qubic?.change24h);
