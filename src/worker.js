@@ -137,13 +137,15 @@ async function burns() {
 const DISCORD_API = 'https://discord.com/api/v10';
 const TWEET_RE = /https?:\/\/(?:www\.|mobile\.)?(?:x|twitter)\.com\/([A-Za-z0-9_]{1,15})\/status(?:es)?\/(\d{5,25})/;
 
+let lastDiscordStatus = null; // HTTP status of the last failed Discord call (401 bad token, 403 no access, 404 wrong id)
 async function discord(env, path) {
   const ctrl = new AbortController(); const t = setTimeout(() => ctrl.abort(), 6000);
   try {
     const r = await fetch(DISCORD_API + path, { signal: ctrl.signal,
-      headers: { Authorization: `Bot ${env.DISCORD_BOT_TOKEN}`, 'User-Agent': 'DiscordBot (https://cfbtoken.com, 1.0)' } });
-    return r.ok ? await r.json() : null;
-  } catch { return null; } finally { clearTimeout(t); }
+      headers: { Authorization: `Bot ${String(env.DISCORD_BOT_TOKEN).trim()}`, 'User-Agent': 'DiscordBot (https://cfbtoken.com, 1.0)' } });
+    if (!r.ok) { lastDiscordStatus = r.status; return null; }
+    return await r.json();
+  } catch { lastDiscordStatus = 'network'; return null; } finally { clearTimeout(t); }
 }
 
 const decodeEntities = s => s.replace(/&(#x?[0-9a-f]+|amp|lt|gt|quot|apos|nbsp|mdash);/gi, (m, e) => {
@@ -164,9 +166,9 @@ async function tweetOEmbed(url) {
 async function news(env) {
   // says which secret is missing (never its value)
   if (!env.DISCORD_BOT_TOKEN || !env.DISCORD_CHANNEL_ID) return { ok: false, configured: false, token: !!env.DISCORD_BOT_TOKEN, channel: !!env.DISCORD_CHANNEL_ID };
-  const ch = env.DISCORD_CHANNEL_ID;
+  const ch = String(env.DISCORD_CHANNEL_ID).trim(); lastDiscordStatus = null;
   const [channel, msgs] = await Promise.all([discord(env, `/channels/${ch}`), discord(env, `/channels/${ch}/messages?limit=30`)]);
-  if (!Array.isArray(msgs)) return { ok: false, configured: true, channelFound: !!channel };
+  if (!Array.isArray(msgs)) return { ok: false, configured: true, channelFound: !!channel, discordStatus: lastDiscordStatus };
   const guild = channel?.guild_id || null;
   const [roles, chans] = guild ? await Promise.all([discord(env, `/guilds/${guild}/roles`), discord(env, `/guilds/${guild}/channels`)]) : [null, null];
   const roleName = new Map((roles || []).map(r => [r.id, r.name]));
