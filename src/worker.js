@@ -162,10 +162,11 @@ async function tweetOEmbed(url) {
 }
 
 async function news(env) {
-  if (!env.DISCORD_BOT_TOKEN || !env.DISCORD_CHANNEL_ID) return { ok: false, configured: false };
+  // says which secret is missing (never its value)
+  if (!env.DISCORD_BOT_TOKEN || !env.DISCORD_CHANNEL_ID) return { ok: false, configured: false, token: !!env.DISCORD_BOT_TOKEN, channel: !!env.DISCORD_CHANNEL_ID };
   const ch = env.DISCORD_CHANNEL_ID;
   const [channel, msgs] = await Promise.all([discord(env, `/channels/${ch}`), discord(env, `/channels/${ch}/messages?limit=30`)]);
-  if (!Array.isArray(msgs)) return { ok: false };
+  if (!Array.isArray(msgs)) return { ok: false, configured: true, channelFound: !!channel };
   const guild = channel?.guild_id || null;
   const [roles, chans] = guild ? await Promise.all([discord(env, `/guilds/${guild}/roles`), discord(env, `/guilds/${guild}/channels`)]) : [null, null];
   const roleName = new Map((roles || []).map(r => [r.id, r.name]));
