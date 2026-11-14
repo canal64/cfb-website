@@ -3,6 +3,7 @@
  * Serves the static site (./public) and two small JSON endpoints used by the page:
  *   GET /api/market  -> $CFB and $QUBIC prices (cached 60 s)
  *   GET /api/status  -> current Qubic tick / epoch (cached 20 s)
+ *   GET /api/news    -> announcements from the CFB Discord (cached 5 min)
  * Every upstream call has a timeout and a fallback, so the page never breaks:
  * a field the source can't provide comes back as null and the page shows "—".
  */
@@ -129,6 +130,88 @@ async function burns() {
   return { ok: true, burns: out, totalSupply: total, updated: new Date().toISOString() };
 }
 
+/* "Stay in the loop": announcements read from the CFB Discord announcement channel by a read-only bot.
+   Secrets (set in the Cloudflare dashboard, never in the repo): DISCORD_BOT_TOKEN, DISCORD_CHANNEL_ID.
+   Tweet links posted in the channel come back as tweet cards (Discord's own embed, or X's public oEmbed as fallback).
+   Without the secrets the endpoint answers {ok:false} and the page keeps the section hidden. */
+const DISCORD_API = 'https://discord.com/api/v10';
+const TWEET_RE = /https?:\/\/(?:www\.|mobile\.)?(?:x|twitter)\.com\/([A-Za-z0-9_]{1,15})\/status(?:es)?\/(\d{5,25})/;
+
+async function discord(env, path) {
+  const ctrl = new AbortController(); const t = setTimeout(() => ctrl.abort(), 6000);
+  try {
+    const r = await fetch(DISCORD_API + path, { signal: ctrl.signal,
+      headers: { Authorization: `Bot ${env.DISCORD_BOT_TOKEN}`, 'User-Agent': 'DiscordBot (https://cfbtoken.com, 1.0)' } });
+    return r.ok ? await r.json() : null;
+  } catch { return null; } finally { clearTimeout(t); }
+}
+
+const decodeEntities = s => s.replace(/&(#x?[0-9a-f]+|amp|lt|gt|quot|apos|nbsp|mdash);/gi, (m, e) => {
+  const k = e.toLowerCase();
+  if (k[0] === '#') { const n = k[1] === 'x' ? parseInt(k.slice(2), 16) : parseInt(k.slice(1), 10); return Number.isFinite(n) ? String.fromCodePoint(n) : m; }
+  return { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ', mdash: '-' }[k] ?? m;
+});
+
+/* X public oEmbed (no account, no key): only used when Discord did not unfurl the tweet itself */
+async function tweetOEmbed(url) {
+  const j = await getJSON('https://publish.twitter.com/oembed?omit_script=1&dnt=true&url=' + encodeURIComponent(url), 5000);
+  const p = j?.html?.match(/<p[^>]*>([\s\S]*?)<\/p>/i);
+  if (!p) return null;
+  const text = decodeEntities(p[1].replace(/<br\s*\/?>/gi, '\n').replace(/<a [^>]*>([^<]*)<\/a>/gi, '$1').replace(/<[^>]+>/g, '')).trim();
+  return text ? { text, name: j.author_name || null } : null;
+}
+
+async function news(env) {
+  if (!env.DISCORD_BOT_TOKEN || !env.DISCORD_CHANNEL_ID) return { ok: false, configured: false };
+  const ch = env.DISCORD_CHANNEL_ID;
+  const [channel, msgs] = await Promise.all([discord(env, `/channels/${ch}`), discord(env, `/channels/${ch}/messages?limit=30`)]);
+  if (!Array.isArray(msgs)) return { ok: false };
+  const guild = channel?.guild_id || null;
+  const [roles, chans] = guild ? await Promise.all([discord(env, `/guilds/${guild}/roles`), discord(env, `/guilds/${guild}/channels`)]) : [null, null];
+  const roleName = new Map((roles || []).map(r => [r.id, r.name]));
+  const chanName = new Map((chans || []).map(c => [c.id, c.name]));
+
+  const items = [];
+  let oembeds = 0;
+  for (const m of msgs) {
+    if (![0, 19, 20].includes(m.type)) continue; // regular messages and replies only
+    const users = new Map((m.mentions || []).map(u => [u.id, u.global_name || u.username]));
+    let text = String(m.content || '')
+      .replace(/<@!?(\d+)>/g, (_, id) => users.has(id) ? '@' + users.get(id) : '')
+      .replace(/<@&(\d+)>/g, (_, id) => roleName.has(id) && roleName.get(id) !== '@everyone' ? '@' + roleName.get(id) : '')
+      .replace(/<#(\d+)>/g, (_, id) => chanName.has(id) ? '#' + chanName.get(id) : '')
+      .replace(/@(everyone|here)\b/g, '')
+      .trim();
+    const images = (m.attachments || []).filter(a => /^image\//.test(a.content_type || '') || /\.(png|jpe?g|gif|webp)(\?|$)/i.test(a.url || ''))
+      .slice(0, 4).map(a => ({ url: a.proxy_url || a.url, w: a.width || null, h: a.height || null }));
+
+    // tweet: link in the text or in an embed
+    const embeds = m.embeds || [];
+    const tm = text.match(TWEET_RE) || embeds.map(e => (e.url || '').match(TWEET_RE)).find(Boolean);
+    let tweet = null;
+    if (tm) {
+      const url = `https://x.com/${tm[1]}/status/${tm[2]}`;
+      const e = embeds.find(x => TWEET_RE.test(x.url || '') && (x.url || '').includes(tm[2])) || embeds.find(x => TWEET_RE.test(x.url || ''));
+      tweet = { url, handle: tm[1], name: e?.author?.name?.replace(/\s*\(@[^)]*\)\s*$/, '') || null, text: e?.description || null,
+        image: e?.image?.proxy_url || e?.image?.url || e?.thumbnail?.proxy_url || e?.thumbnail?.url || null };
+      if (!tweet.text && oembeds < 8) { oembeds++; const o = await tweetOEmbed(url); if (o) { tweet.text = o.text; tweet.name = tweet.name || o.name; } }
+      // the bare link adds nothing once the tweet card shows it
+      text = text.replace(new RegExp(`<?${TWEET_RE.source}[^\\s>]*>?`, 'g'), '').trim();
+    }
+    // other link embeds (articles, videos): keep title + link
+    const links = embeds.filter(e => e.url && !TWEET_RE.test(e.url) && (e.title || e.description)).slice(0, 2)
+      .map(e => ({ url: e.url, title: e.title || null, desc: e.description ? String(e.description).slice(0, 240) : null,
+        image: e.image?.proxy_url || e.thumbnail?.proxy_url || null }));
+    // rich embeds without a link (posted by other bots)
+    if (!text && !tweet && embeds.length) text = embeds.map(e => [e.title ? `**${e.title}**` : '', e.description || ''].filter(Boolean).join('\n')).filter(Boolean).join('\n\n');
+    if (!text && !tweet && !images.length && !links.length) continue;
+    items.push({ id: m.id, date: m.timestamp, edited: m.edited_timestamp || null, text, images, tweet, links,
+      url: guild ? `https://discord.com/channels/${guild}/${ch}/${m.id}` : null });
+    if (items.length >= 20) break;
+  }
+  return { ok: true, items, updated: new Date().toISOString() };
+}
+
 /* Exchange logos: fetched from each exchange's own site (fixed allowlist), cached at the edge for a week.
    Falls back to Google's favicon service if the site doesn't answer. */
 const LOGOS = {
@@ -179,6 +262,8 @@ export default {
     if (pathname === '/api/status') return cached(request, ctx, 20, status);
     if (pathname === '/api/burn') return cached(request, ctx, 300, burns);
     if (pathname === '/api/holders') return cached(request, ctx, 1800, holders);
+    // query string ignored for the cache key, so random ?params can't bypass the cache and hammer Discord
+    if (pathname === '/api/news') return cached(new Request(url.origin + pathname), ctx, 300, () => news(env));
     const lm = pathname.match(/^\/logos\/([a-z]+)$/); if (lm) return logo(request, ctx, lm[1]);
     return env.ASSETS.fetch(request); // everything else = static site
   },

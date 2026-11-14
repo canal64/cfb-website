@@ -500,6 +500,42 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
 .menu a,footer .eco a,.lv .track a,.burns a{display:inline-block;padding:6px 0}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 @media (hover:none){.btn:hover,.sbtn:hover,.step:hover,.play:hover,.totop:hover,footer .listed:hover{transform:none}.marquee img:hover{transform:none}}
+/* ---------- 8 STAY IN THE LOOP (announcements from the CFB Discord) ---------- */
+#news{padding:6vh 0 14vh}
+#news .head{margin-left:var(--col);padding:14px 18px;width:fit-content;max-width:min(760px,calc(100% - 2*var(--col)))}
+#news .h2{margin-top:18px}
+#news .lead{margin-top:14px;color:rgba(255,255,255,.75);font-size:15px;line-height:1.5;max-width:56ch}
+.nwgrid{margin:5vh var(--col) 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,330px),1fr));gap:16px;align-items:start}
+.nw{border:1px solid var(--line);border-radius:18px;background:var(--panel);padding:18px 18px 16px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.nw[hidden]{display:none}
+.nw-top{display:flex;justify-content:space-between;align-items:center;gap:10px;font:400 10.5px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--dim)}
+.nw-src{display:inline-flex;align-items:center;gap:7px;color:var(--o1)}
+.nw-src svg{width:15px;height:15px;fill:currentColor;flex:none}
+.nw-src.x{color:#fff}
+.nw-txt{font-size:15px;line-height:1.55;color:rgba(255,255,255,.88);overflow-wrap:anywhere;max-height:13.2em;overflow:hidden;position:relative}
+.nw-txt.open{max-height:none}
+.nw-txt.clip::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3em;background:linear-gradient(transparent,#0b0706)}
+.nw-txt.open::after{display:none}
+.nw-txt a{color:var(--o1);text-decoration:underline;text-underline-offset:2px}
+.nw-txt code{font:400 13px var(--mono);background:rgba(255,255,255,.08);padding:1px 5px;border-radius:5px}
+.nw-txt pre{font:400 12.5px/1.45 var(--mono);background:rgba(255,255,255,.06);padding:10px;border-radius:8px;white-space:pre-wrap;margin:4px 0}
+.nw-txt .h{display:block;font:400 17px/1.3 var(--disp);color:#fff;margin:4px 0 2px;text-transform:uppercase}
+.nw-txt .q{display:block;border-left:3px solid rgba(255,255,255,.25);padding-left:10px;color:rgba(255,255,255,.75)}
+.nw-txt .sub{font-size:12.5px;color:var(--dim)}
+.nw-txt .emo{width:1.3em;height:1.3em;vertical-align:-.3em;object-fit:contain}
+.nw-more{align-self:flex-start;background:none;border:0;padding:0;color:var(--o1);font:500 11px var(--mono);text-transform:uppercase;letter-spacing:.06em;cursor:pointer}
+.nw-img{width:100%;height:auto;border-radius:12px;display:block;background:rgba(255,255,255,.04);max-height:420px;object-fit:cover}
+.nw-tw{display:flex;flex-direction:column;gap:8px;padding:14px;border:1px solid rgba(255,255,255,.14);border-radius:14px;text-decoration:none;color:inherit;background:rgba(255,255,255,.03);transition:border-color .3s}
+.nw-tw:hover{border-color:var(--o2)}
+.nw-tw .who{font-size:14px;color:#fff;font-weight:600;overflow-wrap:anywhere}.nw-tw .who span{font-weight:400;color:var(--dim)}
+.nw-tw p{font-size:14.5px;line-height:1.5;color:rgba(255,255,255,.85);white-space:pre-line;overflow-wrap:anywhere}
+.nw-tw .go,.nw-open{font:500 11px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--dim);text-decoration:none}
+.nw-tw:hover .go,.nw-open:hover{color:var(--o1)}
+.nw-lk{display:block;padding:12px 14px;border:1px solid var(--line);border-radius:12px;text-decoration:none;color:inherit}
+.nw-lk b{display:block;font-size:14px;color:#fff}.nw-lk span{display:block;font-size:13px;color:var(--dim);margin-top:4px;overflow-wrap:anywhere}
+.nw-lk:hover{border-color:var(--o2)}
+.nw-foot{margin:22px var(--col) 0;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+@media (max-width:900px){#news .head{width:auto;max-width:none;margin:0 16px;padding:12px 0}.nwgrid{margin:4vh 16px 0}.nw-foot{margin:18px 16px 0}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
 @media (min-width:901px) and (max-width:1180px){.pad{display:none}nav{grid-template-columns:var(--col) 1fr auto;padding-right:18px}}
 </style>
@@ -755,6 +791,19 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
   </a>
   <!-- Crypto Fighter card hidden for now (game kept at crypto-fighter/) -->
 </section>
+<section id="news" data-label="News" hidden>
+  <div class="head panel">
+    <div class="kicker rv d1"><b>06</b> Stay in the loop</div>
+    <h2 class="h2 rv d2">Every announcement, <span class="sp">in one place.</span></h2>
+    <p class="lead rv d3">All the news from the CFB Discord and X, gathered here. No need to be on social media to stay up to date.</p>
+  </div>
+  <div class="nwgrid rv d3" id="nwGrid" aria-live="polite"></div>
+  <div class="nw-foot rv d3">
+    <button class="btn ghost" id="nwMore" type="button" hidden>Show more</button>
+    <a class="btn ghost" data-link="discord" href="https://discord.com/invite/cAbXK8Kx35" target="_blank" rel="noopener noreferrer">Join the Discord ↗</a>
+    <a class="btn ghost" data-link="x" href="https://x.com/c_f_b_token" target="_blank" rel="noopener noreferrer">Follow on X ↗</a>
+  </div>
+</section>
 </main>
 
 <button class="totop" id="totop" aria-label="Back to top" title="Back to top"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
@@ -762,7 +811,7 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
   <div class="big">$CFB</div>
   <p class="disc">$CFB token has no association with Sergey Ivancheglo (aka Come-from-Beyond) or his creation. This token is simply paying homage to a meme well loved and recognized in Qubic's community. $CFB is a meme token with no intrinsic value or expectation of financial return. There is no formal team or roadmap. The token is completely useless and for entertainment purposes only.</p>
   <p class="disc">Created by the Community for the Community, just for fun.</p>
-  <p class="disc" id="privacy"><b style="color:rgba(255,255,255,.75);font-weight:600">Privacy.</b> cfbtoken.com is hosted on Cloudflare, which processes visitors' IP addresses to deliver and protect the site, with anonymous traffic statistics. No account, no tracking or advertising cookies, no data sold or shared. Fonts are loaded from Google Fonts and the badge from qubicmap.org, so these services also receive your IP address when you visit. Your browser only keeps your best Head Match scores and the date of your last visit (to show you new burns). Nothing is sent anywhere.</p>
+  <p class="disc" id="privacy"><b style="color:rgba(255,255,255,.75);font-weight:600">Privacy.</b> cfbtoken.com is hosted on Cloudflare, which processes visitors' IP addresses to deliver and protect the site, with anonymous traffic statistics. No account, no tracking or advertising cookies, no data sold or shared. Fonts are loaded from Google Fonts, the badge from qubicmap.org and the pictures of the announcements from Discord, so these services also receive your IP address when you visit. Your browser only keeps your best Head Match scores and the date of your last visit (to show you new burns). Nothing is sent anywhere.</p>
   <a class="built" data-link="qubic" href="https://qubic.org" target="_blank" rel="noopener noreferrer"><span>Built on</span><svg role="img" aria-label="Qubic"><use href="#qubic-word"/></svg></a>
   <a class="listed" data-link="qubicmapCfb" href="https://qubicmap.org/p/cfb" target="_blank" rel="noopener noreferrer"><img src="https://qubicmap.org/badge.svg" alt="Listed on qubicmap.org" width="190" height="40" loading="lazy"></a>
   <div class="eco"><span>Qubic ecosystem</span>
@@ -808,7 +857,7 @@ const CFB_CONFIG={
   ranks:[ // CFB holder ranking (official): [minimum bag, title]
     [0,"🦐 Shrimp"],[121150,"🦀 Crab"],[1211500,"🐟 Fish"],[12115000,"🐬 Dolphin"],[121150000,"🦈 Shark"],
     [1211500000,"🐋 Whale"],[12115000000,"🐳 Humpback"],[121150000000,"🔱 Aquaman"]],
-  api:{market:"/api/market",status:"/api/status",burn:"/api/burn",holders:"/api/holders"},
+  api:{market:"/api/market",status:"/api/status",burn:"/api/burn",holders:"/api/holders",news:"/api/news"},
   links:{
     qubicbay:"https://qubicbay.io/",
     qbros:"https://qubicbay.io/Collections/0",
@@ -992,6 +1041,70 @@ const tr=$('#track');tr.innerHTML=L.map((l,k)=>`<div class="t"><div class="n">${
 const tabs=[...tr.children];let a=0;
 function upd(){tabs.forEach((t,k)=>{t.classList.toggle('on',k===a);t.classList.toggle('gone',k<a)});tr.style.transform=`translateX(${-a*tabs[0].offsetWidth}px)`}
 upd();setInterval(()=>{a=(a+1)%(L.length-1);upd()},2400);
+/* ---- Stay in the loop: announcements from the CFB Discord (via /api/news) ---- */
+(function(){
+  const sec=$('#news'),grid=$('#nwGrid'),more=$('#nwMore');if(!sec)return;
+  const SHOW=6;let all=false,last='';
+  const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const safeUrl=u=>typeof u==='string'&&/^https?:\/\//i.test(u)?u:null;
+  const ago=d=>{const t=new Date(d),s=(Date.now()-t)/1000;if(!(s>=0))return'';if(s<3600)return Math.max(1,Math.round(s/60))+' min ago';if(s<86400)return Math.round(s/3600)+' h ago';
+    if(s<86400*7){const n=Math.round(s/86400);return n+(n>1?' days ago':' day ago')}return t.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})};
+  const ICON={discord:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.3 4.4A19.6 19.6 0 0 0 15.4 3l-.6 1.3a18 18 0 0 0-5.6 0L8.6 3a19.6 19.6 0 0 0-4.9 1.5C.6 9.1-.3 13.7.2 18.2A19.8 19.8 0 0 0 6.2 21l1.3-2.1a12.8 12.8 0 0 1-2-1l.5-.4a14 14 0 0 0 12 0l.5.4c-.6.4-1.3.7-2 1l1.3 2.1a19.7 19.7 0 0 0 6-3c.5-5.2-.9-9.8-3.5-13.6ZM8.3 15.5c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Zm7.4 0c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Z"/></svg>',
+    x:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.8 2.5h3.3l-7.2 8.2 8.5 10.8h-6.6l-5.2-6.6-6 6.6H1.3l7.7-8.8L.9 2.5h6.8l4.7 6 5.4-6Zm-1.2 17h1.8L6.6 4.3H4.7l11.9 15.2Z"/></svg>'};
+  const A=(u,label)=>'<a href="'+u+'" target="_blank" rel="noopener noreferrer nofollow">'+label+'</a>';
+  /* Discord markdown, rendered safely: the text is escaped first, then a small subset is formatted */
+  function md(src){
+    const keep=[];const put=h=>'\u0000'+(keep.push(h)-1)+'\u0000';
+    let t=esc(src);
+    t=t.replace(/```(?:[a-z]+\n)?([\s\S]*?)```/g,(_,c)=>put('<pre>'+c.trim()+'</pre>'));
+    t=t.replace(/`([^`\n]+)`/g,(_,c)=>put('<code>'+c+'</code>'));
+    t=t.replace(/&lt;a?:([A-Za-z0-9_]+):(\d+)&gt;/g,(_,n,id)=>put('<img class="emo" src="https://cdn.discordapp.com/emojis/'+id+'.webp?size=48" alt=":'+n+':" loading="lazy">'));
+    t=t.replace(/&lt;t:(\d+)(?::[a-zA-Z])?&gt;/g,(_,n)=>put(new Date(+n*1000).toLocaleString('en-US',{month:'short',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit'})));
+    t=t.replace(/\[([^\]\n]+)\]\((https?:\/\/[^\s)]+)\)/g,(_,l,u)=>put(A(u,l)));
+    t=t.replace(/&lt;(https?:\/\/[^\s&]+)&gt;/g,(_,u)=>put(A(u,u.replace(/^https?:\/\/(www\.)?/,''))));
+    t=t.replace(/https?:\/\/[^\s<\u0000]*[^\s<.,;:!?)\u0000]/g,u=>put(A(u,u.replace(/^https?:\/\/(www\.)?/,''))));
+    t=t.replace(/\*\*([\s\S]+?)\*\*/g,'<b>$1</b>').replace(/__([\s\S]+?)__/g,'<u>$1</u>').replace(/~~([\s\S]+?)~~/g,'<s>$1</s>').replace(/\|\|([\s\S]+?)\|\|/g,'$1')
+         .replace(/(^|[^\w*])\*([^*\n]+)\*(?!\w)/g,'$1<i>$2</i>').replace(/(^|[^\w])_([^_\n]+)_(?!\w)/g,'$1<i>$2</i>');
+    t=t.split('\n').map(l=>{let m;
+      if((m=l.match(/^#{1,3} (.*)/)))return'<span class="h">'+m[1]+'</span>';
+      if((m=l.match(/^-# (.*)/)))return'<span class="sub">'+m[1]+'</span>';
+      if((m=l.match(/^&gt;&gt;&gt; (.*)/))||(m=l.match(/^&gt; (.*)/)))return'<span class="q">'+m[1]+'</span>';
+      if((m=l.match(/^\s*[-*] (.*)/)))return'• '+m[1];
+      return l}).join('\n').replace(/\n*(<span class="(?:h|q)">[\s\S]*?<\/span>)\n?/g,'$1').replace(/\n/g,'<br>');
+    return t.replace(/\u0000(\d+)\u0000/g,(_,i)=>keep[+i]);
+  }
+  function card(it){
+    const a=document.createElement('article');a.className='nw';
+    const tw=it.tweet&&safeUrl(it.tweet.url)?it.tweet:null;
+    const src=(!it.text&&tw)?'<span class="nw-src x">'+ICON.x+'X · @'+esc(tw.handle)+'</span>':'<span class="nw-src">'+ICON.discord+'Discord · Announcements</span>';
+    let h='<div class="nw-top">'+src+'<time datetime="'+esc(it.date)+'">'+ago(it.date)+'</time></div>';
+    if(it.text)h+='<div class="nw-txt">'+md(it.text)+'</div><button class="nw-more" type="button" hidden>Read more</button>';
+    (it.images||[]).forEach(im=>{const u=safeUrl(im.url);if(u)h+='<img class="nw-img" src="'+esc(u)+'" alt="" loading="lazy" decoding="async"'+(im.w&&im.h?' width="'+(+im.w)+'" height="'+(+im.h)+'"':'')+'>'});
+    if(tw){const img=safeUrl(tw.image);
+      h+='<a class="nw-tw" href="'+esc(tw.url)+'" target="_blank" rel="noopener noreferrer"><span class="who">'+esc(tw.name||'@'+tw.handle)+' <span>@'+esc(tw.handle)+'</span></span>'+
+        (tw.text?'<p>'+esc(tw.text)+'</p>':'')+(img?'<img class="nw-img" src="'+esc(img)+'" alt="" loading="lazy" decoding="async">':'')+'<span class="go">View on X ↗</span></a>'}
+    (it.links||[]).forEach(l=>{const u=safeUrl(l.url);if(u)h+='<a class="nw-lk" href="'+esc(u)+'" target="_blank" rel="noopener noreferrer nofollow"><b>'+esc(l.title||u)+'</b>'+(l.desc?'<span>'+esc(l.desc)+'</span>':'')+'</a>'});
+    if(safeUrl(it.url))h+='<a class="nw-open" href="'+esc(it.url)+'" target="_blank" rel="noopener noreferrer">Open on Discord ↗</a>';
+    a.innerHTML=h;
+    a.querySelectorAll('img').forEach(i=>i.addEventListener('error',()=>i.remove()));
+    return a;
+  }
+  function clamp(){grid.querySelectorAll('.nw:not([hidden]) .nw-txt:not(.open)').forEach(t=>{const b=t.nextElementSibling,c=t.scrollHeight>t.clientHeight+4;t.classList.toggle('clip',c);if(b)b.hidden=!c})}
+  function paint(items){
+    grid.textContent='';items.forEach((it,i)=>{const c=card(it);if(!all&&i>=SHOW)c.hidden=true;grid.appendChild(c)});
+    more.hidden=all||items.length<=SHOW;requestAnimationFrame(clamp);
+  }
+  grid.addEventListener('click',e=>{const b=e.target.closest('.nw-more');if(!b)return;const t=b.previousElementSibling;t.classList.add('open');t.classList.remove('clip');b.hidden=true});
+  more.addEventListener('click',()=>{all=true;grid.querySelectorAll('.nw[hidden]').forEach(c=>c.hidden=false);more.hidden=true;requestAnimationFrame(clamp)});
+  addEventListener('resize',()=>requestAnimationFrame(clamp));
+  async function load(){
+    const d=await getJSON(CFB_CONFIG.api.news,8000);
+    if(!d||!d.ok||!Array.isArray(d.items)||!d.items.length){if(!last)sec.hidden=true;return}
+    const sig=d.items.map(i=>i.id+(i.edited||'')).join();if(sig===last)return;last=sig;
+    sec.hidden=false;paint(d.items);io.observe(sec);
+  }
+  load();setInterval(()=>{if(!document.hidden)load()},600000);
+})();
 
 /* community heads (original designs only) */
 const H=["classic","crown","snapback","deal-with-it","headband","aviators","purple-shades","shutter-shades","3d-glasses","cyborg","android","cyberpunk","visor","tube-head","cyber-samurai","big-brain","cyclops","grey-alien","green-alien","tentacle","devil","orc","goblin","elf","dwarf"];
