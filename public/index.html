@@ -505,7 +505,13 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
 #news .head{margin-left:var(--col);padding:14px 18px;width:fit-content;max-width:min(760px,calc(100% - 2*var(--col)))}
 #news .h2{margin-top:18px}
 #news .lead{margin-top:14px;color:rgba(255,255,255,.75);font-size:15px;line-height:1.5;max-width:56ch}
-.nwgrid{margin:5vh var(--col) 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,330px),1fr));gap:16px;align-items:start}
+.nwgrid{margin:5vh 0 0;padding:4px var(--col) 14px;display:flex;gap:16px;align-items:flex-start;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding:0 var(--col);scrollbar-width:thin;scrollbar-color:rgba(255,131,48,.5) transparent;-webkit-overflow-scrolling:touch}
+.nwgrid::-webkit-scrollbar{height:6px}.nwgrid::-webkit-scrollbar-thumb{background:rgba(255,131,48,.5);border-radius:3px}
+.nwgrid>.nw{flex:0 0 min(380px,82vw);scroll-snap-align:start}
+.nw-nav{display:flex;gap:8px}
+.nw-nav button{width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:var(--panel);color:#fff;font-size:20px;line-height:1;cursor:pointer;transition:border-color .3s,opacity .3s}
+.nw-nav button:hover{border-color:var(--o2)}.nw-nav button:disabled{opacity:.3;cursor:default}
+.nw-nav[hidden]{display:none}
 .nw{border:1px solid var(--line);border-radius:18px;background:var(--panel);padding:18px 18px 16px;display:flex;flex-direction:column;gap:12px;min-width:0}
 .nw[hidden]{display:none}
 #nwMore[hidden]{display:none}
@@ -536,7 +542,7 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
 .nw-lk b{display:block;font-size:14px;color:#fff}.nw-lk span{display:block;font-size:13px;color:var(--dim);margin-top:4px;overflow-wrap:anywhere}
 .nw-lk:hover{border-color:var(--o2)}
 .nw-foot{margin:22px var(--col) 0;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
-@media (max-width:900px){#news .head{width:auto;max-width:none;margin:0 16px;padding:12px 0}.nwgrid{margin:4vh 16px 0}.nw-foot{margin:18px 16px 0}}
+@media (max-width:900px){#news .head{width:auto;max-width:none;margin:0 16px;padding:12px 0}.nwgrid{margin:4vh 0 0;padding:4px 16px 12px;scroll-padding:0 16px}.nw-foot{margin:18px 16px 0}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
 @media (min-width:901px) and (max-width:1180px){.pad{display:none}nav{grid-template-columns:var(--col) 1fr auto;padding-right:18px}}
 </style>
@@ -800,6 +806,7 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
   </div>
   <div class="nwgrid rv d3" id="nwGrid" aria-live="polite"></div>
   <div class="nw-foot rv d3">
+    <div class="nw-nav" id="nwNav" hidden><button type="button" id="nwPrev" aria-label="Previous announcements">←</button><button type="button" id="nwNext" aria-label="Next announcements">→</button></div>
     <button class="btn ghost" id="nwMore" type="button" hidden>Show more</button>
     <a class="btn ghost" data-link="discord" href="https://discord.com/invite/cAbXK8Kx35" target="_blank" rel="noopener noreferrer">Join the Discord ↗</a>
     <a class="btn ghost" data-link="x" href="https://x.com/c_f_b_token" target="_blank" rel="noopener noreferrer">Follow on X ↗</a>
@@ -1045,7 +1052,13 @@ upd();setInterval(()=>{a=(a+1)%(L.length-1);upd()},2400);
 /* ---- Stay in the loop: announcements from the CFB Discord (via /api/news) ---- */
 (function(){
   const sec=$('#news'),grid=$('#nwGrid'),more=$('#nwMore');if(!sec)return;
-  const SHOW=6;let all=false,last='';
+  const SHOW=Infinity;let all=true,last='';
+  const nav=$('#nwNav'),prev=$('#nwPrev'),next=$('#nwNext');
+  const step=()=>{const c=grid.querySelector('.nw');return c?c.offsetWidth+16:300};
+  const arrows=()=>{const max=grid.scrollWidth-grid.clientWidth;nav.hidden=max<8;prev.disabled=grid.scrollLeft<8;next.disabled=grid.scrollLeft>max-8};
+  prev.addEventListener('click',()=>grid.scrollBy({left:-step(),behavior:'smooth'}));
+  next.addEventListener('click',()=>grid.scrollBy({left:step(),behavior:'smooth'}));
+  grid.addEventListener('scroll',arrows,{passive:true});addEventListener('resize',arrows);
   const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const safeUrl=u=>typeof u==='string'&&/^https?:\/\//i.test(u)?u:null;
   const ago=d=>{const t=new Date(d),s=(Date.now()-t)/1000;if(!(s>=0))return'';if(s<3600)return Math.max(1,Math.round(s/60))+' min ago';if(s<86400)return Math.round(s/3600)+' h ago';
@@ -1093,7 +1106,7 @@ upd();setInterval(()=>{a=(a+1)%(L.length-1);upd()},2400);
   function clamp(){grid.querySelectorAll('.nw:not([hidden]) .nw-txt:not(.open)').forEach(t=>{const b=t.nextElementSibling,c=t.scrollHeight>t.clientHeight+4;t.classList.toggle('clip',c);if(b)b.hidden=!c})}
   function paint(items){
     grid.textContent='';items.forEach((it,i)=>{const c=card(it);if(!all&&i>=SHOW)c.hidden=true;grid.appendChild(c)});
-    more.hidden=all||items.length<=SHOW;requestAnimationFrame(clamp);
+    more.hidden=true;grid.scrollLeft=0;requestAnimationFrame(()=>{clamp();arrows()});
   }
   grid.addEventListener('click',e=>{const b=e.target.closest('.nw-more');if(!b)return;const t=b.previousElementSibling;t.classList.add('open');t.classList.remove('clip');b.hidden=true});
   more.addEventListener('click',()=>{all=true;grid.querySelectorAll('.nw[hidden]').forEach(c=>c.hidden=false);more.hidden=true;requestAnimationFrame(clamp)});
