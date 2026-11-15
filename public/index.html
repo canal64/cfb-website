@@ -505,13 +505,21 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
 #news .head{margin-left:var(--col);padding:14px 18px;width:fit-content;max-width:min(760px,calc(100% - 2*var(--col)))}
 #news .h2{margin-top:18px}
 #news .lead{margin-top:14px;color:rgba(255,255,255,.75);font-size:15px;line-height:1.5;max-width:56ch}
-.nwgrid{margin:5vh 0 0;padding:4px var(--col) 14px;display:flex;gap:16px;align-items:flex-start;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding:0 var(--col);scrollbar-width:thin;scrollbar-color:rgba(255,131,48,.5) transparent;-webkit-overflow-scrolling:touch}
+.nwgrid{margin:0;padding:4px 0 14px;display:flex;gap:16px;align-items:flex-start;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding:0;scrollbar-width:thin;scrollbar-color:rgba(255,131,48,.5) transparent;-webkit-overflow-scrolling:touch}
 .nwgrid::-webkit-scrollbar{height:6px}.nwgrid::-webkit-scrollbar-thumb{background:rgba(255,131,48,.5);border-radius:3px}
-.nwgrid>.nw{flex:0 0 min(380px,82vw);scroll-snap-align:start}
-.nw-nav{display:flex;gap:8px}
-.nw-nav button{width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:var(--panel);color:#fff;font-size:20px;line-height:1;cursor:pointer;transition:border-color .3s,opacity .3s}
+.nwgrid>.nw{flex:0 0 min(380px,82vw);height:430px;scroll-snap-align:start}
+.nwwrap{position:relative;margin:5vh var(--col) 0}
+.nw-nav{display:contents}
+.nw-nav button{position:absolute;top:50%;transform:translateY(-60%);z-index:5;width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:var(--panel);color:#fff;font-size:20px;line-height:1;cursor:pointer;transition:border-color .3s,opacity .3s}
 .nw-nav button:hover{border-color:var(--o2)}.nw-nav button:disabled{opacity:.3;cursor:default}
 .nw-nav[hidden]{display:none}
+#nwPrev{left:-62px}#nwNext{right:-62px}
+.nw-nav button:disabled{opacity:0;pointer-events:none}
+.nw-body{flex:1;min-height:0;overflow:hidden;position:relative;display:flex;flex-direction:column;gap:12px}
+.nw-body.clip::after{content:"";position:absolute;left:0;right:0;bottom:0;height:4em;background:linear-gradient(rgba(11,7,6,0),#0b0706);pointer-events:none}
+.nw-body.open{overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(255,131,48,.5) transparent;padding-right:4px}
+.nw-body.open::after{display:none}
+.nw-bot{display:flex;justify-content:space-between;align-items:center;gap:10px;flex:none}
 .nw{border:1px solid var(--line);border-radius:18px;background:var(--panel);padding:18px 18px 16px;display:flex;flex-direction:column;gap:12px;min-width:0}
 .nw[hidden]{display:none}
 #nwMore[hidden]{display:none}
@@ -519,7 +527,7 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
 .nw-src{display:inline-flex;align-items:center;gap:7px;color:var(--o1)}
 .nw-src svg{width:15px;height:15px;fill:currentColor;flex:none}
 .nw-src.x{color:#fff}
-.nw-txt{font-size:15px;line-height:1.55;color:rgba(255,255,255,.88);overflow-wrap:anywhere;max-height:13.2em;overflow:hidden;position:relative}
+.nw-txt{font-size:15px;line-height:1.55;color:rgba(255,255,255,.88);overflow-wrap:anywhere;flex:none}
 .nw-txt.open{max-height:none}
 .nw-txt.clip::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3em;background:linear-gradient(transparent,#0b0706)}
 .nw-txt.open::after{display:none}
@@ -530,8 +538,8 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
 .nw-txt .q{display:block;border-left:3px solid rgba(255,255,255,.25);padding-left:10px;color:rgba(255,255,255,.75)}
 .nw-txt .sub{font-size:12.5px;color:var(--dim)}
 .nw-txt .emo{width:1.3em;height:1.3em;vertical-align:-.3em;object-fit:contain}
-.nw-more{align-self:flex-start;background:none;border:0;padding:0;color:var(--o1);font:500 11px var(--mono);text-transform:uppercase;letter-spacing:.06em;cursor:pointer}
-.nw-img{width:100%;height:auto;border-radius:12px;display:block;background:rgba(255,255,255,.04);max-height:420px;object-fit:cover}
+.nw-more{background:none;border:0;padding:0;color:var(--o1);font:500 11px var(--mono);text-transform:uppercase;letter-spacing:.06em;cursor:pointer}
+.nw-img{width:100%;height:auto;border-radius:12px;display:block;background:rgba(255,255,255,.04);max-height:200px;object-fit:cover;flex:none}
 .nw-tw{display:flex;flex-direction:column;gap:8px;padding:14px;border:1px solid rgba(255,255,255,.14);border-radius:14px;text-decoration:none;color:inherit;background:rgba(255,255,255,.03);transition:border-color .3s}
 .nw-tw:hover{border-color:var(--o2)}
 .nw-tw .who{font-size:14px;color:#fff;font-weight:600;overflow-wrap:anywhere}.nw-tw .who span{font-weight:400;color:var(--dim)}
@@ -542,7 +550,7 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
 .nw-lk b{display:block;font-size:14px;color:#fff}.nw-lk span{display:block;font-size:13px;color:var(--dim);margin-top:4px;overflow-wrap:anywhere}
 .nw-lk:hover{border-color:var(--o2)}
 .nw-foot{margin:22px var(--col) 0;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
-@media (max-width:900px){#news .head{width:auto;max-width:none;margin:0 16px;padding:12px 0}.nwgrid{margin:4vh 0 0;padding:4px 16px 12px;scroll-padding:0 16px}.nw-foot{margin:18px 16px 0}}
+@media (max-width:900px){#news .head{width:auto;max-width:none;margin:0 16px;padding:12px 0}.nwwrap{margin:3vh 0 0}.nwgrid{padding:4px 16px 6px;scroll-padding:0 16px}.nwgrid>.nw{height:400px}.nw-foot{margin:10px 16px 0}.nw-nav{display:none}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
 @media (min-width:901px) and (max-width:1180px){.pad{display:none}nav{grid-template-columns:var(--col) 1fr auto;padding-right:18px}}
 </style>
@@ -804,9 +812,11 @@ footer .bot{margin-top:5vh;display:flex;justify-content:space-between;flex-wrap:
     <h2 class="h2 rv d2">Every announcement, <span class="sp">in one place.</span></h2>
     <p class="lead rv d3">All the news from the CFB Discord and X, gathered here. No need to be on social media to stay up to date.</p>
   </div>
-  <div class="nwgrid rv d3" id="nwGrid" aria-live="polite"></div>
-  <div class="nw-foot rv d3">
+  <div class="nwwrap rv d3">
+    <div class="nwgrid" id="nwGrid" aria-live="polite"></div>
     <div class="nw-nav" id="nwNav" hidden><button type="button" id="nwPrev" aria-label="Previous announcements">←</button><button type="button" id="nwNext" aria-label="Next announcements">→</button></div>
+  </div>
+  <div class="nw-foot rv d3">
     <button class="btn ghost" id="nwMore" type="button" hidden>Show more</button>
     <a class="btn ghost" data-link="discord" href="https://discord.com/invite/cAbXK8Kx35" target="_blank" rel="noopener noreferrer">Join the Discord ↗</a>
     <a class="btn ghost" data-link="x" href="https://x.com/c_f_b_token" target="_blank" rel="noopener noreferrer">Follow on X ↗</a>
@@ -1092,23 +1102,27 @@ upd();setInterval(()=>{a=(a+1)%(L.length-1);upd()},2400);
     const tw=it.tweet&&safeUrl(it.tweet.url)?it.tweet:null;
     const src=(!it.text&&tw)?'<span class="nw-src x">'+ICON.x+'X · @'+esc(tw.handle)+'</span>':'<span class="nw-src">'+ICON.discord+'Discord · Announcements</span>';
     let h='<div class="nw-top">'+src+'<time datetime="'+esc(it.date)+'">'+ago(it.date)+'</time></div>';
-    if(it.text)h+='<div class="nw-txt">'+md(it.text)+'</div><button class="nw-more" type="button" hidden>Read more</button>';
+    h+='<div class="nw-body">';
+    if(it.text)h+='<div class="nw-txt">'+md(it.text)+'</div>';
     (it.images||[]).forEach(im=>{const u=safeUrl(im.url);if(u)h+='<img class="nw-img" src="'+esc(u)+'" alt="" loading="lazy" decoding="async"'+(im.w&&im.h?' width="'+(+im.w)+'" height="'+(+im.h)+'"':'')+'>'});
     if(tw){const img=safeUrl(tw.image);
       h+='<a class="nw-tw" href="'+esc(tw.url)+'" target="_blank" rel="noopener noreferrer"><span class="who">'+esc(tw.name||'@'+tw.handle)+' <span>@'+esc(tw.handle)+'</span></span>'+
-        (tw.text?'<p>'+esc(tw.text)+'</p>':'')+(img?'<img class="nw-img" src="'+esc(img)+'" alt="" loading="lazy" decoding="async">':'')+'<span class="go">View on X ↗</span></a>'}
+        (tw.text?'<p>'+esc(tw.text)+'</p>':'')+(img?'<img class="nw-img" src="'+esc(img)+'" alt="" loading="lazy" decoding="async">':'')+'</a>'}
     (it.links||[]).forEach(l=>{const u=safeUrl(l.url);if(u)h+='<a class="nw-lk" href="'+esc(u)+'" target="_blank" rel="noopener noreferrer nofollow"><b>'+esc(l.title||u)+'</b>'+(l.desc?'<span>'+esc(l.desc)+'</span>':'')+'</a>'});
-    if(safeUrl(it.url))h+='<a class="nw-open" href="'+esc(it.url)+'" target="_blank" rel="noopener noreferrer">Open on Discord ↗</a>';
+    h+='</div><div class="nw-bot"><button class="nw-more" type="button" hidden>Read more</button>';
+    if(tw&&!it.text)h+='<a class="nw-open" href="'+esc(tw.url)+'" target="_blank" rel="noopener noreferrer">View on X ↗</a>';
+    else if(safeUrl(it.url))h+='<a class="nw-open" href="'+esc(it.url)+'" target="_blank" rel="noopener noreferrer">Open on Discord ↗</a>';
+    h+='</div>';
     a.innerHTML=h;
-    a.querySelectorAll('img').forEach(i=>i.addEventListener('error',()=>i.remove()));
+    a.querySelectorAll('img').forEach(i=>{i.addEventListener('error',()=>{i.remove();clamp()});i.addEventListener('load',()=>clamp())});
     return a;
   }
-  function clamp(){grid.querySelectorAll('.nw:not([hidden]) .nw-txt:not(.open)').forEach(t=>{const b=t.nextElementSibling,c=t.scrollHeight>t.clientHeight+4;t.classList.toggle('clip',c);if(b)b.hidden=!c})}
+  function clamp(){grid.querySelectorAll('.nw:not([hidden]) .nw-body:not(.open)').forEach(t=>{const b=t.parentNode.querySelector('.nw-more'),c=t.scrollHeight>t.clientHeight+4;t.classList.toggle('clip',c);if(b)b.hidden=!c})}
   function paint(items){
     grid.textContent='';items.forEach((it,i)=>{const c=card(it);if(!all&&i>=SHOW)c.hidden=true;grid.appendChild(c)});
     more.hidden=true;grid.scrollLeft=0;requestAnimationFrame(()=>{clamp();arrows()});
   }
-  grid.addEventListener('click',e=>{const b=e.target.closest('.nw-more');if(!b)return;const t=b.previousElementSibling;t.classList.add('open');t.classList.remove('clip');b.hidden=true});
+  grid.addEventListener('click',e=>{const b=e.target.closest('.nw-more');if(!b)return;const t=b.closest('.nw').querySelector('.nw-body');t.classList.add('open');t.classList.remove('clip');b.hidden=true});
   more.addEventListener('click',()=>{all=true;grid.querySelectorAll('.nw[hidden]').forEach(c=>c.hidden=false);more.hidden=true;requestAnimationFrame(clamp)});
   addEventListener('resize',()=>requestAnimationFrame(clamp));
   async function load(){
