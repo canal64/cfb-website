@@ -997,8 +997,11 @@ async function burnCheck(first){
   }
   lsSet({ts:now,supply:d.totalSupply});
 }
-burnCheck(true);
-setInterval(()=>{if(!document.hidden)burnCheck(false)},3600000);
+let lastCheck=Date.now();burnCheck(true);
+setInterval(()=>{if(!document.hidden){lastCheck=Date.now();burnCheck(false)}},3600000);
+/* mobile browsers often resume an old tab without reloading the page: check again when it comes back to the screen */
+const recheck=()=>{if(document.hidden||Date.now()-lastCheck<120000)return;lastCheck=Date.now();burnCheck(false)};
+document.addEventListener('visibilitychange',recheck);addEventListener('pageshow',e=>{if(e.persisted)recheck()});addEventListener('focus',recheck);
 document.addEventListener('keydown',e=>{if(e.key==='Escape')hideBurnAlert()});
 document.querySelector('#burnAlert .ba-x').addEventListener('click',hideBurnAlert);document.querySelector('#burnAlert .ba-go').addEventListener('click',hideBurnAlert);
 document.getElementById('burnAlert').addEventListener('click',e=>{if(e.target.id==='burnAlert')hideBurnAlert()});
